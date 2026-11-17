@@ -39,7 +39,7 @@ _SPACE = rf"[\s{_GROUP_SPACES}]*"
 _AMOUNT_RE = re.compile(
     rf"(?P<neg>[-{MINUS}]{_SPACE}|\()?"
     rf"(?:(?<![A-Za-z])(?P<cur>{_CUR}){_SPACE}(?P<num>{_NUM})"
-    rf"|(?<![\d,.])(?P<num2>{_NUM}){_SPACE}(?P<cur2>{_CUR})(?![A-Za-z]))",
+    rf"|(?<![\d,.])(?P<num2>{_NUM}){_SPACE}(?P<cur2>{_CUR})(?![A-Za-z]|{_SPACE}\d))",
     re.IGNORECASE,
 )
 _RANGE_RE = re.compile(

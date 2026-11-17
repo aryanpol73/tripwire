@@ -8,6 +8,7 @@ NBSP = "\u00a0"
 NNBSP = "\u202f"  # narrow no-break space, used by French formatting
 MINUS = "\u2212"
 EN_DASH = "\u2013"
+TIMES = "\u00d7"  # multiplication sign, as in "x 2"
 
 
 @pytest.mark.parametrize(
@@ -131,3 +132,9 @@ def test_find_amounts_lists_every_amount_in_order():
         (4900, "INR"),
         (-10000, "INR"),
     ]
+
+
+def test_quantity_before_a_prefixed_price_is_not_read_as_a_suffix_price():
+    # "1 ₹49" must be "qty 1, ₹49", not "₹1" followed by a stray 49 (found by the walker).
+    assert [a.minor for a in find_amounts(f"Gift card sleeve {TIMES} 1 ₹49")] == [4900]
+    assert parse_price(f"Notebook Set {TIMES} 1 ₹199").minor == 19900

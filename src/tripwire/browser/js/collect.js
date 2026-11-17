@@ -246,16 +246,42 @@
 
   // ---- price candidates (for the commerce ledger) -----------------------------------
   const CURRENCY = /(₹|Rs\.?\s?\d|INR|US\$|\$|€|£|¥|USD|EUR|GBP|\bfree\b)/i;
+  const MONEY = /(₹|Rs\.?\s?\d|INR|US\$|\$|€|£|¥|USD|EUR|GBP)/i;
+  const TERMS = /(renew|auto-?renew|after your .{0,30}trial|billed (monthly|annually|yearly)|per (month|year) from|you (will )?pay .{0,40}from|cancel any ?time)/i;
   const prices = [];
   for (const el of all) {
     const own = [...el.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join(" ");
     if (!CURRENCY.test(own) && !(el.children.length === 0 && CURRENCY.test(el.textContent || ""))) continue;
     const r = el.getBoundingClientRect();
     if (!isVisible(el, r)) continue;
-    const row = el.parentElement || el;
-    prices.push({ text: clean(el.innerText || el.textContent), rowText: clean(row.innerText).slice(0, 200), struck: struckTexts(row), bbox: box(r) });
+    const text = clean(el.innerText || el.textContent);
+    if (text.length > 120) continue;
+    // "free" counts as a price only when it stands nearly alone ("Delivery: Free"),
+    // not inside marketing copy ("14 days free").
+    if (!MONEY.test(text) && text.length > 24) continue;
+    // Renewal sentences are terms, recorded with their legibility, not ledger lines.
+    if (TERMS.test(text)) continue;
+    // The label is the nearest short row around the price; big containers are not labels.
+    const parent = el.parentElement;
+    const row = parent && clean(parent.innerText).length <= 120 ? parent : el;
+    prices.push({ text, rowText: clean(row.innerText), struck: struckTexts(row), bbox: box(r),
+      inControl: !!el.closest("label,button,a,select,option,[role=button],[role=checkbox]") });
+  }
+
+  // ---- renewal / trial terms: plain text whose legibility matters -------------------
+  const terms = [];
+  for (const el of all) {
+    if (!["p", "span", "small", "div", "li", "label", "td"].includes(el.tagName.toLowerCase())) continue;
+    if ([...el.children].some((c) => TERMS.test(c.textContent || ""))) continue; // innermost only
+    const t = clean(el.innerText || el.textContent);
+    if (!t || t.length > 400 || !TERMS.test(t)) continue;
+    const r = el.getBoundingClientRect();
+    const s = style(el);
+    const bg = bgLayers(el);
+    terms.push({ text: t, fontSize: parseFloat(s.fontSize), color: s.color, bgLayers: bg.layers,
+      bgImage: bg.image, opacity: effectiveOpacity(el), visible: isVisible(el, r) });
   }
 
   return { url: location.href, title: document.title, viewport: { width: vw, height: vh },
-    elements, overlays, forms, timers, prices };
+    elements, overlays, forms, timers, prices, terms };
 }

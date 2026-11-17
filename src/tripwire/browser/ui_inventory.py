@@ -42,6 +42,15 @@ class PriceCandidate:
     struck: list[str]
     bbox: BoundingBox
     parsed: ParsedPrice | None
+    in_control: bool = False  # inside a label, button or link: an option, not a ledger line
+
+
+@dataclass
+class TermsText:
+    text: str
+    font_size_px: float
+    contrast_ratio: float | None
+    visible: bool
 
 
 @dataclass
@@ -53,6 +62,7 @@ class PageObservation:
     forms: list[Form] = field(default_factory=list)
     timers: list[Timer] = field(default_factory=list)
     prices: list[PriceCandidate] = field(default_factory=list)
+    terms: list[TermsText] = field(default_factory=list)
 
     def element(self, element_id: str) -> UiElement:
         return next(e for e in self.elements if e.id == element_id)
@@ -67,13 +77,18 @@ def _rgb_text(rgb: tuple[float, float, float]) -> str:
     return f"rgb({r}, {g}, {b})"
 
 
-def _element(raw: dict, prefix: str, dx: float, dy: float) -> UiElement:
+def _contrast(raw: dict) -> float | None:
+    """Contrast of an element's text, or None when it cannot be measured honestly."""
     layers = [parse_css_color(c) for c in raw["bgLayers"]]
     fg = parse_css_color(raw["color"])
-    measurable = fg is not None and not raw["bgImage"] and None not in layers and raw["visible"]
-    contrast = None
-    if measurable:
-        contrast = min(21.0, max(1.0, round(text_contrast(fg, layers, raw["opacity"]), 2)))  # type: ignore[arg-type]
+    if fg is None or raw["bgImage"] or None in layers or not raw["visible"]:
+        return None
+    return min(21.0, max(1.0, round(text_contrast(fg, layers, raw["opacity"]), 2)))  # type: ignore[arg-type]
+
+
+def _element(raw: dict, prefix: str, dx: float, dy: float) -> UiElement:
+    layers = [parse_css_color(c) for c in raw["bgLayers"]]
+    contrast = _contrast(raw)
     background = _rgb_text(effective_background([c for c in layers if c is not None]))
     return UiElement(
         id=prefix + raw["id"],
@@ -224,7 +239,17 @@ def collect_page(page: Page) -> PageObservation:
                 struck=p["struck"],
                 bbox=_bbox(p["bbox"], dx, dy),
                 parsed=parse_price(p["text"], struck_texts=p["struck"]),
+                in_control=p.get("inControl", False),
             )
             for p in data["prices"]
+        ]
+        obs.terms += [
+            TermsText(
+                text=n["text"],
+                font_size_px=n["fontSize"],
+                contrast_ratio=_contrast(n),
+                visible=n["visible"],
+            )
+            for n in data.get("terms", [])
         ]
     return obs
