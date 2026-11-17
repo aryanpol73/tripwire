@@ -1,0 +1,13 @@
+{% extends "shop_base.html" %}
+{% from "macros.html" import nest, button, optin with context %}
+{% block main %}
+<h1>Delivery address</h1>
+<form method="post" action="/checkout/address" class="{{ c('card') }}" id="{{ sid('address') }}">
+  <label class="{{ c('field') }}">Full name <input name="name" autocomplete="off" required></label>
+  <label class="{{ c('field') }}">Phone <input name="phone" type="tel" autocomplete="off" required></label>
+  <label class="{{ c('field') }}">PIN code <input name="pincode" inputmode="numeric" autocomplete="off" required></label>
+  <label class="{{ c('field') }}">City <input name="city" autocomplete="off" required></label>
+  {% for o in optins %}{{ optin(o) }}{% endfor %}
+  {% call nest() %}<div class="{{ c('row') }}">{{ button(w("continue")) }}</div>{% endcall %}
+</form>
+{% endblock %}

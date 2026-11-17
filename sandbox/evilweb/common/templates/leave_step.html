@@ -1,0 +1,55 @@
+{% extends site_base %}
+{% from "macros.html" import nest, button with context %}
+{% block main %}
+<div class="{{ c('card') }}" id="{{ sid('leave') }}">
+{% if kind == "preferences" %}
+  <h1>Email preferences</h1>
+  <p>You are subscribed to the {{ site_name }} daily newsletter.</p>
+  <form method="post" action="{{ action }}">{% call nest() %}<div class="{{ c('row') }}">{{ button(w("unsubscribe")) }}</div>{% endcall %}</form>
+{% elif kind == "notice" %}
+  <h1>Before you cancel</h1>
+  <p>Your projects stay available for 30 days after cancelling, then they are deleted.</p>
+  <form method="post" action="{{ action }}">
+    <label class="{{ c('toggle') }}"><input type="checkbox" name="acknowledge" value="1" required> I understand my data will be deleted after 30 days</label>
+    {% call nest() %}<div class="{{ c('row') }}">{{ button(w("continue")) }}</div>{% endcall %}
+  </form>
+{% elif kind == "survey" %}
+  <h1>Why are you leaving?</h1>
+  <p>Answering is optional.</p>
+  <form method="post" action="{{ action }}">
+    {% for reason in ["Too expensive", "Not using it enough", "Missing features", "Other"] %}
+    <label class="{{ c('toggle') }}"><input type="radio" name="reason" value="{{ loop.index }}"> {{ reason }}</label>
+    {% endfor %}
+    {% call nest() %}<div class="{{ c('row') }}">{{ button(w("continue")) }}</div>{% endcall %}
+  </form>
+{% elif kind == "retention" %}
+  <h1>Wait! Here is a special offer</h1>
+  <p>Stay with us and get 50% off for the next 3 months.</p>
+  <form method="post" action="{{ action }}">
+    {% call nest() %}<div class="{{ c('row') }}">
+      {{ button("Keep it at 50% off", href=keep_url) }}
+      <button type="submit" class="{{ c('linkctl') }}">No thanks, continue</button>
+    </div>{% endcall %}
+  </form>
+{% elif kind == "are_you_sure" %}
+  <h1>Are you sure?</h1>
+  <p>You will lose access to everything you have set up.</p>
+  <form method="post" action="{{ action }}">
+    {% call nest() %}<div class="{{ c('row') }}">
+      {{ button("Go back", href=keep_url) }}
+      <button type="submit" class="{{ c('linkctl') }}">Yes, I am sure</button>
+    </div>{% endcall %}
+  </form>
+{% elif kind == "confirm" %}
+  <h1>Confirm</h1>
+  <p>Please confirm to finish.</p>
+  <form method="post" action="{{ action }}">{% call nest() %}<div class="{{ c('row') }}">{{ button(w("confirm")) }}</div>{% endcall %}</form>
+{% elif kind == "phone_only" %}
+  <h1>Almost done</h1>
+  <p>To complete your cancellation, please call our support team on {{ phone }} (Monday to Friday, 10:00 to 16:00).</p>
+{% elif kind == "email_only" %}
+  <h1>Almost done</h1>
+  <p>To stop receiving the newsletter, send an email from your registered address to {{ email }}.</p>
+{% endif %}
+</div>
+{% endblock %}

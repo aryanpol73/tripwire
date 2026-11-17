@@ -1,0 +1,20 @@
+{% extends "saas_base.html" %}
+{% from "macros.html" import nest, button with context %}
+{% block main %}
+<h1>Review your trial</h1>
+<div class="{{ c('card') }}" id="{{ sid('review') }}">
+  <p class="{{ c('price') }}"><span>{{ plan_name }} plan &times; {{ seats }} seat{{ 's' if seats > 1 }}</span><span>{{ inr(plan_minor * seats) }} per month</span></p>
+  {% if support %}
+  <p class="{{ c('price') }}"><span>{{ support.label }}</span><span>{{ inr(support.minor) }} per month</span></p>
+  {% endif %}
+  {% for fee in late_fees %}
+  <p class="{{ c('price') }}"><span>{{ fee.label }}</span><span>{{ inr(fee.minor) }}</span></p>
+  {% endfor %}
+  <p class="{{ c('price', 'total') }}"><span>Due today</span><span>{{ inr(0) }} (free for {{ trial_days }} days)</span></p>
+  <p class="{{ c('price') }}"><span>Monthly total</span><span>{{ inr(monthly) }}</span></p>
+</div>
+{% if renewal %}<p style="{{ renewal.style }};width:auto;height:auto">{{ renewal.label }}</p>{% endif %}
+<form method="post" action="/signup/confirm">
+  {% call nest() %}<div class="{{ c('row') }}">{{ button(w("confirm_trial")) }}</div>{% endcall %}
+</form>
+{% endblock %}

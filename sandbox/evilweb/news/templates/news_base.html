@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% from "macros.html" import control with context %}
+{% block nav %}
+<a href="/">Home</a>
+<a href="/article/monsoon-markets">Business</a>
+<a href="/article/metro-line-four">City</a>
+{% if leave.entry_location == "menu" %}{{ control(leave.entry, href=leave_entry) }}{% endif %}
+{% endblock %}
+{% block footer %}
+{% if leave.entry_location == "footer" %}{{ control(leave.entry, href=leave_entry) }}{% endif %}
+{% endblock %}

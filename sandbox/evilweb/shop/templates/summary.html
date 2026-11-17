@@ -1,0 +1,19 @@
+{% extends "shop_base.html" %}
+{% from "macros.html" import nest, button with context %}
+{% block main %}
+<h1>Order summary</h1>
+<div class="{{ c('card') }}" id="{{ sid('summary') }}">
+  {% for p, qty in lines %}
+  <p class="{{ c('price') }}"><span>{{ p.name }} &times; {{ qty }}</span><span>{{ inr(p.price_minor * qty) }}</span></p>
+  {% endfor %}
+  <p class="{{ c('price') }}"><span>Delivery</span><span>{{ inr(totals.delivery) }}</span></p>
+  {% if totals.protection %}
+  <p class="{{ c('price') }}"><span>{{ protection.label }}</span><span>{{ inr(totals.protection) }}</span></p>
+  {% endif %}
+  {% for fee in late_fees %}
+  <p class="{{ c('price') }}"><span>{{ fee.label }}</span><span>{{ inr(fee.minor) }}</span></p>
+  {% endfor %}
+  <p class="{{ c('price', 'total') }}"><span>Total payable</span><span>{{ inr(totals.total) }}</span></p>
+</div>
+{% call nest() %}<div class="{{ c('row') }}">{{ button(w("proceed_payment"), href="/payment") }}</div>{% endcall %}
+{% endblock %}

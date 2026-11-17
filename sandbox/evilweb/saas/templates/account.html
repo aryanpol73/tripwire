@@ -1,0 +1,15 @@
+{% extends "saas_base.html" %}
+{% from "macros.html" import nest, control with context %}
+{% block main %}
+<h1>Your account</h1>
+<div class="{{ c('card') }}" id="{{ sid('account') }}">
+  <p>Plan: {{ plan_name }} ({{ "cancelled" if cancelled else "trial" }})</p>
+  <nav aria-label="Account">
+    {% call nest() %}<div class="{{ c('row') }}">
+      {{ control(upgrade, href="/pricing") }}
+      {% if leave.entry_location == "menu" %}{{ control(leave.entry, href=leave_entry) }}{% endif %}
+      <a href="/account/settings">{{ w("settings") }}</a>
+    </div>{% endcall %}
+  </nav>
+</div>
+{% endblock %}

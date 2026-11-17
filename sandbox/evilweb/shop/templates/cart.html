@@ -1,0 +1,24 @@
+{% extends "shop_base.html" %}
+{% from "macros.html" import nest, button with context %}
+{% block main %}
+<h1>Your cart</h1>
+{% if not lines %}
+<p>Your cart is empty. <a href="/">Continue shopping</a></p>
+{% else %}
+<div class="{{ c('card') }}" id="{{ sid('cart') }}">
+  {% for p, qty in lines %}
+  <p class="{{ c('price') }}" data-sku="{{ p.sku }}"><span>{{ p.name }} &times; {{ qty }}</span><span>{{ inr(p.price_minor * qty) }}</span></p>
+  {% endfor %}
+  <p class="{{ c('price') }}"><span>Delivery</span><span>{{ inr(totals.delivery) }}</span></p>
+  {% if protection_on %}
+  <p class="{{ c('price') }}"><span>{{ protection.label }}</span><span>{{ inr(protection.minor) }}</span></p>
+  {% endif %}
+  <p class="{{ c('price', 'total') }}"><span>Total</span><span>{{ inr(totals.total) }}</span></p>
+</div>
+<form method="post" action="/cart/protection" class="{{ c('card') }}">
+  <label class="{{ c('toggle') }}"><input type="checkbox" name="protection" value="1"{% if protection_on %} checked{% endif %} onchange="this.form.submit()"> Add {{ protection.label|lower }} for {{ inr(protection.minor) }}</label>
+  <noscript><button type="submit">Update</button></noscript>
+</form>
+{% call nest() %}<div class="{{ c('row') }}">{{ button(w("checkout"), href="/checkout/address") }}</div>{% endcall %}
+{% endif %}
+{% endblock %}

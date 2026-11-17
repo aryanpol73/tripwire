@@ -1,0 +1,12 @@
+{% extends "saas_base.html" %}
+{% from "macros.html" import control with context %}
+{% block main %}
+<h1>{{ w("billing") }}</h1>
+<div class="{{ c('card') }}" id="{{ sid('billing') }}">
+  <p>Plan: {{ plan_name }}, billed monthly.</p>
+  <p>Payment method: none (sandbox).</p>
+</div>
+{% endblock %}
+{% block footer %}
+{% if leave.entry_location == "footer" %}{{ control(leave.entry, href=leave_entry) }}{% endif %}
+{% endblock %}

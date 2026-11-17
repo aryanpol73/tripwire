@@ -1,0 +1,18 @@
+{% extends "saas_base.html" %}
+{% from "macros.html" import nest, button, optin with context %}
+{% block main %}
+<h1>Start your {{ trial_days }}-day free trial</h1>
+<form method="post" action="/signup" class="{{ c('card') }}" id="{{ sid('signup') }}">
+  <label class="{{ c('field') }}">Work email <input name="email" type="email" autocomplete="off" required></label>
+  <label class="{{ c('field') }}">Seats
+    <select name="seats">
+      {% for n in range(1, 6) %}<option value="{{ n }}"{% if n == trial.default_seats %} selected{% endif %}>{{ n }}</option>{% endfor %}
+    </select>
+  </label>
+  <label class="{{ c('toggle') }}"><input type="checkbox" name="support" value="1"{% if trial.support_preselected %} checked{% endif %}> {{ support.label }} (+{{ inr(support.minor) }} per month)</label>
+  <label class="{{ c('toggle') }}"><input type="checkbox" name="newsletter" value="1"{% if newsletter_prechecked %} checked{% endif %}> Email me product news and offers</label>
+  {% for o in trial.optins %}{{ optin(o) }}{% endfor %}
+  {% if trial.renewal %}<p style="{{ trial.renewal.style }};width:auto;height:auto">{{ trial.renewal.label }}</p>{% endif %}
+  {% call nest() %}<div class="{{ c('row') }}">{{ button(w("continue")) }}</div>{% endcall %}
+</form>
+{% endblock %}

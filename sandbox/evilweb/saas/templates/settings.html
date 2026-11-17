@@ -1,0 +1,8 @@
+{% extends "saas_base.html" %}
+{% block main %}
+<h1>{{ w("settings") }}</h1>
+<div class="{{ c('card') }}" id="{{ sid('settings') }}">
+  <p><a href="/account">Profile</a></p>
+  <p><a href="/account/billing">{{ w("billing") }}</a></p>
+</div>
+{% endblock %}

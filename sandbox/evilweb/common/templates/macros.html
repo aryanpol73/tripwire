@@ -1,0 +1,35 @@
+{# Wrap content in the skin's extra divs, so DOM depth changes between skins. #}
+{% macro nest() -%}
+{%- for _ in range(skin.nesting) %}<div class="{{ c('w' ~ loop.index) }}">{% endfor -%}
+{{ caller() }}
+{%- for _ in range(skin.nesting) %}</div>{% endfor -%}
+{%- endmacro %}
+
+{# A measured control: exact size and colours inline, so ground truth matches the page. #}
+{% macro control(ctl, href=None, type="button", key=None) -%}
+{%- if href -%}
+<a href="{{ href }}" class="{{ c('ctl') }}" style="{{ ctl.style }}">{{ ctl.label }}</a>
+{%- else -%}
+<button type="{{ type }}" class="{{ c('ctl') }}" style="{{ ctl.style }}"{% if key %} data-k="{{ key }}"{% endif %}>{{ ctl.label }}</button>
+{%- endif -%}
+{%- endmacro %}
+
+{# An ordinary, unmeasured button in the skin's primary style. #}
+{% macro button(label, type="submit", href=None) -%}
+{%- if href -%}
+<a href="{{ href }}" class="{{ c('btn') }}">{{ label }}</a>
+{%- else -%}
+<button type="{{ type }}" class="{{ c('btn') }}">{{ label }}</button>
+{%- endif -%}
+{%- endmacro %}
+
+{# Form opt-ins: visible checkboxes, hidden inputs, or checkboxes pushed off-screen. #}
+{% macro optin(o) -%}
+{%- if o.visibility == "hidden" -%}
+<input type="hidden" name="{{ o.name }}" value="{{ 'sandbox-csrf-token' if o.name == 'csrf_token' else '1' }}">
+{%- elif o.visibility == "offscreen" -%}
+<label class="{{ c('offscreen') }}"><input type="checkbox" name="{{ o.name }}" value="1"{% if o.checked %} checked{% endif %}> {{ o.label }}</label>
+{%- else -%}
+<label class="{{ c('toggle') }}"><input type="checkbox" name="{{ o.name }}" value="1"{% if o.checked %} checked{% endif %}> {{ o.label }}</label>
+{%- endif -%}
+{%- endmacro %}

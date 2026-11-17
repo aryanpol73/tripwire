@@ -1,0 +1,11 @@
+{% extends "saas_base.html" %}
+{% from "macros.html" import nest, button with context %}
+{% block main %}
+<h1>Pricing</h1>
+<div class="{{ c('card') }}" id="{{ sid('plan') }}">
+  <h2>{{ plan_name }}</h2>
+  <p class="{{ c('price') }}"><span>Per seat, per month</span><span>{{ inr(plan_minor) }}</span></p>
+  <p>{{ trial_days }}-day free trial. Taxes included.</p>
+  {% call nest() %}<div class="{{ c('row') }}">{{ button(w("start_trial"), href="/signup") }}</div>{% endcall %}
+</div>
+{% endblock %}

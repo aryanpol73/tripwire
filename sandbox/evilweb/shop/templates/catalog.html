@@ -1,0 +1,10 @@
+{% extends "shop_base.html" %}
+{% block main %}
+<h1>All products</h1>
+{% for p in (products|reverse if skin.reverse_buttons else products) %}
+<div class="{{ c('card') }}" id="{{ sid('p-' ~ p.sku) }}">
+  <h2><a href="/product/{{ p.sku }}">{{ p.name }}</a></h2>
+  <p>{{ inr(p.price_minor) }}</p>
+</div>
+{% endfor %}
+{% endblock %}

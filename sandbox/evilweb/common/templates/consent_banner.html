@@ -1,0 +1,49 @@
+{% from "macros.html" import nest, control with context %}
+<div class="{{ c('banner') }}" id="{{ sid('consent') }}" role="dialog" aria-modal="true" aria-label="Cookie consent">
+  {% for layer in plan.consent.layers %}
+  <div class="{{ c('layer') }}" data-layer="{{ loop.index }}"{% if not loop.first %} hidden{% endif %}>
+    {% if loop.index == 1 %}
+    <p>We and our partners use cookies to run this site, measure traffic and show you offers.</p>
+    {% elif loop.index == 2 %}
+    <p>Choose which cookies we may use.</p>
+    {% for t in plan.consent.toggles %}
+    <label class="{{ c('toggle') }}"><input type="checkbox" role="switch" name="{{ t.key }}"{% if t.checked %} checked{% endif %}{% if t.essential %} disabled{% endif %}> {{ t.label }}</label>
+    {% endfor %}
+    {% else %}
+    <p>Some partners process your data on the basis of legitimate interest.</p>
+    {% endif %}
+    {% call nest() %}
+    <div class="{{ c('row') }}">
+      {{ control(layer.accept, key="a") }}
+      {% if layer.reject %}{{ control(layer.reject, key="r") }}{% endif %}
+      {% if layer.save %}{{ control(layer.save, key="s") }}{% endif %}
+      {% if layer.deeper %}{{ control(layer.deeper, key="d") }}{% endif %}
+    </div>
+    {% endcall %}
+  </div>
+  {% endfor %}
+</div>
+<script>
+(function () {
+  var banner = document.getElementById("{{ sid('consent') }}");
+  banner.addEventListener("click", function (event) {
+    var el = event.target.closest("[data-k]");
+    if (!el) return;
+    var k = el.getAttribute("data-k");
+    if (k === "d") {  // open the next layer: no page load, just like most real banners
+      var layer = el.closest("[data-layer]");
+      layer.hidden = true;
+      layer.nextElementSibling.hidden = false;
+      return;
+    }
+    var toggles = {};
+    banner.querySelectorAll("input[type=checkbox]").forEach(function (i) { toggles[i.name] = i.checked; });
+    var choice = { a: "accept", r: "reject", s: "custom" }[k];
+    fetch("/consent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ choice: choice, toggles: toggles })
+    }).then(function () { banner.remove(); });
+  });
+})();
+</script>

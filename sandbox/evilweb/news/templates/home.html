@@ -1,0 +1,10 @@
+{% extends "news_base.html" %}
+{% block main %}
+<h1>Today</h1>
+{% for slug, (headline, body) in articles.items() %}
+<article class="{{ c('card') }}" id="{{ sid('a-' ~ slug) }}">
+  <h2><a href="/article/{{ slug }}">{{ headline }}</a></h2>
+  <p>{{ body[:90] }}...</p>
+</article>
+{% endfor %}
+{% endblock %}
