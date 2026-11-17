@@ -27,7 +27,10 @@ jobs:
       - name: Format check
         run: uv run ruff format --check .
 
-      - name: Unit tests
+      - name: Install Chromium for the browser tests
+        run: uv run playwright install --with-deps chromium
+
+      - name: Tests (unit and browser)
         run: uv run pytest
 
       # Phase 4 adds: uv run tripwire eval (fails on a regression of more than 2 points).
