@@ -1,0 +1,17 @@
+# Buy nothing: get to the last page before payment and stop there.
+name: reach_payment
+goal: >-
+  Handle any consent banner, add the cheapest item to the cart, go through checkout with
+  test data and default choices, and stop on the last page before payment. Never pay.
+start_path: /
+budgets:
+  steps: 40
+  wall_seconds: 240
+  page_loads: 20
+  llm_spend_usd_micros: 0
+stop:
+  kind: before_payment
+detectors:
+  - sneaking.price_drift
+  - sneaking.preadded_extras
+  - sneaking.bundled_optins

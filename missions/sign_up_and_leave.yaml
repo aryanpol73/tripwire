@@ -1,0 +1,28 @@
+# Join something (a trial or a newsletter), then find the way out.
+# Sandbox only: on real sites sign-up and leave flows are measured structurally up to the
+# final confirm button, on the owner's test account, with approval per run (ETHICS rule 10).
+name: sign_up_and_leave
+goal: >-
+  Handle any consent banner, look at the offer (pricing page if there is one), sign up for a
+  trial or newsletter with test data and default choices, then find how to cancel,
+  unsubscribe or delete, and follow that path to its end.
+start_path: /
+budgets:
+  steps: 60
+  wall_seconds: 300
+  page_loads: 30
+  llm_spend_usd_micros: 0
+stop:
+  kind: left_or_blocked
+detectors:
+  - consent.click_asymmetry
+  - consent.visual_asymmetry
+  - consent.preselected
+  - consent.confirmshaming
+  - sneaking.price_drift
+  - sneaking.preadded_extras
+  - sneaking.renewal_disclosure
+  - sneaking.bundled_optins
+  - obstruction.roach_motel
+  - obstruction.buried_control
+  - obstruction.interposed_friction

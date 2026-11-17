@@ -1,0 +1,19 @@
+# A first visit: what a new visitor meets before reading anything.
+name: first_visit
+goal: >-
+  Land on the start page, handle any consent banner by rejecting it (the accept path is
+  measured, never taken on a real site), scroll, and open up to 3 internal pages.
+start_path: /
+budgets:
+  steps: 30
+  wall_seconds: 180
+  page_loads: 15
+  llm_spend_usd_micros: 0
+stop:
+  kind: internal_pages
+  count: 3
+detectors:
+  - consent.click_asymmetry
+  - consent.visual_asymmetry
+  - consent.preselected
+  - consent.confirmshaming

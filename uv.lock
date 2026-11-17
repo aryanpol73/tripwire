@@ -708,6 +708,7 @@ dependencies = [
     { name = "playwright" },
     { name = "pydantic" },
     { name = "python-multipart" },
+    { name = "pyyaml" },
     { name = "uvicorn" },
 ]
 
@@ -726,6 +727,7 @@ requires-dist = [
     { name = "playwright", specifier = ">=1.49" },
     { name = "pydantic", specifier = ">=2.9,<3" },
     { name = "python-multipart", specifier = ">=0.0.12" },
+    { name = "pyyaml", specifier = ">=6" },
     { name = "uvicorn", specifier = ">=0.32" },
 ]
 
