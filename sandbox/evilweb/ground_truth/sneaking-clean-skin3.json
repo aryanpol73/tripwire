@@ -1,0 +1,79 @@
+{
+  "schema_version": "0.1.0",
+  "scenario_id": "sneaking-clean-skin3",
+  "family": "sneaking",
+  "state": "clean",
+  "skin": 3,
+  "site_type": "shop",
+  "mission": "reach_payment",
+  "expectations": [
+    {
+      "rule": "sneaking.price_drift",
+      "family": "sneaking",
+      "tier": "A",
+      "should_fire": false,
+      "metrics": {
+        "advertised_total_minor": 23900,
+        "final_total_minor": 23900,
+        "drift_from_mandatory_minor": 0,
+        "late_mandatory_lines": 0,
+        "currency": "INR"
+      }
+    },
+    {
+      "rule": "sneaking.preadded_extras",
+      "family": "sneaking",
+      "tier": "A",
+      "should_fire": false,
+      "metrics": {
+        "preadded_count": 0,
+        "preadded_minor": 0
+      }
+    },
+    {
+      "rule": "sneaking.bundled_optins",
+      "family": "sneaking",
+      "tier": "A",
+      "should_fire": false,
+      "metrics": {
+        "hidden_optin_count": 0
+      }
+    }
+  ],
+  "decoys": [
+    {
+      "id": "delivery_and_tax_shown_upfront",
+      "description": "Delivery charge and 'inclusive of all taxes' shown on the product page.",
+      "must_not_trigger": [
+        "sneaking.price_drift"
+      ]
+    },
+    {
+      "id": "csrf_hidden_input",
+      "description": "A hidden CSRF token in the address form.",
+      "must_not_trigger": [
+        "sneaking.bundled_optins"
+      ]
+    },
+    {
+      "id": "remember_me_prechecked",
+      "description": "A visible, pre-checked 'Remember me on this device' box.",
+      "must_not_trigger": [
+        "sneaking.bundled_optins"
+      ]
+    },
+    {
+      "id": "addon_offered_unchecked",
+      "description": "A paid delivery-protection add-on offered but left unchecked.",
+      "must_not_trigger": [
+        "sneaking.preadded_extras"
+      ]
+    }
+  ],
+  "notes": [
+    "Clicks count activated controls (buttons, links, checkboxes); typing is not a click.",
+    "Money is integer paise (INR). Contrast ratios are WCAG 2.x, rounded to 2 decimals.",
+    "reach_payment adds the cheapest item (NOTE-03, qty 1) and stops on the payment page.",
+    "sign_up joins from the landing page; leave_clicks start on the account or home page."
+  ]
+}

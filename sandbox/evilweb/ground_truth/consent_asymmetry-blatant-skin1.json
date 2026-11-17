@@ -1,0 +1,70 @@
+{
+  "schema_version": "0.1.0",
+  "scenario_id": "consent_asymmetry-blatant-skin1",
+  "family": "consent_asymmetry",
+  "state": "blatant",
+  "skin": 1,
+  "site_type": "news",
+  "mission": "first_visit",
+  "expectations": [
+    {
+      "rule": "consent.click_asymmetry",
+      "family": "consent_asymmetry",
+      "tier": "A",
+      "should_fire": true,
+      "metrics": {
+        "accept_clicks": 1,
+        "reject_clicks": 3,
+        "extra_clicks_to_reject": 2,
+        "reject_on_first_layer": false
+      }
+    },
+    {
+      "rule": "consent.visual_asymmetry",
+      "family": "consent_asymmetry",
+      "tier": "A",
+      "should_fire": true,
+      "metrics": {
+        "compared_on_layer": 3,
+        "area_ratio": 9.33,
+        "accept_contrast": 6.82,
+        "reject_contrast": 2.32,
+        "accept_font_px": 18,
+        "reject_font_px": 11
+      }
+    },
+    {
+      "rule": "consent.preselected",
+      "family": "consent_asymmetry",
+      "tier": "A",
+      "should_fire": true,
+      "metrics": {
+        "preselected_count": 3
+      }
+    },
+    {
+      "rule": "consent.confirmshaming",
+      "family": "consent_asymmetry",
+      "tier": "B",
+      "should_fire": true,
+      "metrics": {
+        "decline_text": "No thanks, I prefer a worse experience"
+      }
+    }
+  ],
+  "decoys": [
+    {
+      "id": "locked_necessary_toggle",
+      "description": "A 'strictly necessary' toggle that is on and cannot be changed.",
+      "must_not_trigger": [
+        "consent.preselected"
+      ]
+    }
+  ],
+  "notes": [
+    "Clicks count activated controls (buttons, links, checkboxes); typing is not a click.",
+    "Money is integer paise (INR). Contrast ratios are WCAG 2.x, rounded to 2 decimals.",
+    "reach_payment adds the cheapest item (NOTE-03, qty 1) and stops on the payment page.",
+    "sign_up joins from the landing page; leave_clicks start on the account or home page."
+  ]
+}
