@@ -9,8 +9,8 @@ Shops, news sites, SaaS products, booking sites and sign-up forms all run throug
 engine. What changes is the **mission** (for example `first_visit` or `sign_up_and_leave`)
 and which **detectors** apply.
 
-> **Status: Phase 1 (Evil Web sandbox).** Data contracts and a sandbox of 36 labelled scenarios
-> across three fake site types exist. The browser layer, walkers, detectors and reports are not
+> **Status: Phase 2 (browser layer).** Data contracts, a sandbox of 36 labelled scenarios and a
+> safety-gated browser layer that measures pages exist. Walkers, detectors and reports are not
 > built yet. Nothing has been run against any real website.
 
 ## How it works
@@ -36,8 +36,15 @@ cd tripwire && uv sync
 ```
 
 ```bash
+uv run playwright install chromium
+```
+
+```bash
 uv run pytest
 ```
+
+On Windows, keep the checkout path short (for example `C:\code\tripwire`): very long paths stop
+Playwright from loading one of its DLLs.
 
 ```bash
 uv run tripwire --version

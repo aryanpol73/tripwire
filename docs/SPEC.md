@@ -193,3 +193,19 @@ skins + 3 unseen layouts) is built last, never tuned against, and reported as th
 2. Accept the tier confidence caps (B ≤ 0.75, C ≤ 0.4) in D-008?
 3. Accept proposal P1 in the NOTEBOOK (every non-clean scenario plants every Tier A rule of
    its family) so each rule has 8 positives instead of 2–3?
+
+## 8. Measurement definitions (Phase 2)
+
+How the browser layer turns a page into the numbers above; details and trade-offs in DECISIONS
+D-029.
+
+| Quantity | Definition |
+|---|---|
+| contrast | WCAG 2.x ratio of the text colour composited over its composited background; `null` over images or gradients |
+| area | bounding-box width × height in CSS pixels at a 1280×720 viewport |
+| tree depth | number of semantic ancestors (landmarks, lists, forms, sections, dialogs, role-bearing elements) |
+| landmark | nearest landmark ancestor; footer-only means `contentinfo` |
+| overlay | visible fixed/sticky dialog or layer covering ≥ 5% of the viewport (headers and navs excluded) |
+| blocks interaction | all 9 points of a 3×3 viewport grid land inside the overlay |
+| page load | a main-frame `load` event during the step |
+| click | one activated control (button, link, checkbox); typing is not a click |

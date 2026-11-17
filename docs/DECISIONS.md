@@ -144,3 +144,77 @@ until there is a reviewed replacement.
 ### D-023 A minimal WCAG contrast function now, alpha compositing in Phase 2
 `tripwire/browser/color.py` computes contrast for opaque sRGB colours, tested against
 reference pairs (#767676 on white = 4.54). The sandbox needs it to write exact ground truth.
+
+---
+
+## Phase 2
+
+### D-024 Playwright sync API; a session can reuse an already-launched browser
+**Alternative:** the async API.
+**Why:** the walker is a simple loop, and sync code is easier to read and debug. Sessions take
+an optional `browser`, but every session still gets its own fresh context (a throwaway
+profile). Reusing Chromium makes the eval about 36× fewer browser launches.
+
+### D-025 The allowlist restricts navigation; the sandbox blocks everything off-host
+Accepted proposal P4. On real sites, sub-resources from other domains (for example a
+consent-management script) load and are logged; only *navigation* off the allowlist is
+blocked. In sandbox mode **every** off-host request is blocked, so a sandbox run is offline by
+construction, not by convention.
+
+### D-026 What the gate denies on real sites
+- Irreversible controls, matched on the control's words: pay, purchase, place order, subscribe,
+  start trial, create account, register, delete, confirm, "yes, I'm sure", send…
+- Accept controls inside a consent overlay (ETHICS rule 6).
+- Entering a leave flow (cancel, unsubscribe) unless the run is approved (rule 10).
+- Non-GET requests to payment-like URLs and providers.
+- In **every** mode: typing into password, card, OTP, UPI and similar fields.
+
+The deny-list is deliberately broad. A false "no" costs a hand-off; a false "yes" could cost
+money. The words are judged **before** touching the page, so a forbidden control is refused
+even if it is missing or covered.
+
+### D-027 Pacing: hard 2-second floor on real sites, configurable in the sandbox
+`GateConfig` refuses `mode=real` with less than 2 s between actions. Sandbox tests use 0 s;
+sandbox runs from the CLI will default to 2 s.
+
+### D-028 HAR without response bodies, then scrubbed
+`record_har_content="omit"`: page HTML contains tokens (the sandbox test found a CSRF token in
+a saved HAR). After the context closes, cookies, auth headers, sensitive query and form values,
+and email addresses are redacted in place. The per-step DOM snapshot is saved with hidden,
+password and token-like input values blanked.
+
+### D-029 Measurement definitions
+- **Accessible name:** aria-labelledby, aria-label, `<label for>` or wrapping label (minus the
+  control's own text), placeholder, then text content or title. A practical subset of the W3C
+  accname algorithm; it handles the wrapped-label case the browser pane's own tree missed.
+- **tree_depth:** number of *semantic* ancestors (landmarks, lists, forms, tables, sections,
+  dialogs, elements with a role). Plain `<div>` wrappers do not count, so a skin's extra
+  nesting does not make a control look "buried".
+- **landmark:** nearest landmark ancestor; `<footer>`/`<header>` count only when not inside a
+  sectioning element, as in ARIA.
+- **z_order:** z-index of the nearest positioned ancestor with one; 0 otherwise.
+- **contrast:** text colour composited over the background layers (element outward to the white
+  canvas). The element's opacity is applied to the text only. Background images or gradients
+  make contrast `None` (unmeasurable), and a rule then does not fire.
+- **overlay:** a visible `position: fixed/sticky` element that is a dialog or covers ≥ 5% of
+  the viewport; headers and navs are excluded. It **blocks interaction** when all 9 points of a
+  3×3 grid over the viewport land inside it.
+
+### D-030 Iframes and shadow DOM
+Open shadow roots are walked. Every frame (cross-origin too) is measured and offset to page
+coordinates; element ids are prefixed `f<n>`. An iframe that sits inside a main-frame overlay
+contributes its controls to that overlay (the usual consent-management layout).
+
+### D-031 A blocked click-navigation restores the previous page
+Routing aborts the request, so nothing is sent, but Chromium then shows an error page. The
+session navigates back to where it was and raises `SafetyBlocked`, so the walker keeps a usable
+page and knows what happened.
+
+### D-032 Price parser covers several currencies
+INR, USD, EUR, GBP, JPY; Indian, Western and European number formats; signs, parentheses,
+"Free", ranges and crossed-out or labelled old prices. Ambiguous text returns `None`.
+
+### D-033 Local only: short virtualenv path on Windows
+The project path in this session is long enough that Windows refused to load Playwright's
+greenlet DLL ("filename too long"). Development used `UV_PROJECT_ENVIRONMENT` pointing to a
+short path. This does not affect CI or a normal checkout location; README notes it.

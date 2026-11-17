@@ -196,3 +196,87 @@ have to run in a real browser.
 A: Non-clean scenarios plant every applicable Tier A rule of their family; clean scenarios plant
 none. Enforcing it in the GroundTruth validator means a mistake in a pattern module fails loudly
 instead of quietly changing the positive count that precision and recall depend on.
+
+---
+
+## Phase 2 — Browser layer
+
+### What was built
+- `browser/safety_gate.py`: allowlist (navigation on real sites, everything in the sandbox),
+  robots.txt, payment-endpoint blocking, deny-lists for irreversible and consent-accept
+  controls, a secret-field rule for typing, budgets and pacing. All in code, all logged.
+- `browser/redact.py`: cookies, auth headers, sensitive form/query/JSON values and emails.
+- `browser/color.py`: computed-colour parsing and alpha compositing for WCAG contrast.
+- `browser/price_parse.py`: rewritten for five currencies and three number formats.
+- `browser/js/collect.js` + `browser/ui_inventory.py`: one in-page pass collects every
+  interactive element (role, accessible name, box, computed style, default state, z-order,
+  tree depth, landmark), overlays, forms, timers and price candidates, through shadow roots and
+  iframes. Python builds Trace models and computes contrast.
+- `browser/consent.py`: overlay purpose and control purpose (accept / reject / settings / ...).
+- `browser/capture.py` + `browser/session.py`: a throwaway context per run; each action is
+  gated, paced, budgeted and captured (screenshot, ARIA snapshot, scrubbed DOM, HAR slice).
+- `sandbox/evilweb/server.py`: run a scenario in a background thread for tests and the eval.
+- CI installs Chromium and runs the browser tests.
+
+### Results against the exit check (measured)
+
+| Exit check | Result |
+|---|---|
+| Any sandbox page produces a valid Trace step | yes: every page of 3 scenarios (one per site type), every home page of all 36, every leave-entry page of 24 |
+| Contrast matches reference within ±0.1 | yes: 3 independent references in fixtures (6.821, 3.977, 2.849) and the accept/reject/leave controls of all applicable scenarios against ground truth |
+| Gate blocks an off-allowlist navigation in a test | yes: `goto`, a link click, a page `fetch()`; plus "Proceed to payment" refused in real mode |
+| Price parser ≥ 30 cases | 50 |
+
+Test counts: price parser 50, safety gate 41, colour 28, redaction 6, collector (static HTML)
+26, session 7, sandbox measurements 70. Whole suite: 531 passed, 12 skipped (the shop has no
+leave flow).
+
+### What broke (and was fixed)
+- **HAR files stored response bodies**, and a page's CSRF token ended up on disk. Caught by
+  `test_nothing_secret_is_saved`. Fix: omit bodies; the scrubbed DOM snapshot is the saved page.
+- **A blocked link click left the browser on Chromium's error page.** Safe (nothing was sent)
+  but it stranded the walker. Fix: go back and raise `SafetyBlocked`.
+- **The gate inspected the page before reading the label**, so a forbidden but missing control
+  timed out instead of being refused. Fix: judge the words first.
+- **A link under the cookie banner could not be clicked**: the banner intercepts pointer events,
+  exactly as on real sites. The walker must deal with banners first (Phase 3).
+- **Windows path length.** Playwright's greenlet DLL would not load from the long session path.
+  Worked around locally with a short virtualenv path (D-033).
+- **"Save preferences" read as a settings control** because of the word "preferences"; save
+  words are now checked first.
+
+### Risks found
+- **Keyword lists are English-only** and will miss controls on other-language sites, and
+  ambiguous ones ("OK", "Yes") are guessed. These only *locate* controls; Phase 7 will measure
+  how often they are wrong.
+- **Accessible names are a subset of the standard.** Good enough for the sandbox and common
+  markup; it can disagree with assistive technology on unusual pages.
+- **Contrast simplifications**: opacity is applied to the text only; background images make
+  contrast unmeasurable instead of estimated.
+- **The deny-list is broad**, so real-site runs will hand off more often than strictly needed.
+  That is the intended trade-off.
+
+### Three concepts to be able to explain
+1. **Why the gate judges words before touching the page:** a refusal must not depend on whether
+   the page cooperates (element missing, covered, slow).
+2. **Alpha compositing for contrast:** transparent backgrounds are painted from the outermost
+   layer inward over white, then the text colour is painted over that, and only then is the
+   WCAG ratio computed.
+3. **Offline by construction:** in sandbox mode the route handler aborts every off-host request,
+   so "the sandbox makes no network calls" is enforced, not hoped for.
+
+### Interview questions
+**Q: How can you be sure a run never pays for something?**
+A: Three independent layers, all outside any LLM: the control's words are checked against a
+deny-list before the page is touched; non-GET requests to payment-like endpoints are aborted by
+request routing; and the walker has no action that types card or UPI data (typing into such
+fields is refused in every mode). Each block is logged and tested.
+
+**Q: Your unit tests passed, but a token still ended up on disk. What did you learn?**
+A: Test what is *saved*, not just what the code intends to save. The fix was one option
+(`record_har_content="omit"`), but only an end-to-end test that grepped every saved file found it.
+
+**Q: Why not count DOM depth for "buried controls"?**
+A: Skins add wrapper divs, so DOM depth would change with styling, not with how hard the control
+is to find. Counting only semantic ancestors measures structure a user (or screen reader)
+actually experiences.
