@@ -83,3 +83,64 @@ then.
 `.gitattributes` forces LF and `write_model` writes LF.
 **Why:** development is on Windows, CI is on Linux. Without this, the same JSON produces
 different bytes on each OS and any byte-level comparison becomes noise.
+
+---
+
+## Phase 1
+
+### D-014 Approved at the Phase 0 review
+SPEC.md, the contract additions (D-004), the tier confidence caps (D-008) and proposals P1–P5
+were approved on 2026-11-17.
+
+### D-015 Site type alternates by skin
+Odd skins run on a family's main site (consent → news, sneaking → shop, obstruction → saas),
+even skins on its second site (saas, saas, news).
+**Alternatives:** all 36 on the main site; secondary pages planted inside the main-site
+scenarios.
+**Why:** the brief asks for secondary placements and per-site-type reporting. With a fixed
+3×3×4 grid, *something* must be confounded; here skin parity and site type are linked
+(skins 2 and 4 are always the secondary site). The eval reports per skin and per site type
+anyway, and NOTEBOOK records the confound.
+
+### D-016 One family planted per scenario; other surfaces render their clean spec
+**Why:** a scenario tests one family, while every other applicable rule must stay silent.
+Those silent rules are extra negatives, which is what precision is measured on.
+
+### D-017 Pages and ground truth are generated from the same Plan
+**Alternative:** hand-write ground truth for each scenario.
+**Why:** 36 hand-written files with exact paise and contrast values would drift from the
+pages. Generating both from one Plan removes that class of error. The risk is a bug in the
+Plan that both sides share; the browser smoke test and the user's click-through are the
+independent check. A unit test fails if the committed ground truth differs from the
+generated one.
+
+### D-018 Measured controls carry their size and colours inline
+**Why:** the visual-asymmetry, buried-control and renewal rules need exact area, font size and
+contrast. Inline styles make the computed style equal to the spec, independent of the skin's
+stylesheet. Checked in a real browser: computed width, height, font size and colours match.
+
+### D-019 Rule catalog in `tripwire/detectors/rules.py`
+**Why:** ground truth, detectors (Phase 4) and the eval refer to the same 11 rule ids. A typo
+anywhere is caught by validation instead of silently scoring zero.
+
+### D-020 "Applicable rules" depend on site and mission
+For example, renewal disclosure exists only on the saas trial, and the shop has no leave flow.
+Ground truth lists only rules that have something to measure. Result: 8 positives per Tier A
+rule, except `sneaking.renewal_disclosure` with 4.
+
+### D-021 In-memory, single-visitor server state with `POST /__reset`
+**Alternative:** per-browser sessions.
+**Why:** one scenario per server and one walker at a time. Simpler, and the reset endpoint
+makes runs repeatable. The consent banner needs both the cookie and the server's own record,
+because cookies ignore ports and a choice made on another scenario's server would otherwise
+hide the banner.
+
+### D-022 New dependencies: fastapi, jinja2, uvicorn, python-multipart; httpx (dev)
+python-multipart is what FastAPI requires to parse HTML forms. Starlette's test client
+warns that `httpx` support is deprecated in favour of a successor package; that package was
+not added (unfamiliar name, possible typosquat). The warning is filtered in pytest config
+until there is a reviewed replacement.
+
+### D-023 A minimal WCAG contrast function now, alpha compositing in Phase 2
+`tripwire/browser/color.py` computes contrast for opaque sRGB colours, tested against
+reference pairs (#767676 on white = 4.54). The sandbox needs it to write exact ground truth.

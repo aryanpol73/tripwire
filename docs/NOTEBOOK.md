@@ -108,3 +108,91 @@ marks every taxonomy label as informational.
 A: A legitimate design that looks like the pattern, such as a locked-on "strictly necessary"
 toggle or a single confirm dialog when cancelling. Decoys test precision: a rule that fires on
 them would accuse honest sites, which is the most damaging error for this tool.
+
+---
+
+## Phase 1 — Evil Web sandbox
+
+### Plan (as given at the start)
+Rule catalog and ground-truth schema; the 36-scenario grid; four skins; one pattern module per
+family; three FastAPI + Jinja2 sites; generated ground truth; `evilweb list / serve`; tests that
+render every page offline; smoke notes; tag `phase-1`.
+
+### What was built
+- `tripwire/detectors/rules.py`: the 11 v1 rule ids, each with family, tier and the question it
+  answers.
+- `tripwire/schemas/ground_truth.py`: `GroundTruth` with per-rule expectations (should fire, and
+  exact metrics) and decoys. It enforces the planting rule (P1): a non-clean scenario plants
+  every applicable Tier A rule of its family; a clean one plants none; other families never fire.
+- `tripwire/browser/color.py`: WCAG contrast for opaque colours, tested against reference pairs.
+- `sandbox/evilweb/`: grid, skins, pattern specs, plan, app factory, shop/news/saas sites, a
+  shared leave flow, generated `ground_truth/*.json` (36 files), and the `evilweb` CLI.
+- Tests: every page of all 36 scenarios renders with no external resource; banners render the
+  planned layers; shop totals, saas review totals and leave-flow endings match ground truth;
+  ground truth is current. 243 sandbox tests, all green.
+
+### Ground-truth coverage (measured, not estimated)
+
+| Rule | Tier | should fire | should stay silent |
+|---|---|---|---|
+| consent.click_asymmetry / visual_asymmetry / preselected | A | 8 each | 22 each |
+| consent.confirmshaming | B | 4 | 26 |
+| sneaking.price_drift / preadded_extras / bundled_optins | A | 8 each | 16 each |
+| sneaking.renewal_disclosure | A | 4 | 14 |
+| obstruction.roach_motel / buried_control / interposed_friction | A | 8 each | 16 each |
+
+Scenarios per site type: news 12, saas 18, shop 6.
+
+### What broke (and was fixed)
+- **Cookies ignore ports.** A "reject" made on one scenario's server (port 8101) hid the banner
+  on another (port 8102). Real walker runs use a fresh browser profile, so they were never
+  affected, but hand-testing was. Fix: the banner needs both the cookie and the server's own
+  record (D-021). Regression test added.
+- **Escaped CSS silently dropped the skin fonts.** Jinja auto-escaping turned `'` into `&#39;`
+  inside `<style>`, where browsers do not decode entities, so every font rule with a quoted font
+  name was invalid. Unit tests passed because they read HTML, not computed styles; the browser
+  check caught it. Fix: mark the generated stylesheet safe. Regression test added. Lesson:
+  rendered-HTML tests are not enough for a tool whose evidence is computed style.
+- **An unfamiliar package was blocked.** The test client suggested a package called `httpx2`;
+  adding it was refused as a possible typosquat, correctly. Kept `httpx` and filtered the warning.
+
+### Risks found
+- **Shared-Plan risk.** Pages and ground truth come from the same Plan, so a bug in a spec would
+  be wrong on both sides and tests would still pass. The independent checks are the browser
+  smoke test and your click-through.
+- **Skin and site type are confounded** (D-015): skins 2 and 4 are always the second site.
+- **Accessible names.** The browser pane's simplified tree did not name inputs wrapped in
+  `<label>` (checkboxes showed as "1"). Phase 2 must compute accessible names properly (via
+  Playwright), because real sites use exactly this markup.
+- **Small n for renewal disclosure** (4 positives): one miss drops its recall to 0.75.
+
+### Exit check status
+- All 36 scenarios render: **yes** (unit tests, and 4 scenarios, one per skin, in a real browser).
+- Ground-truth files validate against the schema: **yes** (36/36, plus a drift test).
+- You have clicked through at least one scenario per skin: **waiting for you.** Checklist in
+  `sandbox/evilweb/README.md`.
+
+### Three concepts to be able to explain
+1. **Ground truth generated from a single source.** Pages and expected answers both read one
+   Plan, so they cannot drift apart. The price is that a shared bug is invisible to tests, which
+   is why independent browser checks matter.
+2. **Decoys and cross-family negatives.** Each scenario plants one family; every other rule that
+   has something to measure must stay silent. That is where precision comes from.
+3. **Skins as a robustness test.** Different class names, nesting, button order, banner position
+   and wording mean a detector or walker that depends on any of them fails on some skin.
+
+### Interview questions
+**Q: Why not hand-write the 36 ground-truth files?**
+A: Exact paise, click counts and contrast ratios across 36 files would drift from the pages the
+first time a pattern changed. Generating both from one Plan removes that error class; a drift
+test catches stale files.
+
+**Q: Your unit tests passed but the fonts were broken. Why?**
+A: The tests read HTML strings. The bug only showed up in computed style, because browsers do not
+decode HTML entities inside `<style>`. For a tool whose evidence is computed style, some checks
+have to run in a real browser.
+
+**Q: What is the "planting rule" and why enforce it in a schema?**
+A: Non-clean scenarios plant every applicable Tier A rule of their family; clean scenarios plant
+none. Enforcing it in the GroundTruth validator means a mistake in a pattern module fails loudly
+instead of quietly changing the positive count that precision and recall depend on.

@@ -9,9 +9,9 @@ Shops, news sites, SaaS products, booking sites and sign-up forms all run throug
 engine. What changes is the **mission** (for example `first_visit` or `sign_up_and_leave`)
 and which **detectors** apply.
 
-> **Status: Phase 0 (setup and spec).** The data contracts, fixtures and docs exist. The
-> sandbox, browser layer, walkers, detectors and reports are not built yet. Nothing has been
-> run against any website.
+> **Status: Phase 1 (Evil Web sandbox).** Data contracts and a sandbox of 36 labelled scenarios
+> across three fake site types exist. The browser layer, walkers, detectors and reports are not
+> built yet. Nothing has been run against any real website.
 
 ## How it works
 
@@ -41,6 +41,16 @@ uv run pytest
 
 ```bash
 uv run tripwire --version
+```
+
+Browse the sandbox (see [sandbox/evilweb](sandbox/evilweb/README.md)):
+
+```bash
+uv run evilweb list
+```
+
+```bash
+uv run evilweb serve consent_asymmetry-blatant-skin1
 ```
 
 Optional, for contributors:
