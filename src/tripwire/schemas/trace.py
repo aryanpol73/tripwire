@@ -31,7 +31,7 @@ from tripwire.schemas.common import (
     NonEmptyStr,
 )
 
-TRACE_SCHEMA_VERSION = "0.1.0"
+TRACE_SCHEMA_VERSION = "0.2.0"
 
 MissionName = Annotated[str, StringConstraints(pattern=r"^[a-z][a-z0-9_]*$")]
 
@@ -341,10 +341,22 @@ class AddOn(Model):
     element_id: str | None = None
 
 
+class TermsNotice(Model):
+    """Renewal or trial wording shown before a confirm button, with how legible it was."""
+
+    step_index: NonNegativeInt
+    text: NonEmptyStr
+    font_size_px: NonNegativeFloat
+    contrast_ratio: ContrastRatio | None = None
+    mentions_price: bool
+    mentions_date: bool
+
+
 class Commerce(Model):
     price_ledger: list[PriceLine] = Field(default_factory=list)
     cart: list[CartItem] = Field(default_factory=list)
     default_addons: list[AddOn] = Field(default_factory=list)
+    terms: list[TermsNotice] = Field(default_factory=list)
 
 
 # --- Notes -------------------------------------------------------------------------
@@ -368,7 +380,7 @@ class Note(Model):
 
 
 class Trace(Model):
-    schema_version: Literal["0.1.0"] = TRACE_SCHEMA_VERSION
+    schema_version: Literal["0.2.0"] = TRACE_SCHEMA_VERSION
     run_id: NonEmptyStr
     site_url: HttpUrl
     site_type: SiteType
@@ -422,6 +434,7 @@ class Trace(Model):
             self._check_steps((i for p in c.price_ledger for i in p.seen_steps), "price line")
             self._check_steps((i.step_index for i in c.cart), "cart item")
             self._check_steps((a.step_index for a in c.default_addons), "add-on")
+            self._check_steps((n.step_index for n in c.terms), "terms notice")
         return self
 
     def _check_steps(self, indices: Iterable[int], owner: str) -> None:
