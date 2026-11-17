@@ -199,8 +199,12 @@ class BrowserSession:
 
     def locate(self, target: Target) -> Locator:
         """Find an element by role and accessible name; never by a skin-specific selector."""
-        if target.role and target.accessible_name:
-            return self.page.get_by_role(target.role, name=target.accessible_name).first  # type: ignore[arg-type]
+        if target.role and target.role != "generic" and target.accessible_name:
+            return self.page.get_by_role(
+                target.role,  # type: ignore[arg-type]
+                name=target.accessible_name,
+                exact=True,
+            ).first
         if target.visible_text:
             return self.page.get_by_text(target.visible_text, exact=True).first
         if target.selector:

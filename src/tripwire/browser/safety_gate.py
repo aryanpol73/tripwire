@@ -191,7 +191,15 @@ class BudgetTracker:
         )
 
     def check(self) -> None:
-        over = self.used().exceeds(self.limits)
+        """Called before each action: stop when another action would go past a limit."""
+        used, limits = self.used(), self.limits
+        over = [
+            name
+            for name in ("steps", "wall_seconds", "page_loads")
+            if getattr(used, name) >= getattr(limits, name)
+        ]
+        if used.llm_spend_usd_micros > limits.llm_spend_usd_micros:
+            over.append("llm_spend_usd_micros")
         if over:
             raise BudgetExceeded(over)
 
