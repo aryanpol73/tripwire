@@ -1,0 +1,127 @@
+{
+  "schema_version": "0.1.0",
+  "run_id": "fixture-consent-violating",
+  "site_url": "http://127.0.0.1:8101/",
+  "site_type": "news",
+  "mission": "first_visit",
+  "mode": "sandbox",
+  "scenario_id": "consent_asymmetry-blatant-skin1",
+  "started_at": "2026-11-17T10:00:00+05:30",
+  "ended_at": "2026-11-17T10:00:09+05:30",
+  "status": "completed",
+  "budget_limits": {"steps": 60, "wall_seconds": 300, "page_loads": 30, "llm_spend_usd_micros": 500000},
+  "budgets_used": {"steps": 3, "wall_seconds": 9.0, "page_loads": 1, "llm_spend_usd_micros": 0},
+  "steps": [
+    {
+      "index": 0,
+      "timestamp": "2026-11-17T10:00:01+05:30",
+      "action": {"kind": "navigate", "value": "http://127.0.0.1:8101/"},
+      "url_before": null,
+      "url_after": "http://127.0.0.1:8101/",
+      "page_load": true,
+      "screenshot": "screens/000.png",
+      "a11y_snapshot": "a11y/000.yaml",
+      "dom_snapshot": "dom/000.html",
+      "requests": [
+        {"id": "r0", "method": "GET", "url": "http://127.0.0.1:8101/", "resource_type": "document", "status": 200, "timestamp": "2026-11-17T10:00:01+05:30"}
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1", "role": "button", "text": "Accept all",
+            "bbox": {"x": 440, "y": 620, "width": 400, "height": 56},
+            "style": {"font_size_px": 18, "color": "rgb(255, 255, 255)", "background_color": "rgb(0, 82, 204)", "opacity": 1, "visible": true},
+            "contrast_ratio": 6.82, "in_viewport": true, "z_order": 1000, "tree_depth": 4
+          },
+          {
+            "id": "e2", "role": "link", "text": "Manage options",
+            "bbox": {"x": 600, "y": 690, "width": 80, "height": 14},
+            "style": {"font_size_px": 11, "color": "rgb(170, 170, 170)", "background_color": "rgb(255, 255, 255)", "opacity": 1, "visible": true},
+            "contrast_ratio": 2.32, "in_viewport": true, "z_order": 1000, "tree_depth": 5
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "o1", "kind": "banner", "purpose": "consent", "layer": 1,
+          "bbox": {"x": 0, "y": 560, "width": 1280, "height": 160},
+          "viewport_coverage": 0.22, "blocks_interaction": true,
+          "controls": [
+            {"element_id": "e1", "purpose": "accept"},
+            {"element_id": "e2", "purpose": "settings"}
+          ]
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "timestamp": "2026-11-17T10:00:04+05:30",
+      "action": {"kind": "click", "target": {"role": "link", "accessible_name": "Manage options", "visible_text": "Manage options"}},
+      "url_before": "http://127.0.0.1:8101/",
+      "url_after": "http://127.0.0.1:8101/",
+      "page_load": false,
+      "screenshot": "screens/001.png",
+      "ui": {
+        "elements": [
+          {
+            "id": "e1", "role": "switch", "text": "Strictly necessary",
+            "bbox": {"x": 400, "y": 200, "width": 44, "height": 24},
+            "style": {"font_size_px": 14, "color": "rgb(17, 17, 17)", "background_color": "rgb(255, 255, 255)", "opacity": 1, "visible": true},
+            "contrast_ratio": 18.88, "checked": true, "disabled": true, "in_viewport": true, "z_order": 1000
+          },
+          {
+            "id": "e2", "role": "switch", "text": "Marketing emails and offers",
+            "bbox": {"x": 400, "y": 250, "width": 44, "height": 24},
+            "style": {"font_size_px": 14, "color": "rgb(17, 17, 17)", "background_color": "rgb(255, 255, 255)", "opacity": 1, "visible": true},
+            "contrast_ratio": 18.88, "checked": true, "in_viewport": true, "z_order": 1000
+          },
+          {
+            "id": "e3", "role": "button", "text": "Save and accept",
+            "bbox": {"x": 440, "y": 600, "width": 400, "height": 56},
+            "style": {"font_size_px": 18, "color": "rgb(255, 255, 255)", "background_color": "rgb(0, 82, 204)", "opacity": 1, "visible": true},
+            "contrast_ratio": 6.82, "in_viewport": true, "z_order": 1000
+          },
+          {
+            "id": "e4", "role": "button", "text": "Reject all",
+            "bbox": {"x": 600, "y": 670, "width": 70, "height": 14},
+            "style": {"font_size_px": 11, "color": "rgb(170, 170, 170)", "background_color": "rgb(255, 255, 255)", "opacity": 1, "visible": true},
+            "contrast_ratio": 2.32, "in_viewport": true, "z_order": 1000
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "o2", "kind": "modal", "purpose": "consent", "layer": 2,
+          "bbox": {"x": 340, "y": 120, "width": 600, "height": 600},
+          "viewport_coverage": 0.39, "blocks_interaction": true,
+          "controls": [
+            {"element_id": "e3", "purpose": "accept"},
+            {"element_id": "e4", "purpose": "reject"}
+          ]
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "timestamp": "2026-11-17T10:00:07+05:30",
+      "action": {"kind": "reject_consent", "target": {"role": "button", "accessible_name": "Reject all", "visible_text": "Reject all"}},
+      "url_before": "http://127.0.0.1:8101/",
+      "url_after": "http://127.0.0.1:8101/",
+      "page_load": false,
+      "screenshot": "screens/002.png",
+      "requests": [
+        {"id": "r1", "method": "POST", "url": "http://127.0.0.1:8101/consent", "resource_type": "fetch", "status": 204, "timestamp": "2026-11-17T10:00:07+05:30", "post_data_redacted": "choice=reject_all"}
+      ]
+    }
+  ],
+  "paths": [
+    {"name": "accept_consent", "goal": "accept_consent", "clicks": 1, "page_loads": 0, "step_indices": [0], "executed": false},
+    {"name": "reject_consent", "goal": "reject_consent", "clicks": 2, "page_loads": 0, "step_indices": [1, 2]}
+  ],
+  "intents": [
+    {"goal": "reject_consent", "success": true, "cheapest_path": "reject_consent"}
+  ],
+  "notes": [
+    {"kind": "info", "step_index": 0, "message": "Accept path measured structurally from the first banner layer, not executed."}
+  ]
+}

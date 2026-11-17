@@ -1,0 +1,68 @@
+{
+  "schema_version": "0.1.0",
+  "run_id": "fixture-sneaking-clean",
+  "site_url": "http://127.0.0.1:8102/",
+  "site_type": "shop",
+  "mission": "reach_payment",
+  "mode": "sandbox",
+  "scenario_id": "sneaking-clean-skin1",
+  "started_at": "2026-11-17T11:05:00+05:30",
+  "ended_at": "2026-11-17T11:05:10+05:30",
+  "status": "completed",
+  "budget_limits": {"steps": 60, "wall_seconds": 300, "page_loads": 30, "llm_spend_usd_micros": 500000},
+  "budgets_used": {"steps": 3, "wall_seconds": 10.0, "page_loads": 3, "llm_spend_usd_micros": 0},
+  "steps": [
+    {
+      "index": 0,
+      "timestamp": "2026-11-17T11:05:01+05:30",
+      "action": {"kind": "navigate", "value": "http://127.0.0.1:8102/product/TOTE-01"},
+      "url_after": "http://127.0.0.1:8102/product/TOTE-01",
+      "page_load": true,
+      "screenshot": "screens/000.png"
+    },
+    {
+      "index": 1,
+      "timestamp": "2026-11-17T11:05:04+05:30",
+      "action": {"kind": "click", "target": {"role": "button", "accessible_name": "Add to cart", "visible_text": "Add to cart"}},
+      "url_before": "http://127.0.0.1:8102/product/TOTE-01",
+      "url_after": "http://127.0.0.1:8102/cart",
+      "page_load": true,
+      "screenshot": "screens/001.png",
+      "ui": {
+        "elements": [
+          {
+            "id": "e1", "role": "checkbox", "text": "Add gift wrap +₹30",
+            "bbox": {"x": 80, "y": 520, "width": 18, "height": 18},
+            "style": {"font_size_px": 15, "color": "rgb(17, 17, 17)", "background_color": "rgb(255, 255, 255)", "opacity": 1, "visible": true},
+            "contrast_ratio": 18.88, "checked": false, "in_viewport": true
+          }
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "timestamp": "2026-11-17T11:05:08+05:30",
+      "action": {"kind": "click", "target": {"role": "button", "accessible_name": "Checkout", "visible_text": "Checkout"}},
+      "url_before": "http://127.0.0.1:8102/cart",
+      "url_after": "http://127.0.0.1:8102/checkout/summary",
+      "page_load": true,
+      "screenshot": "screens/002.png"
+    }
+  ],
+  "paths": [
+    {"name": "reach_payment", "goal": "reach_payment", "clicks": 2, "page_loads": 3, "step_indices": [0, 1, 2]}
+  ],
+  "commerce": {
+    "price_ledger": [
+      {"label": "Cotton Tote Bag", "amount": {"minor": 29900, "currency": "INR"}, "role": "item", "mandatory": true, "first_step": 0, "seen_steps": [0, 1, 2]},
+      {"label": "Shipping", "amount": {"minor": 4000, "currency": "INR"}, "role": "shipping", "mandatory": true, "first_step": 0, "seen_steps": [0, 1, 2]},
+      {"label": "Total", "amount": {"minor": 33900, "currency": "INR"}, "role": "total", "mandatory": true, "first_step": 1, "seen_steps": [1, 2]}
+    ],
+    "cart": [
+      {"name": "Cotton Tote Bag", "sku": "TOTE-01", "qty": 1, "unit_price": {"minor": 29900, "currency": "INR"}, "qty_added_by_walker": 1, "step_index": 1}
+    ],
+    "default_addons": [
+      {"label": "Gift wrap", "price": {"minor": 3000, "currency": "INR"}, "preselected": false, "step_index": 1, "element_id": "e1"}
+    ]
+  }
+}

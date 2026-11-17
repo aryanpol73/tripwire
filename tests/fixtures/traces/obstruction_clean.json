@@ -1,0 +1,100 @@
+{
+  "schema_version": "0.1.0",
+  "run_id": "fixture-obstruction-clean",
+  "site_url": "http://127.0.0.1:8103/",
+  "site_type": "saas",
+  "mission": "sign_up_and_leave",
+  "mode": "sandbox",
+  "scenario_id": "obstruction-clean-skin1",
+  "started_at": "2026-11-17T12:10:00+05:30",
+  "ended_at": "2026-11-17T12:10:20+05:30",
+  "status": "completed",
+  "budget_limits": {"steps": 60, "wall_seconds": 300, "page_loads": 30, "llm_spend_usd_micros": 500000},
+  "budgets_used": {"steps": 6, "wall_seconds": 20.0, "page_loads": 5, "llm_spend_usd_micros": 0},
+  "steps": [
+    {
+      "index": 0, "timestamp": "2026-11-17T12:10:01+05:30",
+      "action": {"kind": "navigate", "value": "http://127.0.0.1:8103/pricing"},
+      "url_after": "http://127.0.0.1:8103/pricing", "page_load": true, "screenshot": "screens/000.png"
+    },
+    {
+      "index": 1, "timestamp": "2026-11-17T12:10:04+05:30",
+      "action": {"kind": "click", "target": {"role": "link", "accessible_name": "Start free trial", "visible_text": "Start free trial"}},
+      "url_before": "http://127.0.0.1:8103/pricing", "url_after": "http://127.0.0.1:8103/signup",
+      "page_load": true, "screenshot": "screens/001.png"
+    },
+    {
+      "index": 2, "timestamp": "2026-11-17T12:10:07+05:30",
+      "action": {"kind": "type", "target": {"role": "textbox", "accessible_name": "Email"}, "value": "walker@example.test"},
+      "url_before": "http://127.0.0.1:8103/signup", "url_after": "http://127.0.0.1:8103/signup", "page_load": false
+    },
+    {
+      "index": 3, "timestamp": "2026-11-17T12:10:10+05:30",
+      "action": {"kind": "click", "target": {"role": "button", "accessible_name": "Create account", "visible_text": "Create account"}},
+      "url_before": "http://127.0.0.1:8103/signup", "url_after": "http://127.0.0.1:8103/account",
+      "page_load": true, "screenshot": "screens/003.png",
+      "ui": {
+        "elements": [
+          {
+            "id": "e1", "role": "button", "text": "Upgrade",
+            "bbox": {"x": 900, "y": 120, "width": 160, "height": 44},
+            "style": {"font_size_px": 16, "color": "rgb(34, 34, 34)", "background_color": "rgb(245, 245, 245)", "opacity": 1, "visible": true},
+            "contrast_ratio": 14.59, "in_viewport": true, "tree_depth": 4, "landmark": "navigation"
+          },
+          {
+            "id": "e2", "role": "button", "text": "Cancel plan",
+            "bbox": {"x": 1080, "y": 120, "width": 160, "height": 44},
+            "style": {"font_size_px": 16, "color": "rgb(34, 34, 34)", "background_color": "rgb(245, 245, 245)", "opacity": 1, "visible": true},
+            "contrast_ratio": 14.59, "in_viewport": true, "tree_depth": 4, "landmark": "navigation"
+          }
+        ]
+      }
+    },
+    {
+      "index": 4, "timestamp": "2026-11-17T12:10:13+05:30",
+      "action": {"kind": "click", "target": {"role": "button", "accessible_name": "Cancel plan", "visible_text": "Cancel plan"}},
+      "url_before": "http://127.0.0.1:8103/account", "url_after": "http://127.0.0.1:8103/account/cancel",
+      "page_load": true, "screenshot": "screens/004.png",
+      "ui": {
+        "elements": [
+          {
+            "id": "e1", "role": "button", "text": "Confirm cancellation",
+            "bbox": {"x": 540, "y": 420, "width": 200, "height": 44},
+            "style": {"font_size_px": 16, "color": "rgb(255, 255, 255)", "background_color": "rgb(17, 17, 17)", "opacity": 1, "visible": true},
+            "contrast_ratio": 18.88, "in_viewport": true
+          },
+          {
+            "id": "e2", "role": "button", "text": "Go back",
+            "bbox": {"x": 540, "y": 480, "width": 200, "height": 44},
+            "style": {"font_size_px": 16, "color": "rgb(255, 255, 255)", "background_color": "rgb(17, 17, 17)", "opacity": 1, "visible": true},
+            "contrast_ratio": 18.88, "in_viewport": true
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "o1", "kind": "modal", "purpose": "confirm",
+          "bbox": {"x": 440, "y": 260, "width": 400, "height": 300},
+          "viewport_coverage": 0.13, "blocks_interaction": true,
+          "controls": [
+            {"element_id": "e1", "purpose": "continue"},
+            {"element_id": "e2", "purpose": "close"}
+          ]
+        }
+      ]
+    },
+    {
+      "index": 5, "timestamp": "2026-11-17T12:10:16+05:30",
+      "action": {"kind": "click", "target": {"role": "button", "accessible_name": "Confirm cancellation", "visible_text": "Confirm cancellation"}},
+      "url_before": "http://127.0.0.1:8103/account/cancel", "url_after": "http://127.0.0.1:8103/account/cancelled",
+      "page_load": true, "screenshot": "screens/005.png"
+    }
+  ],
+  "paths": [
+    {"name": "sign_up", "goal": "sign_up", "clicks": 2, "page_loads": 3, "step_indices": [0, 1, 2, 3]},
+    {"name": "cancel", "goal": "cancel", "clicks": 2, "page_loads": 2, "step_indices": [4, 5]}
+  ],
+  "intents": [
+    {"goal": "cancel", "success": true, "cheapest_path": "cancel"}
+  ]
+}

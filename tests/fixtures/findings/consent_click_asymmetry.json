@@ -1,0 +1,39 @@
+{
+  "schema_version": "0.1.0",
+  "run_id": "fixture-consent-violating",
+  "findings": [
+    {
+      "schema_version": "0.1.0",
+      "id": "fixture-consent-violating/consent.click_asymmetry/1",
+      "run_id": "fixture-consent-violating",
+      "family": "consent_asymmetry",
+      "detector": "consent.click_asymmetry",
+      "tier": "A",
+      "severity": "medium",
+      "confidence": 0.95,
+      "mission": "first_visit",
+      "site_url": "http://127.0.0.1:8101/",
+      "summary": "Accepting cookies takes 1 click, but rejecting them takes 2 and there is no reject button on the first banner.",
+      "evidence": {
+        "step_indices": [0, 1, 2],
+        "screenshots": ["annotated/000.png", "annotated/001.png"],
+        "measurements": {
+          "accept_clicks": 1,
+          "reject_clicks": 2,
+          "extra_clicks_to_reject": 1,
+          "reject_on_first_layer": false
+        },
+        "request_ids": ["r1"]
+      },
+      "reproduce": [
+        {"url": "http://127.0.0.1:8101/", "action": "Open the page in a fresh browser profile; a cookie banner appears."},
+        {"url": "http://127.0.0.1:8101/", "action": "Look for a reject button on the banner; only 'Accept all' and 'Manage options' are shown."},
+        {"url": "http://127.0.0.1:8101/", "action": "Click 'Manage options', then 'Reject all'."}
+      ],
+      "taxonomy": [
+        {"scheme": "Gray et al. 2018", "label": "Interface interference"}
+      ],
+      "false_positive_notes": "Check that no reject control is hidden elsewhere on the first layer, for example as an X close button that also rejects."
+    }
+  ]
+}

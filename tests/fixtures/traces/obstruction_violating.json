@@ -1,0 +1,191 @@
+{
+  "schema_version": "0.1.0",
+  "run_id": "fixture-obstruction-violating",
+  "site_url": "http://127.0.0.1:8103/",
+  "site_type": "saas",
+  "mission": "sign_up_and_leave",
+  "mode": "sandbox",
+  "scenario_id": "obstruction-blatant-skin1",
+  "started_at": "2026-11-17T12:00:00+05:30",
+  "ended_at": "2026-11-17T12:00:32+05:30",
+  "status": "completed",
+  "budget_limits": {"steps": 60, "wall_seconds": 300, "page_loads": 30, "llm_spend_usd_micros": 500000},
+  "budgets_used": {"steps": 10, "wall_seconds": 32.0, "page_loads": 8, "llm_spend_usd_micros": 0},
+  "steps": [
+    {
+      "index": 0, "timestamp": "2026-11-17T12:00:01+05:30",
+      "action": {"kind": "navigate", "value": "http://127.0.0.1:8103/pricing"},
+      "url_after": "http://127.0.0.1:8103/pricing", "page_load": true, "screenshot": "screens/000.png"
+    },
+    {
+      "index": 1, "timestamp": "2026-11-17T12:00:04+05:30",
+      "action": {"kind": "click", "target": {"role": "link", "accessible_name": "Start free trial", "visible_text": "Start free trial"}},
+      "url_before": "http://127.0.0.1:8103/pricing", "url_after": "http://127.0.0.1:8103/signup",
+      "page_load": true, "screenshot": "screens/001.png",
+      "ui": {
+        "elements": [
+          {
+            "id": "e1", "role": "textbox", "text": "", "accessible_name": "Email",
+            "bbox": {"x": 440, "y": 300, "width": 400, "height": 40},
+            "style": {"font_size_px": 16, "color": "rgb(17, 17, 17)", "background_color": "rgb(255, 255, 255)", "opacity": 1, "visible": true},
+            "contrast_ratio": 18.88, "in_viewport": true
+          },
+          {
+            "id": "e2", "role": "button", "text": "Create account",
+            "bbox": {"x": 440, "y": 360, "width": 400, "height": 48},
+            "style": {"font_size_px": 16, "color": "rgb(255, 255, 255)", "background_color": "rgb(0, 82, 204)", "opacity": 1, "visible": true},
+            "contrast_ratio": 6.82, "in_viewport": true
+          }
+        ]
+      },
+      "forms": [
+        {
+          "id": "f1", "action_url": "/signup", "method": "POST", "submit_element_id": "e2",
+          "fields": [
+            {"name": "email", "type": "email", "label": "Email", "required": true, "element_id": "e1"},
+            {"name": "csrf_token", "type": "hidden", "default_value": "[REDACTED]", "hidden": true}
+          ]
+        }
+      ]
+    },
+    {
+      "index": 2, "timestamp": "2026-11-17T12:00:07+05:30",
+      "action": {"kind": "type", "target": {"role": "textbox", "accessible_name": "Email"}, "value": "walker@example.test"},
+      "url_before": "http://127.0.0.1:8103/signup", "url_after": "http://127.0.0.1:8103/signup", "page_load": false
+    },
+    {
+      "index": 3, "timestamp": "2026-11-17T12:00:10+05:30",
+      "action": {"kind": "click", "target": {"role": "button", "accessible_name": "Create account", "visible_text": "Create account"}},
+      "url_before": "http://127.0.0.1:8103/signup", "url_after": "http://127.0.0.1:8103/account",
+      "page_load": true, "screenshot": "screens/003.png",
+      "requests": [
+        {"id": "r0", "method": "POST", "url": "http://127.0.0.1:8103/signup", "resource_type": "document", "status": 303, "timestamp": "2026-11-17T12:00:10+05:30", "post_data_redacted": "email=walker%40example.test&csrf_token=[REDACTED]"}
+      ]
+    },
+    {
+      "index": 4, "timestamp": "2026-11-17T12:00:13+05:30",
+      "action": {"kind": "click", "target": {"role": "link", "accessible_name": "Settings", "visible_text": "Settings"}},
+      "url_before": "http://127.0.0.1:8103/account", "url_after": "http://127.0.0.1:8103/account/settings",
+      "page_load": true, "screenshot": "screens/004.png",
+      "ui": {
+        "elements": [
+          {
+            "id": "e1", "role": "button", "text": "Upgrade to Pro",
+            "bbox": {"x": 900, "y": 120, "width": 220, "height": 48},
+            "style": {"font_size_px": 16, "color": "rgb(255, 255, 255)", "background_color": "rgb(0, 82, 204)", "opacity": 1, "visible": true},
+            "contrast_ratio": 6.82, "in_viewport": true, "tree_depth": 4, "landmark": "main"
+          },
+          {
+            "id": "e2", "role": "link", "text": "Cancel subscription",
+            "bbox": {"x": 1100, "y": 2380, "width": 96, "height": 13},
+            "style": {"font_size_px": 10, "color": "rgb(160, 160, 160)", "background_color": "rgb(248, 248, 248)", "opacity": 1, "visible": true},
+            "contrast_ratio": 2.46, "in_viewport": false, "tree_depth": 11, "landmark": "contentinfo"
+          }
+        ]
+      }
+    },
+    {
+      "index": 5, "timestamp": "2026-11-17T12:00:16+05:30",
+      "action": {"kind": "click", "target": {"role": "link", "accessible_name": "Cancel subscription", "visible_text": "Cancel subscription"}},
+      "url_before": "http://127.0.0.1:8103/account/settings", "url_after": "http://127.0.0.1:8103/account/cancel/survey",
+      "page_load": true, "screenshot": "screens/005.png",
+      "ui": {
+        "elements": [
+          {
+            "id": "e1", "role": "button", "text": "Continue",
+            "bbox": {"x": 540, "y": 600, "width": 200, "height": 44},
+            "style": {"font_size_px": 16, "color": "rgb(255, 255, 255)", "background_color": "rgb(17, 17, 17)", "opacity": 1, "visible": true},
+            "contrast_ratio": 18.88, "in_viewport": true
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "o1", "kind": "interstitial", "purpose": "survey",
+          "bbox": {"x": 0, "y": 0, "width": 1280, "height": 720},
+          "viewport_coverage": 1.0, "blocks_interaction": true,
+          "controls": [{"element_id": "e1", "purpose": "continue"}]
+        }
+      ]
+    },
+    {
+      "index": 6, "timestamp": "2026-11-17T12:00:19+05:30",
+      "action": {"kind": "click", "target": {"role": "button", "accessible_name": "Continue", "visible_text": "Continue"}},
+      "url_before": "http://127.0.0.1:8103/account/cancel/survey", "url_after": "http://127.0.0.1:8103/account/cancel/offer",
+      "page_load": true, "screenshot": "screens/006.png",
+      "ui": {
+        "elements": [
+          {
+            "id": "e1", "role": "button", "text": "Keep my plan at 50% off",
+            "bbox": {"x": 440, "y": 500, "width": 400, "height": 56},
+            "style": {"font_size_px": 18, "color": "rgb(255, 255, 255)", "background_color": "rgb(0, 82, 204)", "opacity": 1, "visible": true},
+            "contrast_ratio": 6.82, "in_viewport": true
+          },
+          {
+            "id": "e2", "role": "link", "text": "No thanks, I want to lose my benefits",
+            "bbox": {"x": 520, "y": 580, "width": 240, "height": 14},
+            "style": {"font_size_px": 11, "color": "rgb(170, 170, 170)", "background_color": "rgb(255, 255, 255)", "opacity": 1, "visible": true},
+            "contrast_ratio": 2.32, "in_viewport": true
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "o1", "kind": "interstitial", "purpose": "retention",
+          "bbox": {"x": 0, "y": 0, "width": 1280, "height": 720},
+          "viewport_coverage": 1.0, "blocks_interaction": true,
+          "controls": [
+            {"element_id": "e1", "purpose": "accept"},
+            {"element_id": "e2", "purpose": "continue"}
+          ]
+        }
+      ]
+    },
+    {
+      "index": 7, "timestamp": "2026-11-17T12:00:22+05:30",
+      "action": {"kind": "click", "target": {"role": "link", "accessible_name": "No thanks, I want to lose my benefits", "visible_text": "No thanks, I want to lose my benefits"}},
+      "url_before": "http://127.0.0.1:8103/account/cancel/offer", "url_after": "http://127.0.0.1:8103/account/cancel/confirm",
+      "page_load": true, "screenshot": "screens/007.png"
+    },
+    {
+      "index": 8, "timestamp": "2026-11-17T12:00:25+05:30",
+      "action": {"kind": "click", "target": {"role": "button", "accessible_name": "Cancel subscription", "visible_text": "Cancel subscription"}},
+      "url_before": "http://127.0.0.1:8103/account/cancel/confirm", "url_after": "http://127.0.0.1:8103/account/cancel/confirm",
+      "page_load": false, "screenshot": "screens/008.png",
+      "ui": {
+        "elements": [
+          {
+            "id": "e1", "role": "button", "text": "Yes, I'm sure",
+            "bbox": {"x": 540, "y": 420, "width": 200, "height": 44},
+            "style": {"font_size_px": 16, "color": "rgb(255, 255, 255)", "background_color": "rgb(17, 17, 17)", "opacity": 1, "visible": true},
+            "contrast_ratio": 18.88, "in_viewport": true
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "o1", "kind": "modal", "purpose": "confirm",
+          "bbox": {"x": 440, "y": 260, "width": 400, "height": 240},
+          "viewport_coverage": 0.1, "blocks_interaction": true,
+          "controls": [{"element_id": "e1", "purpose": "continue"}]
+        }
+      ]
+    },
+    {
+      "index": 9, "timestamp": "2026-11-17T12:00:28+05:30",
+      "action": {"kind": "click", "target": {"role": "button", "accessible_name": "Yes, I'm sure", "visible_text": "Yes, I'm sure"}},
+      "url_before": "http://127.0.0.1:8103/account/cancel/confirm", "url_after": "http://127.0.0.1:8103/account/cancelled",
+      "page_load": true, "screenshot": "screens/009.png",
+      "requests": [
+        {"id": "r1", "method": "POST", "url": "http://127.0.0.1:8103/account/cancel", "resource_type": "document", "status": 303, "timestamp": "2026-11-17T12:00:28+05:30", "post_data_redacted": "confirm=yes&csrf_token=[REDACTED]"}
+      ]
+    }
+  ],
+  "paths": [
+    {"name": "sign_up", "goal": "sign_up", "clicks": 2, "page_loads": 3, "step_indices": [0, 1, 2, 3]},
+    {"name": "cancel", "goal": "cancel", "clicks": 6, "page_loads": 5, "step_indices": [4, 5, 6, 7, 8, 9]}
+  ],
+  "intents": [
+    {"goal": "cancel", "success": true, "cheapest_path": "cancel"}
+  ]
+}

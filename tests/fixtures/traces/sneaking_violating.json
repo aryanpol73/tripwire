@@ -1,0 +1,91 @@
+{
+  "schema_version": "0.1.0",
+  "run_id": "fixture-sneaking-violating",
+  "site_url": "http://127.0.0.1:8102/",
+  "site_type": "shop",
+  "mission": "reach_payment",
+  "mode": "sandbox",
+  "scenario_id": "sneaking-blatant-skin1",
+  "started_at": "2026-11-17T11:00:00+05:30",
+  "ended_at": "2026-11-17T11:00:10+05:30",
+  "status": "completed",
+  "budget_limits": {"steps": 60, "wall_seconds": 300, "page_loads": 30, "llm_spend_usd_micros": 500000},
+  "budgets_used": {"steps": 3, "wall_seconds": 10.0, "page_loads": 3, "llm_spend_usd_micros": 0},
+  "steps": [
+    {
+      "index": 0,
+      "timestamp": "2026-11-17T11:00:01+05:30",
+      "action": {"kind": "navigate", "value": "http://127.0.0.1:8102/product/TOTE-01"},
+      "url_after": "http://127.0.0.1:8102/product/TOTE-01",
+      "page_load": true,
+      "screenshot": "screens/000.png",
+      "requests": [
+        {"id": "r0", "method": "GET", "url": "http://127.0.0.1:8102/product/TOTE-01", "resource_type": "document", "status": 200, "timestamp": "2026-11-17T11:00:01+05:30"}
+      ]
+    },
+    {
+      "index": 1,
+      "timestamp": "2026-11-17T11:00:04+05:30",
+      "action": {"kind": "click", "target": {"role": "button", "accessible_name": "Add to cart", "visible_text": "Add to cart"}},
+      "url_before": "http://127.0.0.1:8102/product/TOTE-01",
+      "url_after": "http://127.0.0.1:8102/cart",
+      "page_load": true,
+      "screenshot": "screens/001.png",
+      "requests": [
+        {"id": "r1", "method": "POST", "url": "http://127.0.0.1:8102/cart/add", "resource_type": "document", "status": 303, "timestamp": "2026-11-17T11:00:03+05:30", "post_data_redacted": "sku=TOTE-01&qty=1"},
+        {"id": "r2", "method": "GET", "url": "http://127.0.0.1:8102/cart", "resource_type": "document", "status": 200, "timestamp": "2026-11-17T11:00:04+05:30"}
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1", "role": "checkbox", "text": "Delivery protection +₹99",
+            "bbox": {"x": 80, "y": 520, "width": 18, "height": 18},
+            "style": {"font_size_px": 13, "color": "rgb(150, 150, 150)", "background_color": "rgb(255, 255, 255)", "opacity": 1, "visible": true},
+            "contrast_ratio": 2.96, "checked": true, "in_viewport": true
+          },
+          {
+            "id": "e2", "role": "button", "text": "Checkout",
+            "bbox": {"x": 900, "y": 600, "width": 240, "height": 48},
+            "style": {"font_size_px": 16, "color": "rgb(255, 255, 255)", "background_color": "rgb(0, 82, 204)", "opacity": 1, "visible": true},
+            "contrast_ratio": 6.82, "in_viewport": true
+          }
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "timestamp": "2026-11-17T11:00:08+05:30",
+      "action": {"kind": "click", "target": {"role": "button", "accessible_name": "Checkout", "visible_text": "Checkout"}},
+      "url_before": "http://127.0.0.1:8102/cart",
+      "url_after": "http://127.0.0.1:8102/checkout/summary",
+      "page_load": true,
+      "screenshot": "screens/002.png",
+      "requests": [
+        {"id": "r3", "method": "GET", "url": "http://127.0.0.1:8102/checkout/summary", "resource_type": "document", "status": 200, "timestamp": "2026-11-17T11:00:08+05:30"}
+      ]
+    }
+  ],
+  "paths": [
+    {"name": "reach_payment", "goal": "reach_payment", "clicks": 2, "page_loads": 3, "step_indices": [0, 1, 2]}
+  ],
+  "commerce": {
+    "price_ledger": [
+      {"label": "Cotton Tote Bag", "amount": {"minor": 29900, "currency": "INR"}, "role": "item", "mandatory": true, "first_step": 0, "seen_steps": [0, 1, 2]},
+      {"label": "Gift protection plan", "amount": {"minor": 4900, "currency": "INR"}, "role": "other", "mandatory": false, "first_step": 1, "seen_steps": [1, 2]},
+      {"label": "Delivery protection", "amount": {"minor": 9900, "currency": "INR"}, "role": "fee", "mandatory": false, "first_step": 1, "seen_steps": [1, 2]},
+      {"label": "Total", "amount": {"minor": 44700, "currency": "INR"}, "role": "total", "mandatory": true, "first_step": 1, "seen_steps": [1]},
+      {"label": "Convenience fee", "amount": {"minor": 2900, "currency": "INR"}, "role": "fee", "mandatory": true, "first_step": 2, "seen_steps": [2]},
+      {"label": "Total payable", "amount": {"minor": 47600, "currency": "INR"}, "role": "total", "mandatory": true, "first_step": 2, "seen_steps": [2]}
+    ],
+    "cart": [
+      {"name": "Cotton Tote Bag", "sku": "TOTE-01", "qty": 1, "unit_price": {"minor": 29900, "currency": "INR"}, "qty_added_by_walker": 1, "step_index": 1},
+      {"name": "Gift protection plan", "sku": "GIFT-PROT", "qty": 1, "unit_price": {"minor": 4900, "currency": "INR"}, "qty_added_by_walker": 0, "step_index": 1}
+    ],
+    "default_addons": [
+      {"label": "Delivery protection", "price": {"minor": 9900, "currency": "INR"}, "preselected": true, "step_index": 1, "element_id": "e1"}
+    ]
+  },
+  "notes": [
+    {"kind": "info", "step_index": 2, "message": "Stopped on the last page before payment."}
+  ]
+}
