@@ -1,0 +1,3 @@
+# Same bytes on every OS, so the JSON Schema drift check in CI is meaningful.
+* text=auto eol=lf
+*.png binary

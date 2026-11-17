@@ -1,0 +1,47 @@
+[project]
+name = "tripwire"
+version = "0.0.1"
+description = "A general-purpose web dark-pattern auditing agent that records reproducible evidence."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.9,<3",
+]
+
+[project.scripts]
+tripwire = "tripwire.cli:main"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4",
+    "pytest>=8.3",
+    "ruff>=0.8",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tripwire"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # import sorting
+    "B",   # bugbear: likely bugs
+    "UP",  # pyupgrade: modern syntax
+    "SIM", # simplifications
+    "RUF", # ruff-specific
+]

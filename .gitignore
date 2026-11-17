@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Secrets: only .env.example is committed
+.env
+.env.*
+!.env.example
+
+# Run output (traces, screenshots, HAR files, reports). Never commit raw runs:
+# they can contain cookies or personal data. Golden fixtures live in tests/fixtures/.
+runs/
+*.har
+playwright-profile*/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
