@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tricky markup</title>
+<style>
+  body { margin: 0; background: #ffffff; font-family: Arial, sans-serif; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .sticky { position: sticky; top: 0; height: 60px; background: #eee; }
+  .wrap { padding: 4px; }
+</style>
+</head>
+<body>
+<header class="sticky"><nav><a href="/home">Home</a></nav></header>
+<main>
+  <!-- accessible names -->
+  <label>Work email <input id="wrapped" type="email"></label>
+  <label for="byfor">Full name</label><input id="byfor" type="text">
+  <span id="lbl">Coupon code</span><input id="bylabelledby" aria-labelledby="lbl">
+  <input id="byaria" aria-label="Search the site">
+  <input id="byplaceholder" placeholder="PIN code">
+  <label><input type="checkbox" id="wrappedbox" value="1" checked> Send me offers</label>
+
+  <!-- tree depth ignores plain div wrappers -->
+  <div class="wrap"><div class="wrap"><div class="wrap"><div class="wrap"><button id="deepdivs">Deep in divs</button></div></div></div></div>
+  <section aria-label="Plans"><ul><li><button id="semantic">In a list</button></li></ul></section>
+
+  <!-- hidden in several ways -->
+  <button id="h-display" style="display:none">Display none</button>
+  <button id="h-visibility" style="visibility:hidden">Visibility hidden</button>
+  <button id="h-opacity" style="opacity:0">Opacity zero</button>
+  <div hidden><button id="h-attr">Hidden attribute</button></div>
+  <button id="h-sronly" class="sr-only">Screen reader only</button>
+
+  <!-- contrast: transparent and layered backgrounds -->
+  <div style="background: rgba(0,0,0,0.5)"><button id="c-layered" style="background:transparent;color:#ffffff;border:0">Over half-black</button></div>
+  <button id="c-alpha" style="background:#ffffff;color:rgba(0,0,0,0.4);border:0">Faint text</button>
+  <button id="c-opaque" style="background:rgb(0,82,204);color:#fff;border:0">Opaque blue</button>
+  <div style="background-image: linear-gradient(red, blue)"><button id="c-image" style="background:transparent;border:0">On a gradient</button></div>
+
+  <!-- shadow DOM and an iframe -->
+  <div id="host"></div>
+  <iframe id="frame" style="position:absolute;left:400px;top:900px;width:300px;height:100px;border:0"
+    srcdoc="<body style='margin:0'><button style='margin:10px'>Inside frame</button></body>"></iframe>
+
+  <!-- forms -->
+  <form action="/signup" method="post" id="signup">
+    <input type="hidden" name="csrf_token" value="tok-12345">
+    <input type="email" name="email" required aria-label="Email">
+    <select name="seats" aria-label="Seats"><option>1</option><option selected>2</option></select>
+    <label style="position:absolute;left:-9999px"><input type="checkbox" name="partner_offers" value="1" checked> Partner offers</label>
+    <button type="submit">Create account</button>
+  </form>
+
+  <!-- timers and prices -->
+  <p><span id="timer">Offer ends in 09:59</span></p>
+  <p><span>Only 3 left in stock</span></p>
+  <p class="price-row"><del>₹2,999</del> <span>₹1,499</span></p>
+</main>
+<footer><a id="footer-link" href="/leave" style="font-size:10px">Email preferences</a></footer>
+
+<div id="banner" style="position:fixed;left:0;right:0;bottom:0;height:120px;background:#fff;z-index:1000" role="dialog" aria-label="Cookie consent">
+  <p>We use cookies.</p>
+  <button>Accept all</button><button>Disagree</button><button>Manage options</button><button>Save preferences</button>
+</div>
+<script>
+  const root = document.getElementById("host").attachShadow({ mode: "open" });
+  root.innerHTML = '<button id="in-shadow">Shadow button</button>';
+</script>
+</body>
+</html>
