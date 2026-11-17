@@ -48,6 +48,9 @@ re-run offline after a rule changes, and checked by someone who never runs the t
 | `sign_up_and_leave` | Find a sign-up, newsletter or trial; then find how to cancel, unsubscribe or delete | consent asymmetry, sneaking, obstruction |
 | `reach_payment` | Add something to a cart or start a booking; go to the last page before payment | sneaking |
 
+Each mission is a YAML file in `missions/` (goal, start path, budgets, stop condition,
+applicable detectors); see DECISIONS D-034.
+
 ### 2.2 Detector tiers
 
 | Tier | How it decides | Max confidence | Counts toward headline metrics? |

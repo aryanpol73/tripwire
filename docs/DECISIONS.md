@@ -218,3 +218,65 @@ INR, USD, EUR, GBP, JPY; Indian, Western and European number formats; signs, par
 The project path in this session is long enough that Windows refused to load Playwright's
 greenlet DLL ("filename too long"). Development used `UV_PROJECT_ENVIRONMENT` pointing to a
 short path. This does not affect CI or a normal checkout location; README notes it.
+
+---
+
+## Phase 3
+
+### D-034 Mission spec format
+YAML in `missions/`: `name`, `goal`, `start_path`, `budgets` (the Trace `Budgets` model),
+`stop` (`internal_pages` with a count, `left_or_blocked`, `before_payment`) and `detectors`
+(validated against the rule catalog). Allowed domains are not in the file: they come from the
+target URL at run time, so a mission cannot widen its own allowlist.
+**Note:** `load_mission` reads from the repository's `missions/` folder; packaging the YAML
+files into the wheel is a Phase 8 task.
+
+### D-035 Trace schema 0.2.0: `commerce.terms`
+Renewal and trial wording is plain text, not a control, so the UI inventory did not record it,
+and a detector reads only the Trace. `TermsNotice` stores the text, font size, contrast, and
+whether it mentions a price and a date. Version bumped; fixtures updated.
+
+### D-036 Commerce is recorded whenever priced pages are seen
+The brief scopes the commerce extension to `reach_payment`, but the saas trial (part of
+`sign_up_and_leave`) carries the same sneaking patterns: setup fees at review, pre-selected
+add-ons, renewal terms. The recorder runs on every step; `commerce` is null when no price,
+cart, add-on or terms were seen.
+
+### D-037 Paths are the cheapest chain found; detours stay in the trace
+When the walker explores a link that leads nowhere (for example "Profile" while looking for
+cancel), it goes back. Those steps remain in `steps[]`, but `paths[].step_indices` contains only
+the chain that worked. Click counts therefore measure the route a user needs, not the walker's
+search. The accept-consent path is never walked (rule 6): it is recorded as 1 click, 0 page
+loads, `executed=false`, from the visible layer-1 accept control.
+
+### D-038 Debt: the walker's English vocabulary
+`walker/vocab.py` lists words such as "add to cart", "start trial", "cancel plan", "no thanks".
+It is generic web vocabulary, not per-skin selectors, and it is the "tiny adapter" the brief
+allows. Phase 6 should retire it. Known weaknesses: English only; "OK"/"Yes" are ambiguous;
+an unusual wording for a leave link (for example "Manage membership") would be missed.
+
+### D-039 Blocking pop-ups that are not the mission are closed
+A newsletter modal on an article blocks clicks, as on real sites. In missions where the pop-up
+is not the goal, the walker presses its Close or "No thanks" control. This click is not part
+of any path; the pop-up itself is recorded in the step's overlays.
+
+### D-040 Determinism is checked on a fingerprint of detector inputs
+`tripwire.eval.fingerprint` hashes what detectors will read (actions, URL paths, page loads,
+overlays with measured controls, forms, visible elements, paths, intents, commerce, notes) and
+leaves out what may legitimately vary (timestamps, ports, request ids, wall time).
+
+### D-041 Sandbox runs are not paced by default
+`tripwire audit` uses a 0 s interval for the local sandbox (it is our own server). The
+2-second floor for real sites is unchanged and enforced by `GateConfig`. Updates D-027.
+
+### D-042 `audit` refuses real URLs until Phase 7
+Any non-local host raises `RealSitesDisabled` before a browser starts.
+
+### D-043 Price parser fix found by the walker
+"Gift card sleeve × 1 ₹49" was read as ₹1: a currency sign right after a number was taken as
+a suffix even when it began the next price. A suffix currency must now not be followed by a
+digit. Regression test added.
+
+### D-044 The budget check happens before each action
+`BudgetTracker.check()` stops when another action would reach a limit (`>=`), so a finished
+trace never shows more steps or page loads than allowed. LLM spend still uses `>`.

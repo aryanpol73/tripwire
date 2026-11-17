@@ -9,9 +9,10 @@ Shops, news sites, SaaS products, booking sites and sign-up forms all run throug
 engine. What changes is the **mission** (for example `first_visit` or `sign_up_and_leave`)
 and which **detectors** apply.
 
-> **Status: Phase 2 (browser layer).** Data contracts, a sandbox of 36 labelled scenarios and a
-> safety-gated browser layer that measures pages exist. Walkers, detectors and reports are not
-> built yet. Nothing has been run against any real website.
+> **Status: Phase 3 (scripted missions).** A sandbox of 36 labelled scenarios, a
+> safety-gated browser layer and a scripted walker that runs three missions and saves
+> traces exist. Detectors and reports are not built yet. Real websites are refused until
+> Phase 7.
 
 ## How it works
 
@@ -58,6 +59,16 @@ uv run evilweb list
 
 ```bash
 uv run evilweb serve consent_asymmetry-blatant-skin1
+```
+
+Run a mission on a sandbox scenario, then read the saved trace back without a browser:
+
+```bash
+uv run tripwire audit --scenario obstruction-blatant-skin1
+```
+
+```bash
+uv run tripwire replay runs/<run id>
 ```
 
 Optional, for contributors:

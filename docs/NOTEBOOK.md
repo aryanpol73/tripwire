@@ -280,3 +280,84 @@ A: Test what is *saved*, not just what the code intends to save. The fix was one
 A: Skins add wrapper divs, so DOM depth would change with styling, not with how hard the control
 is to find. Counting only semantic ancestors measures structure a user (or screen reader)
 actually experiences.
+
+---
+
+## Phase 3 — Scripted missions
+
+### What was built
+- `missions/*.yaml` and `tripwire/mission.py`: three missions with budgets, stop conditions and
+  applicable detectors.
+- `walker/scripted_walker.py`: `first_visit`, `sign_up_and_leave`, `reach_payment`, locating
+  controls by role and words. Records `paths[]` (cheapest chain), `intents[]`, notes and the
+  commerce extension.
+- `walker/commerce.py`: price ledger (label, amount, role, mandatory, first and later steps),
+  cart (quantity vs. what the walker chose), paid add-ons with their first-render state, and
+  renewal terms with font size and contrast.
+- `walker/handoff.py`: CAPTCHA, login and OTP detection; the run stops with a hand-off note.
+- `walker/vocab.py`: the English vocabulary (debt, D-038).
+- `eval/fingerprint.py`: detector-input fingerprint for determinism checks.
+- CLI: `tripwire audit --scenario <id>`, `tripwire audit <local url> --mission <name>`,
+  `tripwire replay <run_dir>`; real URLs are refused.
+- Collector additions: renewal and trial terms with legibility; price rows limited to short
+  rows; prices inside controls flagged as add-ons.
+
+### Results against the exit check (measured)
+
+| Exit check | Result |
+|---|---|
+| Every relevant mission runs on every scenario within budget | 36 of 36 completed, none over budget |
+| Click counts match ground truth | 36 of 36: accept and reject consent clicks, sign-up clicks, leave clicks and exit channel (phone, email) all exact |
+| Prices (not required yet, checked anyway) | final total and late mandatory fees exact to the paisa on the 6 shop scenarios; late fees exact on saas trials |
+| Three repeated runs give identical detector inputs | 3 scenarios × 3 runs, identical fingerprints |
+
+Whole suite: 595 passed, 12 skipped, about 5 minutes (mostly real browser runs).
+
+### What broke (and was fixed)
+- **Newsletter pop-ups blocked clicks** on article pages, as on real sites. The walker now
+  closes pop-ups that are not its goal (D-039).
+- **The price parser misread "× 1 ₹49" as ₹1** (D-043). Found only because the walker read
+  real cart rows.
+- **Ledger labels were whole page sections**: price rows now come from the nearest short row,
+  and prices inside checkbox labels are treated as add-ons, not ledger lines.
+- **"Free" in marketing copy** ("14 days free") produced ₹0 lines; "free" now counts only when
+  it stands nearly alone.
+- **The accept path reported 0 clicks** because it is never executed; it now records the
+  structurally measured 1 click.
+- **The budget check was off by one**: a run could take one step past the limit (D-044).
+
+### Risks found
+- **The vocabulary is the weakest part.** Every sandbox skin uses words it knows, which
+  flatters the walker. Real sites will use other words; Phase 6 must do better.
+- **Agreement with ground truth on clicks is partly circular**: the sandbox was built knowing
+  what a "click" is. The definitions are written down (SPEC section 8) so a human can check.
+- **Search depth is 3 links.** A leave control hidden deeper is reported as "not found", which
+  could look like a walker failure rather than obstruction. The report must say so.
+- **Terms detection is pattern-based** ("renew", "billed monthly", "cancel anytime"). Unusual
+  wording would be missed; it also catches harmless lines such as "Plan: Pro, billed monthly"
+  on a billing page (harmless because that is after the confirm step).
+
+### Three concepts to be able to explain
+1. **Cheapest chain vs. the walker's search:** paths measure what a user must do, not how long
+   the walker took to find it; detours stay in the trace for honesty.
+2. **First-render state:** a pre-checked box is recorded the first time it is seen, before the
+   walker could touch it, so "pre-selected" is a fact about the page, not about the walker.
+3. **Determinism fingerprint:** compare only what detectors read, after removing what may
+   legitimately change between runs; otherwise "flaky" and "different" cannot be told apart.
+
+### Interview questions
+**Q: How do you know the walker is not just memorising the sandbox?**
+A: It never uses selectors or URLs from the sandbox; it locates controls by role and generic
+words, and four skins change class names, nesting, order and wording. The honest caveat is that
+the vocabulary still covers the sandbox's words, which is why the hold-out (Phase 4) and the
+LLM explorer (Phase 6) exist.
+
+**Q: Why record the accept path without clicking it?**
+A: ETHICS rule 6: never accept tracking on a real site. On the first layer the accept control
+is visible, so its cost is 1 click with no page load, measurable from the page alone. The path
+is stored with `executed=false` so a reader knows how the number was obtained.
+
+**Q: What does "three runs give identical detector inputs" actually compare?**
+A: A hash of everything a detector reads (actions, URL paths, overlays and the measured size,
+font and contrast of their controls, forms, paths, intents, ledger), excluding timestamps,
+ports and request ids. Identical hashes mean the detectors see exactly the same evidence.
