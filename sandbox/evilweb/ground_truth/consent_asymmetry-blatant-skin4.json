@@ -190,7 +190,7 @@
   "notes": [
     "Clicks count activated controls (buttons, links, checkboxes); typing is not a click.",
     "Money is integer paise (INR). Contrast ratios are WCAG 2.x, rounded to 2 decimals.",
-    "reach_payment adds the cheapest item (NOTE-03, qty 1) and stops on the payment page.",
+    "reach_payment adds the cheapest item (NOTE-03, qty 1) and stops before payment.",
     "sign_up joins from the landing page; leave_clicks start on the account or home page."
   ]
 }
