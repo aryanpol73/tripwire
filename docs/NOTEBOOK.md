@@ -576,3 +576,10 @@ command exited 1 on four measurement differences. In sneaking-blatant skins 1–
 each fixture counts two planted opt-ins. Under D-048 the auditor counts one and
 sends the unlabelled flag to review. These four development results are separate
 from the 21 discrepancies in the frozen v2 score.
+
+PR #5 CI failed at the development sandbox scoring step on commit `5387fc5`.
+The development label generator now scores both outcomes specified by D-048.
+Each blatant sneaking scenario expects one confirmed off-screen opt-in and one
+unclassified enabled hidden field. The other applicable scenarios also check
+the review count, including zero for clean decoys. This changes development
+expectations only. Both hold-out records above retain their first-run values.
