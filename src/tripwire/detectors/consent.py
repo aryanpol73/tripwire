@@ -49,15 +49,17 @@ def consent(trace, config):
         if not (yes and no):
             continue
         text = no.accessible_name or no.text
+        ambiguous = has_mixed_choice_cues(text)
         yield Observation(
             "consent.confirmshaming",
             any(p in text.casefold() for p in config["decline_phrases"])
             or bool(_DISAVOWAL.search(text)),
             [step.index],
-            dict(decline_text=text),
+            dict(decline_text=text, mixed_choice_cues=ambiguous),
             "The decline option uses wording associated with shaming.",
             "Read the whole sentence in context.",
-            review_steps=[step.index] if has_mixed_choice_cues(text) else [],
+            review_steps=[step.index] if ambiguous else [],
+            confidence=0.5 if ambiguous else None,
         )
         area = no.bbox.width * no.bbox.height
         if area:

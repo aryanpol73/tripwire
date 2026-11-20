@@ -529,10 +529,50 @@ matched the label. Mixed accept/reject cues now surface the step for human revie
 Neither the unknown hidden field's purpose nor mixed wording alone is counted as a
 confirmed positive. These cases remain limitations of automatic judgment.
 
-#### Labels proposed for written decision
+#### V2 first-run measurement misses
 
-None. The first-run snapshots, actions and fixture definitions support the labeled prices,
-counts and decline text. The hidden opt-in label describes the fixture author's intended
-meaning. A reviewer can distinguish this from what an auditor can infer from the field
-alone. The detector vocabulary and thresholds stayed fixed. All post-run checks used the
-development sandbox or separate regression fixtures.
+The 21 rows below use the scenario suffix after `holdout2-`. Monetary amounts are in
+paise. “Missing” means the detector emitted no measurement for that field.
+
+| Scenario | Metric | Expected | Observed | Cause |
+|---|---|---:|---:|---|
+| store-candy-subtle | `preadded_minor` | 9900 | -9900 | The parser read a parenthesized care-plan price as negative. |
+| store-mono-blatant | `hidden_optin_count` | 2 | 1 | Only the off-screen choice was identifiable. The enabled hidden field lacked a label. |
+| store-mono-blatant | `preadded_count` | 2 | 1 | The cart reader missed the organiser quantity in a three-column row. |
+| store-mono-blatant | `preadded_minor` | 22800 | -14900 | The parser read a parenthesized care-plan price as negative. The organiser line was also missing. |
+| courses-candy-clean | `advertised_total_minor` | 49900 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-candy-clean | `final_total_minor` | 49900 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-candy-clean | `drift_from_mandatory_minor` | 0 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-candy-clean | `late_mandatory_lines` | 0 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-candy-clean | `currency` | INR | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-mono-subtle | `unneeded_interstitials` | 2 | 0 | Skipped the optional survey and the pause choice. |
+| courses-mono-subtle | `advertised_total_minor` | 49900 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-mono-subtle | `final_total_minor` | 74800 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-mono-subtle | `drift_from_mandatory_minor` | 9900 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-mono-subtle | `late_mandatory_lines` | 1 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-mono-subtle | `currency` | INR | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-forest-blatant | `unneeded_interstitials` | 3 | 1 | Skipped the optional survey and the pause choice. |
+| courses-forest-blatant | `advertised_total_minor` | 49900 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-forest-blatant | `final_total_minor` | 114700 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-forest-blatant | `drift_from_mandatory_minor` | 24800 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-forest-blatant | `late_mandatory_lines` | 2 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-forest-blatant | `currency` | INR | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+
+**Validation status.** The v2 fixes are hold-out-informed and not yet independently
+validated. Development fixtures exercise the implementation. Both published headlines
+describe the original frozen runs.
+
+#### Judgment cases
+
+The store fixture labels two intended opt-ins. The auditor can confirm one and assigns
+the unlabelled enabled field to human review. The forum decline text mixes accept and
+reject cues, so the wording is ambiguous. Any independently triggered wording finding
+carries lower confidence. Both decisions apply prospectively. The original labels,
+classification errors and first-run counts stand. [Written decisions](DECISIONS.md#d-048-require-labelled-evidence-for-hidden-opt-ins)
+
+On the post-decision development grid, all 36 scenarios completed with zero
+classification errors and zero false positives across 214 decoy checks. The
+command exited 1 on four measurement differences. In sneaking-blatant skins 1–4,
+each fixture counts two planted opt-ins. Under D-048 the auditor counts one and
+sends the unlabelled flag to review. These four development results are separate
+from the 21 discrepancies in the frozen v2 score.

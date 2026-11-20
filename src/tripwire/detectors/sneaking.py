@@ -2,6 +2,7 @@
 
 import re
 
+from tripwire.browser.redact import hidden_boolean_default
 from tripwire.detectors.base import Observation
 
 _AGREEMENT = re.compile(r"consent|marketing|newsletter|partner|share|offer|promotional", re.I)
@@ -57,16 +58,22 @@ def sneaking(trace, config):
                 if key in seen:
                     continue
                 seen.add(key)
-                if not _AGREEMENT.search(f"{f.name} {f.label or ''}"):
-                    if f.hidden_boolean_default is True:
-                        unclassified.append(step.index)
+                if not (f.hidden or f.off_screen):
                     continue
-                enabled_value = f.hidden_boolean_default is True or (
-                    f.default_value or ""
-                ).casefold() in {"1", "yes", "true", "on"}
-                if (f.hidden and f.type == "hidden" and enabled_value) or (
-                    (f.hidden or f.off_screen) and f.prechecked
-                ):
+                if f.type == "hidden":
+                    enabled = f.hidden_boolean_default
+                    if enabled is None:
+                        enabled = hidden_boolean_default(f.name, f.default_value)
+                else:
+                    enabled = f.prechecked
+                if not enabled:
+                    continue
+                if f.hidden:
+                    if _AGREEMENT.search(f.label or ""):
+                        bundled.append(step.index)
+                    else:
+                        unclassified.append(step.index)
+                elif _AGREEMENT.search(f"{f.name} {f.label or ''}"):
                     bundled.append(step.index)
     yield Observation(
         "sneaking.bundled_optins",

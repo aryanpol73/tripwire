@@ -312,3 +312,19 @@ existing redaction rules. Older traces load with false and unknown defaults for 
 two optional observations. The finding set may now include `review_steps_by_rule`
 for mixed consent wording or a hidden enabled field with unclear purpose. These steps
 are outside the positive finding counts.
+
+### D-048 Require labelled evidence for hidden opt-ins
+
+An enabled hidden flag without a label goes to **needs review**, even when its
+internal name suggests marketing or sharing. Record its step and exclude it from
+the Tier A hidden opt-in count. Counting a hidden flag requires a label that
+identifies an agreement. The v2 store label records the fixture author's intent.
+The auditor reports only what the trace establishes.
+
+### D-049 Lower confidence for ambiguous consent wording
+
+A decline control containing both accept and reject cues is ambiguous. Send its
+step for review. Mixed cues alone produce no wording finding. When the existing
+confirmshaming rule independently fires on that text, assign confidence 0.50
+instead of the usual Tier B value of 0.70. These are policy values, not calibrated
+probabilities. The decision concerns wording only and applies after the frozen v2 run.

@@ -24,6 +24,7 @@ class Observation:
     summary: str
     caveat: str
     review_steps: list[int] = field(default_factory=list)
+    confidence: float | None = None
 
 
 class Detector(Protocol):
@@ -78,7 +79,9 @@ def findings_for(trace: Trace, observations: Mapping[str, Observation]) -> list[
                 family=rule.family,
                 tier=rule.tier,
                 severity="medium",
-                confidence=0.7 if rule.tier == "B" else 0.95,
+                confidence=obs.confidence
+                if obs.confidence is not None
+                else (0.7 if rule.tier == "B" else 0.95),
                 mission=trace.mission,
                 site_url=redact_url(trace.site_url),
                 summary=obs.summary,

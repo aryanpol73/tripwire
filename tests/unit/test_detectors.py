@@ -75,7 +75,7 @@ def test_unreachable_reject_does_not_invent_a_click_cost():
         ("checkbox", "remember_me", False, True, False),
         ("checkbox", "marketing", True, False, False),
         ("checkbox", "marketing", True, True, True),
-        ("hidden", "share_with_partners", False, False, True),
+        ("hidden", "share_with_partners", False, False, False),
     ],
 )
 def test_bundled_agreement_decoys(kind, name, offscreen, checked, fires):
@@ -248,18 +248,37 @@ def test_review_keeps_ambiguous_evidence_distinct_from_positive_findings():
     report = finding_set(trace, measurements(trace))
     assert report.review_steps_by_rule["consent.confirmshaming"] == [1]
     assert all(f.detector != "consent.confirmshaming" for f in report.findings)
+    trace.steps[1].ui.elements[-1] = (
+        trace.steps[1]
+        .ui.elements[-1]
+        .model_copy(update={"text": "Decline and accept that I prefer a worse experience"})
+    )
+    report = finding_set(trace, measurements(trace))
+    wording = next(f for f in report.findings if f.detector == "consent.confirmshaming")
+    assert wording.confidence == 0.5
+    assert report.review_steps_by_rule[wording.detector] == [1]
     trace = read_trace(FIXTURES / "sneaking_clean.json")
     trace.steps[0].forms.append(
         Form(
             id="preferences",
             fields=[
-                FormField(name="setting_x", type="hidden", hidden=True, hidden_boolean_default=True)
+                FormField(
+                    name="share_with_partners",
+                    type="hidden",
+                    hidden=True,
+                    hidden_boolean_default=True,
+                )
             ],
         )
     )
     report = finding_set(trace, measurements(trace))
     assert report.review_steps_by_rule["sneaking.bundled_optins"] == [0]
     assert not report.findings
+    field = trace.steps[0].forms[-1].fields[0]
+    trace.steps[0].forms[-1].fields[0] = field.model_copy(update={"label": "Share with partners"})
+    report = finding_set(trace, measurements(trace))
+    assert not report.review_steps_by_rule
+    assert report.findings[0].evidence.measurements["hidden_optin_count"] == 1
 
 
 @pytest.mark.parametrize("required,expected", [(False, True), (True, False)])
