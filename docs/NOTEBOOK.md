@@ -496,3 +496,43 @@ The discrepancies break down as follows.
 The clean grocery case also explains the decoy result. The evaluator recorded a false
 positive against the unchecked-tip guard because the extras rule fired on that case.
 The captured tip was unchecked and the erroneous ₹45 amount matched the purchased item.
+
+### Hold-out v2
+
+**First-run Tier A precision was 100% (21/21) and recall was 87.50% (21/24).**
+All nine missions completed on Chromium 156. The single scored run used fixture commit
+`ff86591` with the complete backend source identical to `dbc41b4`. Both aggregate
+targets passed. The command exited 1 because 21 of 174 labeled measurements were missing
+or incorrect. Zero of the 21 negative decoy checks fired.
+
+| Family (Tier A) | TP | FP | FN | TN |
+|---|---:|---:|---:|---:|
+| Consent | 5 | 0 | 0 | 13 |
+| Obstruction | 4 | 0 | 1 | 4 |
+| Sneaking | 12 | 0 | 2 | 7 |
+
+Two missed positives were course price drift (mono-subtle and forest-blatant). The third
+was friction in courses-mono-subtle. Tier B missed the sole labeled wording case
+(forum-candy-blatant), with zero predictions, undefined precision and zero recall.
+The saved score includes the expected and observed value of every discrepancy.
+[First-run score](eval/holdout-v2-first-score.json)
+
+| Measurement discrepancies | First-run evidence | Backend response |
+|---|---|---|
+| 15 course price fields (5 in each case) | The visitor chose the ₹499/month plan through its pricing card. The baseline resolver looked for a radio selection and emitted no drift observation. | Associate the actual click with a uniquely matching advertised price row from the preceding step. Ambiguous matches remain unresolved. |
+| 2 course friction counts | Subtle measured 0 of 2 steps, blatant 1 of 3. Optional checkboxes and a standalone choice to pause or continue added a step apiece. | Inspect the submitted form's optional choices and an intervening form's alternative link. Required inputs and a normal terminal confirmation have different roles. |
+| 3 store extras fields | Parentheses around the care-plan price yielded a negative amount in the subtle and blatant cases. In the blatant case the cart grid also lost the added organiser's quantity, producing a count of 1 instead of 2. | Parse a labeled option's price in shopping context. Read item, quantity and line amount from header-associated cart columns. |
+| 1 store opt-in count | In the blatant case one off-screen choice was detected. The second was an enabled hidden field, with its raw value redacted and no visible label. | Capture its boolean state separately from its raw value and surface an unknown purpose for review. Enabled state alone cannot establish consent. |
+
+The Tier B wording miss was a classification error; the recorded decline text itself
+matched the label. Mixed accept/reject cues now surface the step for human review.
+Neither the unknown hidden field's purpose nor mixed wording alone is counted as a
+confirmed positive. These cases remain limitations of automatic judgment.
+
+#### Labels proposed for written decision
+
+None. The first-run snapshots, actions and fixture definitions support the labeled prices,
+counts and decline text. The hidden opt-in label describes the fixture author's intended
+meaning. A reviewer can distinguish this from what an auditor can infer from the field
+alone. The detector vocabulary and thresholds stayed fixed. All post-run checks used the
+development sandbox or separate regression fixtures.

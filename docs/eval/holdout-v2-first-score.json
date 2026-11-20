@@ -1,0 +1,442 @@
+{
+  "groups": {
+    "A/detector/consent.click_asymmetry": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "tn": 4,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "A/detector/consent.preselected": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "tn": 4,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "A/detector/consent.visual_asymmetry": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 5,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "A/detector/obstruction.buried_control": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "A/detector/obstruction.interposed_friction": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 1,
+      "tn": 1,
+      "precision": 1.0,
+      "recall": 0.5
+    },
+    "A/detector/obstruction.roach_motel": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 2,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "A/detector/sneaking.bundled_optins": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 0,
+      "tn": 2,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "A/detector/sneaking.preadded_extras": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 0,
+      "tn": 2,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "A/detector/sneaking.price_drift": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 2,
+      "tn": 2,
+      "precision": 1.0,
+      "recall": 0.5
+    },
+    "A/detector/sneaking.renewal_disclosure": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "A/family/consent_asymmetry": {
+      "tp": 5,
+      "fp": 0,
+      "fn": 0,
+      "tn": 13,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "A/family/obstruction": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 1,
+      "tn": 4,
+      "precision": 1.0,
+      "recall": 0.8
+    },
+    "A/family/sneaking": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 2,
+      "tn": 7,
+      "precision": 1.0,
+      "recall": 0.8571428571428571
+    },
+    "A/overall": {
+      "tp": 21,
+      "fp": 0,
+      "fn": 3,
+      "tn": 24,
+      "precision": 1.0,
+      "recall": 0.875
+    },
+    "A/site/news": {
+      "tp": 5,
+      "fp": 0,
+      "fn": 0,
+      "tn": 4,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "A/site/saas": {
+      "tp": 10,
+      "fp": 0,
+      "fn": 3,
+      "tn": 17,
+      "precision": 1.0,
+      "recall": 0.7692307692307693
+    },
+    "A/site/shop": {
+      "tp": 6,
+      "fp": 0,
+      "fn": 0,
+      "tn": 3,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "A/skin/candy": {
+      "tp": 6,
+      "fp": 0,
+      "fn": 0,
+      "tn": 10,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "A/skin/forest": {
+      "tp": 8,
+      "fp": 0,
+      "fn": 1,
+      "tn": 7,
+      "precision": 1.0,
+      "recall": 0.8888888888888888
+    },
+    "A/skin/mono": {
+      "tp": 7,
+      "fp": 0,
+      "fn": 2,
+      "tn": 7,
+      "precision": 1.0,
+      "recall": 0.7777777777777778
+    },
+    "B/detector/consent.confirmshaming": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "tn": 5,
+      "precision": null,
+      "recall": 0.0
+    },
+    "B/family/consent_asymmetry": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "tn": 5,
+      "precision": null,
+      "recall": 0.0
+    },
+    "B/overall": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "tn": 5,
+      "precision": null,
+      "recall": 0.0
+    },
+    "B/site/news": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "tn": 2,
+      "precision": null,
+      "recall": 0.0
+    },
+    "B/site/saas": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 3,
+      "precision": null,
+      "recall": null
+    },
+    "B/skin/candy": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "tn": 1,
+      "precision": null,
+      "recall": 0.0
+    },
+    "B/skin/forest": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 2,
+      "precision": null,
+      "recall": null
+    },
+    "B/skin/mono": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 2,
+      "precision": null,
+      "recall": null
+    }
+  },
+  "classification_errors": [
+    "holdout2-courses-mono-subtle obstruction.interposed_friction miss",
+    "holdout2-courses-mono-subtle sneaking.price_drift miss",
+    "holdout2-courses-forest-blatant sneaking.price_drift miss",
+    "holdout2-forum-candy-blatant consent.confirmshaming miss"
+  ],
+  "decoy_false_positives": [],
+  "negative_decoy_checks": 21,
+  "measurement_errors": [
+    {
+      "scenario": "holdout2-store-candy-subtle",
+      "rule": "sneaking.preadded_extras",
+      "metric": "preadded_minor",
+      "expected": 9900,
+      "observed": -9900,
+      "missing": false,
+      "delta": -19800
+    },
+    {
+      "scenario": "holdout2-store-mono-blatant",
+      "rule": "sneaking.bundled_optins",
+      "metric": "hidden_optin_count",
+      "expected": 2,
+      "observed": 1,
+      "missing": false,
+      "delta": -1
+    },
+    {
+      "scenario": "holdout2-store-mono-blatant",
+      "rule": "sneaking.preadded_extras",
+      "metric": "preadded_count",
+      "expected": 2,
+      "observed": 1,
+      "missing": false,
+      "delta": -1
+    },
+    {
+      "scenario": "holdout2-store-mono-blatant",
+      "rule": "sneaking.preadded_extras",
+      "metric": "preadded_minor",
+      "expected": 22800,
+      "observed": -14900,
+      "missing": false,
+      "delta": -37700
+    },
+    {
+      "scenario": "holdout2-courses-candy-clean",
+      "rule": "sneaking.price_drift",
+      "metric": "advertised_total_minor",
+      "expected": 49900,
+      "observed": null,
+      "missing": true,
+      "delta": null
+    },
+    {
+      "scenario": "holdout2-courses-candy-clean",
+      "rule": "sneaking.price_drift",
+      "metric": "final_total_minor",
+      "expected": 49900,
+      "observed": null,
+      "missing": true,
+      "delta": null
+    },
+    {
+      "scenario": "holdout2-courses-candy-clean",
+      "rule": "sneaking.price_drift",
+      "metric": "drift_from_mandatory_minor",
+      "expected": 0,
+      "observed": null,
+      "missing": true,
+      "delta": null
+    },
+    {
+      "scenario": "holdout2-courses-candy-clean",
+      "rule": "sneaking.price_drift",
+      "metric": "late_mandatory_lines",
+      "expected": 0,
+      "observed": null,
+      "missing": true,
+      "delta": null
+    },
+    {
+      "scenario": "holdout2-courses-candy-clean",
+      "rule": "sneaking.price_drift",
+      "metric": "currency",
+      "expected": "INR",
+      "observed": null,
+      "missing": true,
+      "delta": null
+    },
+    {
+      "scenario": "holdout2-courses-mono-subtle",
+      "rule": "obstruction.interposed_friction",
+      "metric": "unneeded_interstitials",
+      "expected": 2,
+      "observed": 0,
+      "missing": false,
+      "delta": -2
+    },
+    {
+      "scenario": "holdout2-courses-mono-subtle",
+      "rule": "sneaking.price_drift",
+      "metric": "advertised_total_minor",
+      "expected": 49900,
+      "observed": null,
+      "missing": true,
+      "delta": null
+    },
+    {
+      "scenario": "holdout2-courses-mono-subtle",
+      "rule": "sneaking.price_drift",
+      "metric": "final_total_minor",
+      "expected": 74800,
+      "observed": null,
+      "missing": true,
+      "delta": null
+    },
+    {
+      "scenario": "holdout2-courses-mono-subtle",
+      "rule": "sneaking.price_drift",
+      "metric": "drift_from_mandatory_minor",
+      "expected": 9900,
+      "observed": null,
+      "missing": true,
+      "delta": null
+    },
+    {
+      "scenario": "holdout2-courses-mono-subtle",
+      "rule": "sneaking.price_drift",
+      "metric": "late_mandatory_lines",
+      "expected": 1,
+      "observed": null,
+      "missing": true,
+      "delta": null
+    },
+    {
+      "scenario": "holdout2-courses-mono-subtle",
+      "rule": "sneaking.price_drift",
+      "metric": "currency",
+      "expected": "INR",
+      "observed": null,
+      "missing": true,
+      "delta": null
+    },
+    {
+      "scenario": "holdout2-courses-forest-blatant",
+      "rule": "obstruction.interposed_friction",
+      "metric": "unneeded_interstitials",
+      "expected": 3,
+      "observed": 1,
+      "missing": false,
+      "delta": -2
+    },
+    {
+      "scenario": "holdout2-courses-forest-blatant",
+      "rule": "sneaking.price_drift",
+      "metric": "advertised_total_minor",
+      "expected": 49900,
+      "observed": null,
+      "missing": true,
+      "delta": null
+    },
+    {
+      "scenario": "holdout2-courses-forest-blatant",
+      "rule": "sneaking.price_drift",
+      "metric": "final_total_minor",
+      "expected": 114700,
+      "observed": null,
+      "missing": true,
+      "delta": null
+    },
+    {
+      "scenario": "holdout2-courses-forest-blatant",
+      "rule": "sneaking.price_drift",
+      "metric": "drift_from_mandatory_minor",
+      "expected": 24800,
+      "observed": null,
+      "missing": true,
+      "delta": null
+    },
+    {
+      "scenario": "holdout2-courses-forest-blatant",
+      "rule": "sneaking.price_drift",
+      "metric": "late_mandatory_lines",
+      "expected": 2,
+      "observed": null,
+      "missing": true,
+      "delta": null
+    },
+    {
+      "scenario": "holdout2-courses-forest-blatant",
+      "rule": "sneaking.price_drift",
+      "metric": "currency",
+      "expected": "INR",
+      "observed": null,
+      "missing": true,
+      "delta": null
+    }
+  ],
+  "measurements_compared": {
+    "sneaking.bundled_optins": 6,
+    "sneaking.preadded_extras": 12,
+    "sneaking.price_drift": 30,
+    "consent.click_asymmetry": 36,
+    "consent.confirmshaming": 6,
+    "consent.preselected": 6,
+    "consent.visual_asymmetry": 36,
+    "obstruction.buried_control": 12,
+    "obstruction.interposed_friction": 3,
+    "obstruction.roach_motel": 18,
+    "sneaking.renewal_disclosure": 9
+  },
+  "gate_failures": [],
+  "artifacts": "/workspace/tripwire/runs/holdout-zrdlfw6w"
+}

@@ -10,8 +10,8 @@ engine. What changes is the **mission** (for example `first_visit` or `sign_up_a
 and which **detectors** apply.
 
 > **Phase 4 backend.** The scripted walker records evidence for three sandbox missions.
-> Eleven rules evaluate the traces and write findings. The independent hold-out scored
-> 95.24% Tier A precision and 83.33% recall on its first run.
+> The v2 hold-out scored **100% Tier A precision and 87.50% recall** on its first run.
+> The v1 first run scored 95.24% precision and 83.33% recall.
 > Live audits remain limited to the local sandbox.
 
 ## How it works
