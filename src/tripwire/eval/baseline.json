@@ -1,0 +1,122 @@
+{
+  "A/detector/consent.click_asymmetry": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/detector/consent.preselected": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/detector/consent.visual_asymmetry": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/detector/obstruction.buried_control": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/detector/obstruction.interposed_friction": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/detector/obstruction.roach_motel": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/detector/sneaking.bundled_optins": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/detector/sneaking.preadded_extras": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/detector/sneaking.price_drift": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/detector/sneaking.renewal_disclosure": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/family/consent_asymmetry": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/family/obstruction": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/family/sneaking": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/overall": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/site/news": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/site/saas": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/site/shop": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/skin/1": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/skin/2": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/skin/3": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "A/skin/4": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "B/detector/consent.confirmshaming": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "B/family/consent_asymmetry": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "B/overall": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "B/site/news": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "B/site/saas": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "B/skin/1": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "B/skin/2": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "B/skin/3": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "B/skin/4": {
+    "precision": 1.0,
+    "recall": 1.0
+  }
+}
