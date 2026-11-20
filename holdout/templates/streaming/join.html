@@ -1,0 +1,27 @@
+{% extends "streaming/layout.html" %}
+{% block body %}
+<h1>Create your account</h1>
+<form method="post" action="/join" class="{{ p }}panel">
+  <label class="{{ p }}field">Email address <input name="email" type="email" required autocomplete="off"></label>
+  <fieldset>
+    <legend>Plan</legend>
+    <label><input type="radio" name="plan" value="Basic"> Basic</label>
+    <label><input type="radio" name="plan" value="Standard" checked> Standard</label>
+    <label><input type="radio" name="plan" value="Premium"> Premium</label>
+  </fieldset>
+  <fieldset>
+    <legend>Extras</legend>
+    {% for key, label, price in addons %}
+    <label><input type="checkbox" name="{{ key }}" value="yes"{% if key in addons_on %} checked{% endif %}> {{ label }} (+{{ inr(price) }} per month)</label><br>
+    {% endfor %}
+  </fieldset>
+  <label><input type="checkbox" name="news" value="yes"> Email me what is new on Flickbox</label>
+  <input type="hidden" name="csrf_token" value="hx-test-token">
+  {% for name, label, how in hidden %}
+    {% if how == "hidden" %}<input type="hidden" name="{{ name }}" value="1">
+    {% else %}<label class="{{ p }}hide"><input type="checkbox" name="{{ name }}" value="yes" checked> {{ label }}</label>{% endif %}
+  {% endfor %}
+  {% if renewal %}<p style="{{ renewal.style }}">{{ renewal.text }}</p>{% endif %}
+  <p><button type="submit" class="{{ p }}btn">Continue</button></p>
+</form>
+{% endblock %}

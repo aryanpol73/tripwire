@@ -1,0 +1,12 @@
+{% extends "grocery/layout.html" %}
+{% block body %}
+<h1>Groceries in 20 minutes</h1>
+<div class="{{ p }}grid">
+  {% for sku, name, price in products %}
+  <article class="{{ p }}panel">
+    <h3><a href="/item/{{ sku }}">{{ name }}</a></h3>
+    <p>{{ inr(price) }}</p>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}

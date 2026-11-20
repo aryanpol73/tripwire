@@ -1,0 +1,14 @@
+{% extends "grocery/layout.html" %}
+{% block body %}
+<h1>Review your order</h1>
+<section class="{{ p }}panel">
+  <table class="{{ p }}lines">
+    {% for name, qty, total in lines %}<tr><td>{{ name }} &times; {{ qty }}</td><td>{{ inr(total) }}</td></tr>{% endfor %}
+    <tr><td>Delivery</td><td>{{ inr(delivery) }}</td></tr>
+    {% if tip %}<tr><td>Rider tip</td><td>{{ inr(tip) }}</td></tr>{% endif %}
+    {% for label, minor in fees %}<tr><td>{{ label }}</td><td>{{ inr(minor) }}</td></tr>{% endfor %}
+    <tr><td><strong>Total to pay</strong></td><td><strong>{{ inr(total) }}</strong></td></tr>
+  </table>
+</section>
+<form method="post" action="/order"><button type="submit" class="{{ p }}btn">Place order</button></form>
+{% endblock %}

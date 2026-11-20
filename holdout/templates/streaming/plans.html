@@ -1,0 +1,14 @@
+{% extends "streaming/layout.html" %}
+{% block body %}
+<h1>Choose a plan</h1>
+<div class="{{ p }}grid">
+  {% for name, price in plans %}
+  <article class="{{ p }}panel">
+    <h2>{{ name }}</h2>
+    <p>{{ inr(price) }} per month</p>
+  </article>
+  {% endfor %}
+</div>
+<p>Standard is our most popular plan. First month free on every plan.</p>
+<a class="{{ p }}btn" href="/join">Start free trial</a>
+{% endblock %}

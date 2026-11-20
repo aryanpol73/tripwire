@@ -1,0 +1,11 @@
+{% extends "streaming/layout.html" %}
+{% block body %}
+<h1>Subscription</h1>
+<section class="{{ p }}panel">
+  <p>{{ plan[0] }} plan, {{ inr(plan[1]) }} per month after your free month.</p>
+  <p>Next payment: when your free month ends.</p>
+</section>
+{% endblock %}
+{% block footer %}
+{% if cfg.entry == "footer" %}<a class="{{ p }}ctl" href="/account/cancel/0" style="{{ ctl_style(cfg.entry_ctl) }}">{{ cfg.entry_ctl.label }}</a>{% endif %}
+{% endblock %}
