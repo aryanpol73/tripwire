@@ -33,4 +33,5 @@ jobs:
       - name: Tests (unit and browser)
         run: uv run pytest
 
-      # Phase 4 adds: uv run tripwire eval (fails on a regression of more than 2 points).
+      - name: Score the labeled sandbox and check for regressions
+        run: uv run --locked tripwire eval

@@ -9,10 +9,9 @@ Shops, news sites, SaaS products, booking sites and sign-up forms all run throug
 engine. What changes is the **mission** (for example `first_visit` or `sign_up_and_leave`)
 and which **detectors** apply.
 
-> **Status: Phase 3 (scripted missions).** A sandbox of 36 labelled scenarios, a
-> safety-gated browser layer and a scripted walker that runs three missions and saves
-> traces exist. Detectors and reports are not built yet. Real websites are refused until
-> Phase 7.
+> **Phase 4 backend.** The scripted walker records evidence for three sandbox missions.
+> Eleven rules evaluate the traces and write findings. The independent hold-out is pending.
+> Live audits remain limited to the local sandbox.
 
 ## How it works
 
@@ -84,7 +83,19 @@ uv run pre-commit install
 - [DECISIONS](docs/DECISIONS.md): every design decision and its alternatives
 - [NOTEBOOK](docs/NOTEBOOK.md): per-phase notes, risks and interview Q&A
 
-## Limitations (current)
+## Evaluate the detectors
 
-- No detector, walker or report exists yet, so there are no precision or recall numbers.
-- Desktop web only.
+```bash
+uv run tripwire eval
+uv run tripwire eval --repeat 3 --jobs 4
+```
+
+The first command scores all 36 labeled scenarios. The second compares findings across
+three independent runs per scenario. Each audit writes `findings.json` alongside its trace.
+The independent fixture format and the measured development results are in
+[the Phase 4 notebook](docs/NOTEBOOK.md#phase-4-backend--detectors-and-evaluation).
+
+## Limitations
+
+Desktop sandbox measurements cover the scripted English-language missions. The independent
+hold-out, evidence report, and real-site pilot are pending.

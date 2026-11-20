@@ -361,3 +361,91 @@ is stored with `executed=false` so a reader knows how the number was obtained.
 A: A hash of everything a detector reads (actions, URL paths, overlays and the measured size,
 font and contrast of their controls, forms, paths, intents, ledger), excluding timestamps,
 ports and request ids. Identical hashes mean the detectors see exactly the same evidence.
+
+## Phase 4 backend — detectors and evaluation
+
+The audit command now writes findings.json alongside trace.json. All 11 rules read evidence
+captured during the mission. The click detectors compare paths. The visual detectors compare
+measured controls. Commerce rules use integer minor units, the ledger, and the quantities
+the walker selected. Each finding links to the observed steps and their available screenshots
+and request IDs. Screenshot annotation and the HTML report belong to Phase 5.
+
+The development grid has 36 labeled scenarios. Tier A produced 76 true positives and
+176 true negatives. Tier B produced four true positives and 26 true negatives. No rule
+had a false positive or a miss on this grid. All 930 labeled measurements agreed within
+their defined tolerances. There were 214 negative scenario/decoy/rule checks. Where a
+scenario contains a positive and a decoy for the same rule, its binary label alone cannot
+attribute a finding to a control. Fixture tests and measured counts cover those cases.
+
+Three fresh browser runs of each scenario (108 walks) produced identical findings after
+normalizing the per-run loopback port. Validation used system Chromium 156 because the
+cloud network denied the pinned browser download. The detectors were frozen at commit
+`c536b38` before receiving independent fixtures.
+
+The hold-out score is pending the frontend team's three unseen skins and three unseen
+layouts. These grid numbers measure fit to the development sandbox.
+
+### Running the backend
+
+- Run `uv run tripwire audit --scenario sneaking-blatant-skin1` and inspect the resulting
+  trace and findings in the run directory.
+- Run `uv run tripwire eval` for the development grid. Use `--repeat 3 --jobs 4` to compare
+  the findings across independent browser runs. On this machine add
+  `--chromium-executable /usr/bin/chromium` to the eval command.
+- With the hold-out fixtures running locally, execute
+  `uv run tripwire eval --holdout manifest.json`. Save the first score. Each live case
+  retains its trace, screenshots, request log and findings under the reported run directory.
+  A recorded case uses its original trace directory for screenshots.
+
+### Hold-out fixture contract
+
+The manifest is a JSON object with a `cases` array. Give each case a unique ID, skin and
+layout identifiers, and independently labeled expectations. The suite needs at least
+three distinct skins and three distinct layouts. A case may share a skin or layout with
+another case. Start each live case in its intended initial state. The `source` field
+accepts a loopback fixture description or a path to trace JSON relative to the manifest.
+Include positive and negative expectations, specific measurements and named decoys.
+The following entry illustrates the format and does not supply hold-out labels.
+
+```json
+{
+  "id": "example-first-visit",
+  "skin": "example-theme",
+  "layout": "example-layout",
+  "source": {
+    "url": "http://127.0.0.1:8201/",
+    "mission": "first_visit",
+    "site_type": "news"
+  },
+  "expectations": [{
+    "rule": "consent.click_asymmetry",
+    "family": "consent_asymmetry",
+    "tier": "A",
+    "should_fire": false,
+    "metrics": {"extra_clicks_to_reject": 0, "reject_on_first_layer": true}
+  }],
+  "decoys": {"equal_choices": ["consent.click_asymmetry"]}
+}
+```
+
+### Three concepts to explain
+
+1. A decoy tests specificity. A checked mandatory control or a hidden CSRF field can look
+   similar to an opt-in, yet it provides no evidence of an optional agreement.
+2. Precision asks how often a reported finding is supported. Recall asks how many labeled
+   positives a detector found. Counts and monetary errors can reveal defects even when both
+   classification metrics are perfect.
+3. A hold-out measures generalization only if its layouts and labels remain independent
+   of detector design. Record its first result and investigate misses without changing
+   thresholds against those fixtures.
+
+### Limits found during review
+
+- The Phase 3 walker searches a bounded English vocabulary. A finished browser process can
+  still leave a mission incomplete. The evaluator checks the observed mission outcome.
+- Renewal text is deduplicated on first appearance. A pre-confirmation sighting can prove
+  that the user encountered a notice, but the trace can lose the fact that the same wording
+  was still present on the final review screen.
+- A synthetic query token survived in the trace header and navigation fields although
+  request URLs were redacted. Phase 4 applies the URL redactor to finding URLs. The
+  earlier trace capture needs a separate approved correction.

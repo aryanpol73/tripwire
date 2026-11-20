@@ -68,6 +68,11 @@ def _cmd_audit(args: argparse.Namespace) -> int:
             print(err, file=sys.stderr)
             return 2
     write_model(trace, run_dir / "trace.json")
+    from tripwire.detectors.base import detect
+    from tripwire.schemas.finding import FindingSet
+
+    findings = detect(trace)
+    write_model(FindingSet(run_id=trace.run_id, findings=findings), run_dir / "findings.json")
     print(render(trace))
     print(f"\nSaved {run_dir / 'trace.json'}")
     return 0
@@ -78,6 +83,17 @@ def _cmd_replay(args: argparse.Namespace) -> int:
     trace = read_trace(path / "trace.json" if path.is_dir() else path)
     print(render(trace))
     return 0
+
+
+def _cmd_eval(args: argparse.Namespace) -> int:
+    if args.holdout:
+        from tripwire.eval.holdout import evaluate_holdout
+
+        return evaluate_holdout(Path(args.holdout), args.chromium_executable)
+
+    from tripwire.eval.runner import evaluate
+
+    return evaluate(args)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -97,6 +113,29 @@ def build_parser() -> argparse.ArgumentParser:
     audit.add_argument("--headed", action="store_true", help="show the browser window")
     audit.add_argument("--site-type", default="other", choices=[s.value for s in SiteType])
     audit.set_defaults(func=_cmd_audit)
+
+    evaluation = sub.add_parser("eval", help="score all 36 labeled sandbox scenarios")
+    evaluation.add_argument("--chromium-executable", help="use a local Chromium installation")
+    evaluation.add_argument(
+        "--repeat",
+        type=int,
+        choices=(1, 3),
+        default=1,
+        help="compare findings across independent runs (1 or 3)",
+    )
+    evaluation.add_argument(
+        "--holdout",
+        metavar="MANIFEST",
+        help="score independent labeled sandbox traces instead of the grid",
+    )
+    evaluation.add_argument(
+        "--jobs",
+        type=int,
+        choices=range(1, 5),
+        default=1,
+        help="number of independent grid scenarios to walk concurrently",
+    )
+    evaluation.set_defaults(func=_cmd_eval)
 
     replay = sub.add_parser("replay", help="re-render a saved trace without a browser")
     replay.add_argument("run", help="a run folder or a trace.json file")
