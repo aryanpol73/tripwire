@@ -68,11 +68,9 @@ def _cmd_audit(args: argparse.Namespace) -> int:
             print(err, file=sys.stderr)
             return 2
     write_model(trace, run_dir / "trace.json")
-    from tripwire.detectors.base import detect
-    from tripwire.schemas.finding import FindingSet
+    from tripwire.detectors.base import finding_set, measurements
 
-    findings = detect(trace)
-    write_model(FindingSet(run_id=trace.run_id, findings=findings), run_dir / "findings.json")
+    write_model(finding_set(trace, measurements(trace)), run_dir / "findings.json")
     print(render(trace))
     print(f"\nSaved {run_dir / 'trace.json'}")
     return 0

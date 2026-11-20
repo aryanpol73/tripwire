@@ -31,6 +31,18 @@ _SENSITIVE_HEADER = {
 _EMAIL = re.compile(r"[^@\s&=]+@[^@\s&=]+\.[A-Za-z]{2,}")
 
 
+def hidden_boolean_default(key: str, value: str | None) -> bool | None:
+    """Keep only the on/off state; never derive evidence from credential-like fields."""
+    if any(m[0].lower() not in {"email", "phone"} for m in _SENSITIVE_KEY.finditer(key)):
+        return None
+    normalized = (value or "").casefold()
+    if normalized in {"1", "true", "yes", "on"}:
+        return True
+    if normalized in {"0", "false", "no", "off"}:
+        return False
+    return None
+
+
 def redact_value(key: str, value: str) -> str:
     """Redact one key/value pair if the key looks sensitive or the value is an email."""
     if _SENSITIVE_KEY.search(key) or _EMAIL.search(value):

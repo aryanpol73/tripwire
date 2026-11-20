@@ -66,9 +66,14 @@ def _optins(state: ScenarioState) -> tuple[FormOptIn, ...]:
     return (CSRF_DECOY, REMEMBER_ME_DECOY, *planted)
 
 
-def _planted_optin_count(optins: tuple[FormOptIn, ...]) -> int:
+def _bundled_optin_metrics(optins: tuple[FormOptIn, ...]) -> dict[str, int]:
     decoys = {CSRF_DECOY.name, REMEMBER_ME_DECOY.name}
-    return sum(o.visibility != "visible" and o.name not in decoys for o in optins)
+    planted = [o for o in optins if o.checked and o.name not in decoys]
+    # The form template labels off-screen controls and renders hidden inputs without labels.
+    return {
+        "hidden_optin_count": sum(o.visibility == "offscreen" for o in planted),
+        "unclassified_enabled_hidden_fields": sum(o.visibility == "hidden" for o in planted),
+    }
 
 
 @dataclass(frozen=True)
@@ -101,7 +106,7 @@ class ShopSpec:
                 "preadded_count": int(self.protection_preselected) + len(self.sneaked),
                 "preadded_minor": protection + sneaked,
             },
-            "sneaking.bundled_optins": {"hidden_optin_count": _planted_optin_count(self.optins)},
+            "sneaking.bundled_optins": _bundled_optin_metrics(self.optins),
         }
 
 
@@ -168,7 +173,7 @@ class SaasTrialSpec:
                 "renewal_font_px": self.renewal.font_px if self.renewal else None,
                 "renewal_contrast": self.renewal.contrast if self.renewal else None,
             },
-            "sneaking.bundled_optins": {"hidden_optin_count": _planted_optin_count(self.optins)},
+            "sneaking.bundled_optins": _bundled_optin_metrics(self.optins),
         }
 
 

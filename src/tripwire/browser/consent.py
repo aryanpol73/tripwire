@@ -57,6 +57,11 @@ _OVERLAY_RULES: list[tuple[OverlayPurpose, re.Pattern[str]]] = [
 ]
 
 
+def has_mixed_choice_cues(label: str) -> bool:
+    purposes = {purpose for purpose, pattern in _CONTROL_RULES if pattern.search(label)}
+    return {ControlPurpose.ACCEPT, ControlPurpose.REJECT} <= purposes
+
+
 def control_purpose(label: str) -> ControlPurpose:
     for purpose, pattern in _CONTROL_RULES:
         if pattern.search(label or ""):

@@ -4,14 +4,14 @@ from __future__ import annotations
 
 import tomllib
 from collections.abc import Iterator, Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from importlib.resources import files
 from typing import Protocol
 
 from tripwire.browser.redact import redact_url
 from tripwire.detectors.rules import RULES
 from tripwire.mission import load_mission
-from tripwire.schemas.finding import Evidence, Finding, Measurement, ReproStep
+from tripwire.schemas.finding import Evidence, Finding, FindingSet, Measurement, ReproStep
 from tripwire.schemas.trace import Trace
 
 
@@ -23,6 +23,8 @@ class Observation:
     metrics: dict[str, Measurement]
     summary: str
     caveat: str
+    review_steps: list[int] = field(default_factory=list)
+    confidence: float | None = None
 
 
 class Detector(Protocol):
@@ -77,7 +79,9 @@ def findings_for(trace: Trace, observations: Mapping[str, Observation]) -> list[
                 family=rule.family,
                 tier=rule.tier,
                 severity="medium",
-                confidence=0.7 if rule.tier == "B" else 0.95,
+                confidence=obs.confidence
+                if obs.confidence is not None
+                else (0.7 if rule.tier == "B" else 0.95),
                 mission=trace.mission,
                 site_url=redact_url(trace.site_url),
                 summary=obs.summary,
@@ -92,6 +96,16 @@ def findings_for(trace: Trace, observations: Mapping[str, Observation]) -> list[
             )
         )
     return findings
+
+
+def finding_set(trace: Trace, observations: Mapping[str, Observation]) -> FindingSet:
+    return FindingSet(
+        run_id=trace.run_id,
+        findings=findings_for(trace, observations),
+        review_steps_by_rule={
+            rule: sorted(set(o.review_steps)) for rule, o in observations.items() if o.review_steps
+        },
+    )
 
 
 def detect(trace: Trace) -> list[Finding]:

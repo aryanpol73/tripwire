@@ -496,3 +496,90 @@ The discrepancies break down as follows.
 The clean grocery case also explains the decoy result. The evaluator recorded a false
 positive against the unchecked-tip guard because the extras rule fired on that case.
 The captured tip was unchecked and the erroneous ₹45 amount matched the purchased item.
+
+### Hold-out v2
+
+**First-run Tier A precision was 100% (21/21) and recall was 87.50% (21/24).**
+All nine missions completed on Chromium 156. The single scored run used fixture commit
+`ff86591` with the complete backend source identical to `dbc41b4`. Both aggregate
+targets passed. The command exited 1 because 21 of 174 labeled measurements were missing
+or incorrect. Zero of the 21 negative decoy checks fired.
+
+| Family (Tier A) | TP | FP | FN | TN |
+|---|---:|---:|---:|---:|
+| Consent | 5 | 0 | 0 | 13 |
+| Obstruction | 4 | 0 | 1 | 4 |
+| Sneaking | 12 | 0 | 2 | 7 |
+
+Two missed positives were course price drift (mono-subtle and forest-blatant). The third
+was friction in courses-mono-subtle. Tier B missed the sole labeled wording case
+(forum-candy-blatant), with zero predictions, undefined precision and zero recall.
+The saved score includes the expected and observed value of every discrepancy.
+[First-run score](eval/holdout-v2-first-score.json)
+
+| Measurement discrepancies | First-run evidence | Backend response |
+|---|---|---|
+| 15 course price fields (5 in each case) | The visitor chose the ₹499/month plan through its pricing card. The baseline resolver looked for a radio selection and emitted no drift observation. | Associate the actual click with a uniquely matching advertised price row from the preceding step. Ambiguous matches remain unresolved. |
+| 2 course friction counts | Subtle measured 0 of 2 steps, blatant 1 of 3. Optional checkboxes and a standalone choice to pause or continue added a step apiece. | Inspect the submitted form's optional choices and an intervening form's alternative link. Required inputs and a normal terminal confirmation have different roles. |
+| 3 store extras fields | Parentheses around the care-plan price yielded a negative amount in the subtle and blatant cases. In the blatant case the cart grid also lost the added organiser's quantity, producing a count of 1 instead of 2. | Parse a labeled option's price in shopping context. Read item, quantity and line amount from header-associated cart columns. |
+| 1 store opt-in count | In the blatant case one off-screen choice was detected. The second was an enabled hidden field, with its raw value redacted and no visible label. | Capture its boolean state separately from its raw value and surface an unknown purpose for review. Enabled state alone cannot establish consent. |
+
+The Tier B wording miss was a classification error; the recorded decline text itself
+matched the label. Mixed accept/reject cues now surface the step for human review.
+Neither the unknown hidden field's purpose nor mixed wording alone is counted as a
+confirmed positive. These cases remain limitations of automatic judgment.
+
+#### V2 first-run measurement misses
+
+The 21 rows below use the scenario suffix after `holdout2-`. Monetary amounts are in
+paise. “Missing” means the detector emitted no measurement for that field.
+
+| Scenario | Metric | Expected | Observed | Cause |
+|---|---|---:|---:|---|
+| store-candy-subtle | `preadded_minor` | 9900 | -9900 | The parser read a parenthesized care-plan price as negative. |
+| store-mono-blatant | `hidden_optin_count` | 2 | 1 | Only the off-screen choice was identifiable. The enabled hidden field lacked a label. |
+| store-mono-blatant | `preadded_count` | 2 | 1 | The cart reader missed the organiser quantity in a three-column row. |
+| store-mono-blatant | `preadded_minor` | 22800 | -14900 | The parser read a parenthesized care-plan price as negative. The organiser line was also missing. |
+| courses-candy-clean | `advertised_total_minor` | 49900 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-candy-clean | `final_total_minor` | 49900 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-candy-clean | `drift_from_mandatory_minor` | 0 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-candy-clean | `late_mandatory_lines` | 0 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-candy-clean | `currency` | INR | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-mono-subtle | `unneeded_interstitials` | 2 | 0 | Skipped the optional survey and the pause choice. |
+| courses-mono-subtle | `advertised_total_minor` | 49900 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-mono-subtle | `final_total_minor` | 74800 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-mono-subtle | `drift_from_mandatory_minor` | 9900 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-mono-subtle | `late_mandatory_lines` | 1 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-mono-subtle | `currency` | INR | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-forest-blatant | `unneeded_interstitials` | 3 | 1 | Skipped the optional survey and the pause choice. |
+| courses-forest-blatant | `advertised_total_minor` | 49900 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-forest-blatant | `final_total_minor` | 114700 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-forest-blatant | `drift_from_mandatory_minor` | 24800 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-forest-blatant | `late_mandatory_lines` | 2 | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+| courses-forest-blatant | `currency` | INR | Missing | The selected pricing card was unresolved, so the detector emitted no price-drift observation. |
+
+**Validation status.** The v2 fixes are hold-out-informed and not yet independently
+validated. Development fixtures exercise the implementation. Both published headlines
+describe the original frozen runs.
+
+#### Judgment cases
+
+The store fixture labels two intended opt-ins. The auditor can confirm one and assigns
+the unlabelled enabled field to human review. The forum decline text mixes accept and
+reject cues, so the wording is ambiguous. Any independently triggered wording finding
+carries lower confidence. Both decisions apply prospectively. The original labels,
+classification errors and first-run counts stand. [Written decisions](DECISIONS.md#d-048-require-labelled-evidence-for-hidden-opt-ins)
+
+On the post-decision development grid, all 36 scenarios completed with zero
+classification errors and zero false positives across 214 decoy checks. The
+command exited 1 on four measurement differences. In sneaking-blatant skins 1–4,
+each fixture counts two planted opt-ins. Under D-048 the auditor counts one and
+sends the unlabelled flag to review. These four development results are separate
+from the 21 discrepancies in the frozen v2 score.
+
+PR #5 CI failed at the development sandbox scoring step on commit `5387fc5`.
+The development label generator now scores both outcomes specified by D-048.
+Each blatant sneaking scenario expects one confirmed off-screen opt-in and one
+unclassified enabled hidden field. The other applicable scenarios also check
+the review count, including zero for clean decoys. This changes development
+expectations only. Both hold-out records above retain their first-run values.

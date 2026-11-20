@@ -129,7 +129,9 @@ def to_minor(value: Decimal, currency: str) -> int | None:
     return int(scaled) if scaled == scaled.to_integral_value() else None
 
 
-def find_amounts(text: str, struck_texts: Iterable[str] = ()) -> list[Amount]:
+def find_amounts(
+    text: str, struck_texts: Iterable[str] = (), *, accounting: bool = True
+) -> list[Amount]:
     """Every currency-marked amount in the text, in order. Malformed numbers are skipped."""
     struck_values = {(abs(a.minor), a.currency) for s in struck_texts for a in find_amounts(s) if s}
     found = []
@@ -142,7 +144,7 @@ def find_amounts(text: str, struck_texts: Iterable[str] = ()) -> list[Amount]:
         if minor is None:
             continue
         neg = m.group("neg") or ""
-        negative = neg.startswith("(") and text[m.end() : m.end() + 1] == ")"
+        negative = accounting and neg.startswith("(") and text[m.end() : m.end() + 1] == ")"
         negative = negative or neg[:1] in ("-", MINUS)
         if negative:
             minor = -minor
@@ -160,7 +162,11 @@ def _has_malformed_number(text: str) -> bool:
 
 
 def parse_price(
-    text: str, *, struck_texts: Iterable[str] = (), default_currency: str | None = None
+    text: str,
+    *,
+    struck_texts: Iterable[str] = (),
+    default_currency: str | None = None,
+    accounting: bool = True,
 ) -> ParsedPrice | None:
     """Parse one price element's text. None means "not a price" or "ambiguous".
 
@@ -186,7 +192,7 @@ def parse_price(
     if _has_malformed_number(text):
         return None  # "₹1,2345" must not be half-read as something else
 
-    amounts = find_amounts(text, struck_texts)
+    amounts = find_amounts(text, struck_texts, accounting=accounting)
     real = [a for a in amounts if not a.struck]
     old = [a for a in amounts if a.struck]
     struck_minor = abs(old[0].minor) if old else None

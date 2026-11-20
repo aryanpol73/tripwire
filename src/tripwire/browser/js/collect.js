@@ -209,6 +209,7 @@
     return {
       id: "f" + (i + 1), action: f.getAttribute("action"), method: (f.getAttribute("method") || "GET").toUpperCase(),
       submitId: submit ? idOf(submit) : null,
+      hasAlternativeLink: [...f.querySelectorAll("a[href]")].some(a => isVisible(a, a.getBoundingClientRect())),
       fields: fields.map((c) => {
         const r = c.getBoundingClientRect();
         const type = c.tagName.toLowerCase() === "input" ? c.type : c.tagName.toLowerCase();
@@ -270,6 +271,22 @@
     if (cell && cell.parentElement?.cells?.length === 2 && cell.cellIndex === 1) {
       row = cell.parentElement;
       rowText = clean(row.innerText);
+    } else if (cell && cell.tagName === "TD") {
+      const table = cell.closest("table");
+      const headers = table?.tHead?.rows;
+      if (headers?.length === 1) {
+        const columns = [...headers[0].cells].map(h => clean(h.innerText).toLowerCase());
+        const cells = cell.parentElement.cells;
+        const item = columns.findIndex(h => ["product", "item", "description"].includes(h));
+        const qty = columns.findIndex(h => ["quantity", "qty"].includes(h));
+        if (cells.length === columns.length && item >= 0 && qty >= 0 &&
+            ["amount", "line total", "total", "price"].includes(columns[cell.cellIndex])) {
+          const count = clean(cells[qty].innerText);
+          // "Price" alone does not distinguish unit and extended price for a multi-unit row.
+          if (/^[1-9]\d*$/.test(count) && (count === "1" || columns[cell.cellIndex] !== "price"))
+            rowText = clean(cells[item].innerText) + " × " + count + " " + clean(cell.innerText);
+        }
+      }
     } else if (description) {
       row = description;
       let term = description.previousElementSibling;

@@ -80,7 +80,8 @@
       "tier": "A",
       "should_fire": false,
       "metrics": {
-        "hidden_optin_count": 0
+        "hidden_optin_count": 0,
+        "unclassified_enabled_hidden_fields": 0
       }
     },
     {

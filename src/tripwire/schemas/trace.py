@@ -193,6 +193,7 @@ class Overlay(Model):
 
 
 class FormField(Model):
+    hidden_boolean_default: bool | None = None
     name: str
     type: NonEmptyStr  # the input type: "email", "checkbox", "hidden", ...
     label: str | None = None
@@ -205,6 +206,7 @@ class FormField(Model):
 
 
 class Form(Model):
+    has_alternative_link: bool = False
     id: NonEmptyStr
     action_url: str | None = None
     method: str = "GET"

@@ -36,7 +36,8 @@
       "tier": "A",
       "should_fire": true,
       "metrics": {
-        "hidden_optin_count": 2
+        "hidden_optin_count": 1,
+        "unclassified_enabled_hidden_fields": 1
       }
     }
   ],
