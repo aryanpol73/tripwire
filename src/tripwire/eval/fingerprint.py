@@ -45,10 +45,21 @@ def _step(step: Step) -> dict[str, Any]:
             for o in step.overlays
         ],
         "forms": [
-            [
-                [f.name, f.type, f.prechecked, f.hidden, f.off_screen, f.required]
-                for f in form.fields
-            ]
+            {
+                "alternative_link": form.has_alternative_link,
+                "fields": [
+                    [
+                        f.name,
+                        f.type,
+                        f.prechecked,
+                        f.hidden_boolean_default,
+                        f.hidden,
+                        f.off_screen,
+                        f.required,
+                    ]
+                    for f in form.fields
+                ],
+            }
             for form in step.forms
         ],
         "elements": sorted(

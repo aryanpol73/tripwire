@@ -177,3 +177,21 @@ def test_price_labels_follow_semantic_rows_and_preserve_product_variants(page):
         ("Total payable", 1800),
     ]
     assert commerce.cart[0].qty_added_by_walker == 1
+
+
+def test_cart_columns_and_option_price_are_independent_of_label_layout(page):
+    from tripwire.walker.commerce import CommerceRecorder
+
+    page.set_content("""
+      <table><thead><tr><th>Quantity</th><th>Product</th><th>Amount</th></tr></thead>
+      <tbody><tr><td>2</td><td>Wool yarn (red)</td><td><b>£18</b></td></tr></tbody></table>
+      <label><input type="checkbox" checked>Insulated parcel (£3)</label>
+    """)
+    recorder = CommerceRecorder()
+    recorder.record_add("Wool yarn (red)", qty=2)
+    recorder.observe(0, collect_page(page))
+    cart = recorder.build()
+    assert [(i.name, i.qty, i.qty_added_by_walker) for i in cart.cart] == [
+        ("Wool yarn (red)", 2, 2)
+    ]
+    assert cart.default_addons[0].price.minor == 300

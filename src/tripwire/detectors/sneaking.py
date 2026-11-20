@@ -14,6 +14,17 @@ def _selected_offers(candidates, steps):
     # Use the most recent choice that identifies an advertised offer. Abstain when
     # several advertised prices remain and there is no evidence which one was chosen.
     for step in reversed(steps):
+        if step.action.kind == "click" and step.action.target:
+            name = step.action.target.accessible_name or step.action.target.visible_text
+            if name:
+                matches = [
+                    line
+                    for line in candidates
+                    if step.index - 1 in (line.seen_steps or [line.first_step])
+                    and re.search(r"(?<!\w)" + re.escape(name) + r"(?!\w)", line.label, re.I)
+                ]
+                if len(matches) == 1:
+                    return matches
         selected = {
             text.casefold()
             for form in step.forms
@@ -38,6 +49,7 @@ def _selected_offers(candidates, steps):
 def sneaking(trace, config):
     seen = set()
     bundled = []
+    unclassified = []
     for step in trace.steps:
         for form in step.forms:
             for f in form.fields:
@@ -46,8 +58,12 @@ def sneaking(trace, config):
                     continue
                 seen.add(key)
                 if not _AGREEMENT.search(f"{f.name} {f.label or ''}"):
+                    if f.hidden_boolean_default is True:
+                        unclassified.append(step.index)
                     continue
-                enabled_value = (f.default_value or "").casefold() in {"1", "yes", "true", "on"}
+                enabled_value = f.hidden_boolean_default is True or (
+                    f.default_value or ""
+                ).casefold() in {"1", "yes", "true", "on"}
                 if (f.hidden and f.type == "hidden" and enabled_value) or (
                     (f.hidden or f.off_screen) and f.prechecked
                 ):
@@ -56,9 +72,10 @@ def sneaking(trace, config):
         "sneaking.bundled_optins",
         bool(bundled),
         bundled,
-        dict(hidden_optin_count=len(bundled)),
+        dict(hidden_optin_count=len(bundled), unclassified_enabled_hidden_fields=len(unclassified)),
         f"The form carried {len(bundled)} hidden or off-screen opt-ins.",
         "Verify that the submitted fields change an agreement.",
+        review_steps=unclassified,
     )
     c = trace.commerce
     if not c:

@@ -204,3 +204,95 @@ def test_retention_choice_counts_only_while_leaving():
         update={"action": trace.steps[7].action.model_copy(update={"target": target})}
     )
     assert 6 in measurements(trace)["obstruction.interposed_friction"].steps
+
+
+def test_clicked_offer_is_measured_from_the_originating_price_row():
+    from tripwire.detectors.sneaking import _selected_offers
+    from tripwire.schemas.trace import PriceLine
+
+    trace = read_trace(FIXTURES / "sneaking_clean.json")
+    options = [
+        PriceLine(
+            label=name,
+            amount={"minor": price, "currency": "GBP"},
+            role="other",
+            mandatory=True,
+            first_step=0,
+            seen_steps=[0],
+        )
+        for name, price in [
+            ("Entry per month Find out more", 400),
+            ("Family per month Subscribe now", 1800),
+        ]
+    ]
+    step = trace.steps[1]
+    target = step.action.target.model_copy(update={"accessible_name": "Subscribe now"})
+    trace.steps[1] = step.model_copy(
+        update={"action": step.action.model_copy(update={"target": target})}
+    )
+    assert _selected_offers(options, trace.steps[:2]) == [options[1]]
+    options[0] = options[0].model_copy(update={"label": "Entry per month Subscribe now"})
+    assert _selected_offers(options, trace.steps[:2]) == []
+
+
+def test_review_keeps_ambiguous_evidence_distinct_from_positive_findings():
+    from tripwire.detectors.base import finding_set, measurements
+    from tripwire.schemas.trace import Form, FormField
+
+    trace = read_trace(FIXTURES / "consent_asymmetry_violating.json")
+    trace.steps[1].ui.elements[-1] = (
+        trace.steps[1]
+        .ui.elements[-1]
+        .model_copy(update={"text": "Reject optional cookies and allow necessary cookies"})
+    )
+    report = finding_set(trace, measurements(trace))
+    assert report.review_steps_by_rule["consent.confirmshaming"] == [1]
+    assert all(f.detector != "consent.confirmshaming" for f in report.findings)
+    trace = read_trace(FIXTURES / "sneaking_clean.json")
+    trace.steps[0].forms.append(
+        Form(
+            id="preferences",
+            fields=[
+                FormField(name="setting_x", type="hidden", hidden=True, hidden_boolean_default=True)
+            ],
+        )
+    )
+    report = finding_set(trace, measurements(trace))
+    assert report.review_steps_by_rule["sneaking.bundled_optins"] == [0]
+    assert not report.findings
+
+
+@pytest.mark.parametrize("required,expected", [(False, True), (True, False)])
+def test_intermediate_choices_measured_on_the_submitted_form(required, expected):
+    from tripwire.detectors.base import measurements
+    from tripwire.schemas.trace import Form, FormField
+
+    trace = read_trace(FIXTURES / "obstruction_violating.json")
+    for i, index in enumerate((5, 6)):
+        step = trace.steps[index]
+        step.overlays.clear()
+        step.ui.elements[:] = [
+            step.ui.elements[0].model_copy(
+                update={"id": "submit", "text": "Proceed", "accessible_name": "Proceed"}
+            )
+        ]
+        fields = (
+            [FormField(type="checkbox", name="use", required=required)]
+            if i == 0 or required
+            else []
+        )
+        step.forms[:] = [
+            Form(id="flow", submit_element_id="submit", has_alternative_link=i == 1, fields=fields)
+        ]
+        action = trace.steps[step.index + 1].action
+        trace.steps[step.index + 1] = trace.steps[step.index + 1].model_copy(
+            update={
+                "action": action.model_copy(
+                    update={
+                        "target": action.target.model_copy(update={"accessible_name": "Proceed"})
+                    }
+                )
+            }
+        )
+    obs = measurements(trace)["obstruction.interposed_friction"]
+    assert obs.metrics["unneeded_interstitials"] == (2 if expected else 0)

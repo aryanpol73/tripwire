@@ -144,3 +144,4 @@ class FindingSet(Model):
     schema_version: Literal["0.1.0"] = FINDING_SCHEMA_VERSION
     run_id: NonEmptyStr
     findings: list[Finding] = Field(default_factory=list)
+    review_steps_by_rule: dict[str, list[NonNegativeInt]] = Field(default_factory=dict)

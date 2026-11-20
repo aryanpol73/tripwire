@@ -98,8 +98,26 @@ def obstruction(trace, config):
             continue
         overlays = {o.purpose for o in step.overlays}
         names = " ".join((e.accessible_name or e.text) for e in step.ui.elements if e.style.visible)
+        target = trace.steps[i].action.target
+        clicked = target.accessible_name or target.visible_text if target else None
+        submitted = [
+            form
+            for form in step.forms
+            if any(
+                e.id == form.submit_element_id and clicked == (e.accessible_name or e.text)
+                for e in step.ui.elements
+            )
+        ]
+        optional_choices = any(
+            any(f.type in {"checkbox", "radio"} and not f.hidden for f in form.fields)
+            for form in submitted
+        )
+        intermediate_choice = i != leave.step_indices[-1] and any(
+            form.has_alternative_link for form in submitted
+        )
         if (
             overlays & {"survey", "retention"}
+            or optional_choices
             or _declined_offer(step, trace.steps[i].action)
             or re.search(r"% off|no thanks, continue", names, re.I)
             or any(f.type == "radio" for form in step.forms for f in form.fields)
@@ -107,6 +125,8 @@ def obstruction(trace, config):
             friction.append(step.index)
         elif "confirm" in overlays or re.search(r"yes,? i am sure|yes,? i'm sure", names, re.I):
             confirmations.append(step.index)
+        elif intermediate_choice:
+            friction.append(step.index)
     # Keep one ordinary final confirmation. An offline terminal still requires the person
     # to confirm outside the web flow, so repeated web prompts are additional steps.
     friction += confirmations if offline else confirmations[:-1]

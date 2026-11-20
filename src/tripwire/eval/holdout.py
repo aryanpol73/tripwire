@@ -10,12 +10,11 @@ from playwright.sync_api import sync_playwright
 from pydantic import Field, model_validator
 
 from tripwire.browser.safety_gate import LOCAL_HOSTS
-from tripwire.detectors.base import findings_for, measurements
+from tripwire.detectors.base import finding_set, measurements
 from tripwire.detectors.rules import RULES
 from tripwire.eval.scoring import Score, incomplete_reason
 from tripwire.mission import load_mission
 from tripwire.schemas.common import Model, NonEmptyStr
-from tripwire.schemas.finding import FindingSet
 from tripwire.schemas.ground_truth import RuleExpectation
 from tripwire.schemas.io import read_trace, write_model
 from tripwire.schemas.trace import MissionName, SiteType
@@ -112,10 +111,7 @@ def evaluate_holdout(manifest: Path, executable: str | None = None) -> int:
                 if reason := incomplete_reason(trace):
                     failures.append(f"{case.id}: {reason}")
                 observations = measurements(trace)
-                findings = findings_for(trace, observations)
-                write_model(
-                    FindingSet(run_id=trace.run_id, findings=findings), case_dir / "findings.json"
-                )
+                write_model(finding_set(trace, observations), case_dir / "findings.json")
             except Exception as error:
                 failures.append(f"{case.id}: {type(error).__name__}: {error}")
                 observations = {}

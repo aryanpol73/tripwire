@@ -2,6 +2,7 @@
 
 import re
 
+from tripwire.browser.consent import has_mixed_choice_cues
 from tripwire.detectors.base import Observation
 
 MARKETING = re.compile(r"newsletter|marketing|product news|promotional", re.I)
@@ -56,6 +57,7 @@ def consent(trace, config):
             dict(decline_text=text),
             "The decline option uses wording associated with shaming.",
             "Read the whole sentence in context.",
+            review_steps=[step.index] if has_mixed_choice_cues(text) else [],
         )
         area = no.bbox.width * no.bbox.height
         if area:
