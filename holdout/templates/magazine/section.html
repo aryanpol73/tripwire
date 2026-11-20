@@ -1,0 +1,5 @@
+{% extends "magazine/layout.html" %}
+{% block body %}
+<h1>{{ title }}</h1>
+{% for slug, story in stories %}<article class="{{ p }}panel"><h2><a href="/story/{{ slug }}">{{ story }}</a></h2></article>{% endfor %}
+{% endblock %}

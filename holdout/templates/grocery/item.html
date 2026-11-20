@@ -1,0 +1,16 @@
+{% extends "grocery/layout.html" %}
+{% block body %}
+<section class="{{ p }}panel">
+  <h1>{{ name }}</h1>
+  <dl>
+    <dt>Price</dt><dd>{{ inr(price) }}</dd>
+    <dt>Delivery</dt><dd>{{ inr(delivery) }}</dd>
+    <dt>Total</dt><dd>{{ inr(price + delivery) }}</dd>
+  </dl>
+  <p>Prices include all taxes.</p>
+  <form method="post" action="/basket/add">
+    <input type="hidden" name="sku" value="{{ sku }}">
+    <button type="submit" class="{{ p }}btn">Add to cart</button>
+  </form>
+</section>
+{% endblock %}

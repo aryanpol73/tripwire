@@ -1,0 +1,10 @@
+{% extends "magazine/layout.html" %}
+{% block body %}
+<h1>This week</h1>
+{% for name, items in stories.items() %}
+<section class="{{ p }}panel">
+  <h2>{{ name.title() }}</h2>
+  {% for slug, title in items %}<p><a href="/story/{{ slug }}">{{ title }}</a></p>{% endfor %}
+</section>
+{% endfor %}
+{% endblock %}

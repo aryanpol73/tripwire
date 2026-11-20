@@ -35,6 +35,7 @@ packages = ["src/tripwire", "sandbox/evilweb"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]  # lets tests import the holdout/ fixture package
 addopts = "-ra --strict-markers"
 markers = ["browser: needs Playwright Chromium (uv run playwright install chromium)"]
 filterwarnings = [
@@ -45,7 +46,7 @@ filterwarnings = [
 [tool.ruff]
 line-length = 100
 target-version = "py312"
-src = ["src", "sandbox", "tests"]
+src = [".", "src", "sandbox", "tests"]
 
 [tool.ruff.lint]
 select = [
@@ -62,3 +63,4 @@ select = [
 [tool.ruff.lint.per-file-ignores]
 # A CSS stylesheet in an f-string: wrapping it would only make it harder to read.
 "sandbox/evilweb/skins.py" = ["E501"]
+"holdout/app.py" = ["E501"]  # the same kind of CSS stylesheet

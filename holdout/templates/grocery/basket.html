@@ -1,0 +1,18 @@
+{% extends "grocery/layout.html" %}
+{% block body %}
+<h1>Your basket</h1>
+{% if not lines %}<p>Your basket is empty.</p>{% else %}
+<section class="{{ p }}panel">
+  <table class="{{ p }}lines">
+    {% for name, qty, total in lines %}<tr><td>{{ name }} &times; {{ qty }}</td><td>{{ inr(total) }}</td></tr>{% endfor %}
+    <tr><td>Delivery</td><td>{{ inr(delivery) }}</td></tr>
+    {% if tip_on %}<tr><td>Rider tip</td><td>{{ inr(tip) }}</td></tr>{% endif %}
+    <tr><td><strong>Total</strong></td><td><strong>{{ inr(total) }}</strong></td></tr>
+  </table>
+</section>
+<form method="post" action="/basket/tip" class="{{ p }}panel">
+  <label><input type="checkbox" name="tip" value="yes"{% if tip_on %} checked{% endif %} onchange="this.form.submit()"> Add a {{ inr(tip) }} tip for your rider</label>
+</form>
+<a class="{{ p }}btn" href="/checkout">Go to checkout</a>
+{% endif %}
+{% endblock %}

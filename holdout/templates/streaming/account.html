@@ -1,0 +1,20 @@
+{% extends "streaming/layout.html" %}
+{% block body %}
+<h1>Your account</h1>
+<nav aria-label="Account sections">
+  <ul class="{{ p }}menu">
+    <li><a href="/account">Profile</a></li>
+    <li><a href="/account/subscription">Subscription</a></li>
+    <li><a href="/account/devices">Devices</a></li>
+  </ul>
+</nav>
+<section class="{{ p }}panel">
+  <p>Membership: Standard ({{ "cancelled" if cancelled else "free month" }})</p>
+  {% if cfg.entry == "account" %}
+  <div class="{{ p }}choices">
+    <a class="{{ p }}ctl" href="/account/subscription" style="{{ ctl_style(change) }}">{{ change.label }}</a>
+    <a class="{{ p }}ctl" href="/account/cancel/0" style="{{ ctl_style(cfg.entry_ctl) }}">{{ cfg.entry_ctl.label }}</a>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

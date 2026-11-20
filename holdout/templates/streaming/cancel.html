@@ -1,0 +1,35 @@
+{% extends "streaming/layout.html" %}
+{% block body %}
+<section class="{{ p }}panel">
+{% if kind == "survey" %}
+  <h1>Before you go, tell us why</h1>
+  <form method="post" action="/account/cancel/{{ i }}">
+    {% for reason in ["Too expensive", "Nothing to watch", "Taking a break", "Something else"] %}
+    <label><input type="radio" name="why" value="{{ loop.index }}"> {{ reason }}</label><br>
+    {% endfor %}
+    <p><button type="submit" class="{{ p }}btn">Continue</button></p>
+  </form>
+{% elif kind == "retention" %}
+  <h1>Stay for half price</h1>
+  <p>Get 50% off for the next 3 months.</p>
+  <form method="post" action="/account/cancel/{{ i }}" class="{{ p }}choices">
+    <a class="{{ p }}btn" href="/account">Accept offer</a>
+    <button type="submit" class="{{ p }}quiet">No thanks, cancel</button>
+  </form>
+{% elif kind == "sure" %}
+  <h1>Are you sure?</h1>
+  <p>Your watch history and profiles will be deleted.</p>
+  <form method="post" action="/account/cancel/{{ i }}" class="{{ p }}choices">
+    <a class="{{ p }}btn" href="/account">Go back</a>
+    <button type="submit" class="{{ p }}quiet">Yes, I'm sure</button>
+  </form>
+{% elif kind == "confirm" %}
+  <h1>Cancel your membership?</h1>
+  <p>You can keep watching until the end of your free month.</p>
+  <form method="post" action="/account/cancel/{{ i }}"><button type="submit" class="{{ p }}btn">Confirm cancellation</button></form>
+{% elif kind == "phone" %}
+  <h1>One last step</h1>
+  <p>To cancel, call us at {{ phone }}. Lines are open 9 am to 5 pm on weekdays.</p>
+{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% macro measured(c, act) -%}
+<button type="button" class="{{ p }}ctl" style="{{ ctl_style(c) }}" data-act="{{ act }}">{{ c.label }}</button>
+{%- endmacro %}
+{% set box %}
+<section class="{{ p }}cookie" id="{{ p }}privacy" role="dialog" aria-label="Privacy choices"{% if skin.banner == 'modal' %} aria-modal="true"{% endif %}>
+  <div class="{{ p }}stage" data-stage="1">
+    <h2>Your privacy</h2>
+    <p>We use cookies to keep you signed in, count visits and personalise advertising.</p>
+    <div class="{{ p }}choices">
+      {{ measured(consent.layer1.accept, "yes") }}
+      {% if consent.layer1.get('reject') %}{{ measured(consent.layer1.reject, "no") }}{% endif %}
+      {{ measured(consent.layer1.more, "next") }}
+    </div>
+  </div>
+  <div class="{{ p }}stage" data-stage="2" hidden>
+    <h2>Choose your cookies</h2>
+    <ul style="list-style:none;padding:0">
+      {% for key, label in toggles %}
+      <li><label><input type="checkbox" role="switch" name="{{ key }}"{% if key == 'essential' or key in consent.on %} checked{% endif %}{% if key == 'essential' %} disabled{% endif %}> {{ label }}</label></li>
+      {% endfor %}
+    </ul>
+    <div class="{{ p }}choices">
+      {{ measured(consent.layer2.save, "save") }}
+      {{ measured(consent.layer2.reject, "no") }}
+      {{ measured(consent.layer2.accept, "yes") }}
+    </div>
+  </div>
+</section>
+{% endset %}
+{% if skin.banner == 'modal' %}<div class="{{ p }}backdrop">{{ box }}</div>{% else %}{{ box }}{% endif %}
+<script>
+document.getElementById("{{ p }}privacy").addEventListener("click", function (event) {
+  var button = event.target.closest("[data-act]");
+  if (!button) return;
+  var act = button.getAttribute("data-act");
+  var stage = button.closest("[data-stage]");
+  if (act === "next") { stage.hidden = true; stage.nextElementSibling.hidden = false; return; }
+  var picked = {};
+  this.querySelectorAll("input[type=checkbox]").forEach(function (i) { picked[i.name] = i.checked; });
+  var choice = { yes: "accept", no: "reject", save: "custom" }[act];
+  var root = this.closest("." + "{{ p }}backdrop") || this;
+  fetch("/consent", { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ choice: choice, picked: picked }) }).then(function () { root.remove(); });
+});
+</script>

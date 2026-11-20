@@ -1,0 +1,21 @@
+{% extends "grocery/layout.html" %}
+{% block body %}
+<h1>Delivery details</h1>
+<form method="post" action="/checkout" class="{{ p }}panel">
+  <label class="{{ p }}field">Full name <input name="full_name" required autocomplete="off"></label>
+  <label class="{{ p }}field">Mobile number <input name="mobile" type="tel" required autocomplete="off"></label>
+  <label class="{{ p }}field">PIN code <input name="pin_code" required inputmode="numeric" autocomplete="off"></label>
+  <fieldset>
+    <legend>Delivery slot</legend>
+    <label><input type="radio" name="slot" value="now" checked> In 20 minutes</label>
+    <label><input type="radio" name="slot" value="evening"> Today, 6 to 8 pm</label>
+  </fieldset>
+  <label><input type="checkbox" name="save_address" value="yes" checked> Save this address for next time</label>
+  <input type="hidden" name="csrf_token" value="hx-test-token">
+  {% for name, label, how in hidden %}
+    {% if how == "hidden" %}<input type="hidden" name="{{ name }}" value="1">
+    {% else %}<label class="{{ p }}hide"><input type="checkbox" name="{{ name }}" value="yes" checked> {{ label }}</label>{% endif %}
+  {% endfor %}
+  <p><button type="submit" class="{{ p }}btn">Continue</button></p>
+</form>
+{% endblock %}

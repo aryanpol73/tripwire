@@ -1,0 +1,15 @@
+{% extends "streaming/layout.html" %}
+{% block body %}
+<h1>Check your membership</h1>
+<section class="{{ p }}panel">
+  <table class="{{ p }}lines">
+    <tr><td>{{ plan[0] }} plan</td><td>{{ inr(plan[1]) }} per month</td></tr>
+    {% for label, price in addons %}<tr><td>{{ label }}</td><td>{{ inr(price) }} per month</td></tr>{% endfor %}
+    {% for label, minor in fees %}<tr><td>{{ label }}</td><td>{{ inr(minor) }}</td></tr>{% endfor %}
+    <tr><td>Due today</td><td>{{ inr(0) }}</td></tr>
+    <tr><td><strong>Monthly total</strong></td><td><strong>{{ inr(monthly) }}</strong></td></tr>
+  </table>
+</section>
+{% if renewal %}<p style="{{ renewal.style }}">{{ renewal.text }}</p>{% endif %}
+<form method="post" action="/join/activate"><button type="submit" class="{{ p }}btn">Activate trial</button></form>
+{% endblock %}
