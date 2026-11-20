@@ -10,7 +10,8 @@ engine. What changes is the **mission** (for example `first_visit` or `sign_up_a
 and which **detectors** apply.
 
 > **Phase 4 backend.** The scripted walker records evidence for three sandbox missions.
-> Eleven rules evaluate the traces and write findings. The independent hold-out is pending.
+> Eleven rules evaluate the traces and write findings. The independent hold-out scored
+> 95.24% Tier A precision and 83.33% recall on its first run.
 > Live audits remain limited to the local sandbox.
 
 ## How it works
@@ -97,5 +98,5 @@ The independent fixture format and the measured development results are in
 
 ## Limitations
 
-Desktop sandbox measurements cover the scripted English-language missions. The independent
-hold-out, evidence report, and real-site pilot are pending.
+Desktop sandbox measurements cover the scripted English-language missions. The evidence
+report and real-site pilot are pending.
