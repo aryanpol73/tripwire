@@ -1,0 +1,17 @@
+[consent]
+extra_clicks = 2
+area_ratio = 3.0
+low_contrast = 3.0
+high_contrast = 4.5
+decline_phrases = ["prefer a worse experience", "hate saving money", "don't want to not"]
+
+[obstruction]
+deep_tree_level = 12
+extra_clicks = 3
+small_font = 12
+low_contrast = 3.0
+
+[sneaking]
+min_drift_minor = 1
+small_font = 12
+low_contrast = 3.0
