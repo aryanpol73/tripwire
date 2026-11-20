@@ -479,3 +479,20 @@ The raw output preserves each discrepancy and the local trace directory.
 Independent regression fixtures exercise the corrections. The first-run figures above
 remain the published measurements for this hold-out. A new blind set is needed to
 quantify generalization of the revised implementation.
+
+#### Label review for the 29 measurement misses
+
+**Proposed label corrections: none.** I compared the original score with the saved
+DOM snapshots and actions, using the metric definitions from fixture commit `23c6d12`.
+The discrepancies break down as follows.
+
+| Measurement | Misses | Evidence from the first run |
+|---|---:|---|
+| Grocery price drift | 15 | Five missing fields per case. The item page showed ₹70 including delivery. The three review pages showed ₹70, ₹84 and ₹165, with late mandatory fees of ₹0, ₹4 and ₹50 respectively. |
+| Grocery pre-added extras | 6 | Both count and amount were high in each case. The walker explicitly added the ₹45 “Bananas (6)” item. Losing its pack size counted it as one extra worth 4,500 paise. |
+| Streaming advertised and final totals | 6 | Each journey selected the ₹299 Standard plan. The fixture defines the final total as monthly charges plus one-time fees, giving ₹299, ₹448 and ₹568. The review pages separately showed ₹0 due today. |
+| Streaming leave-flow friction | 2 | The subtle and blatant traces both departed a retention offer by clicking “No thanks, cancel”. Each labeled count includes that extra step. |
+
+The clean grocery case also explains the decoy result. The evaluator recorded a false
+positive against the unchecked-tip guard because the extras rule fired on that case.
+The captured tip was unchecked and the erroneous ₹45 amount matched the purchased item.
