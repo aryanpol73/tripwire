@@ -1,0 +1,7 @@
+{% extends "forum/base.html" %}
+{% block content %}
+<h1>Latest threads</h1>
+<ol>
+  {% for slug, title, topic in threads %}<li class="{{ p }}card"><a href="/t/{{ slug }}">{{ title }}</a> <small>in {{ topic }}</small></li>{% endfor %}
+</ol>
+{% endblock %}

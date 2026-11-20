@@ -1,0 +1,14 @@
+{% extends "store/base.html" %}
+{% block content %}
+<div class="{{ p }}card">
+  <h1>{{ name }}</h1>
+  <div class="{{ p }}row"><span>Price</span><span>{{ inr(price) }}</span></div>
+  <div class="{{ p }}row"><span>Delivery</span><span>{{ inr(delivery) }}</span></div>
+  <div class="{{ p }}row"><span>Estimated total</span><span>{{ inr(price + delivery) }}</span></div>
+  <p>All prices include GST.</p>
+  <form method="post" action="/cart">
+    <input type="hidden" name="sku" value="{{ sku }}">
+    <button type="submit" class="{{ p }}cta">Add to cart</button>
+  </form>
+</div>
+{% endblock %}

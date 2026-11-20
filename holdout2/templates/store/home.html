@@ -1,0 +1,9 @@
+{% extends "store/base.html" %}
+{% block content %}
+<h1>Today's deals</h1>
+<ul class="{{ p }}cards" style="list-style:none;padding:0">
+  {% for sku, name, price in products %}
+  <li class="{{ p }}card"><a href="/p/{{ sku }}">{{ name }}</a><div>{{ inr(price) }}</div></li>
+  {% endfor %}
+</ul>
+{% endblock %}
