@@ -35,7 +35,13 @@ def test_measured_findings_and_clean_decoys(family, ids):
 
 
 @pytest.mark.parametrize(
-    "phrase,expected", [("I prefer a worse experience", True), ("Decline optional cookies", False)]
+    "phrase,expected",
+    [
+        ("I prefer a worse experience", True),
+        ("Decline optional cookies", False),
+        ("No, I do not value my security", True),
+        ("No, I do not want to share my address", False),
+    ],
 )
 def test_decline_wording(phrase, expected):
     trace = read_trace(FIXTURES / "consent_asymmetry_violating.json")
@@ -138,3 +144,63 @@ def test_an_unchecked_hidden_preference_is_not_an_agreement():
         )
     )
     assert "sneaking.bundled_optins" not in {f.detector for f in detect(trace)}
+
+
+@pytest.mark.parametrize("chosen,expected", [("Studio", 1800), ("Solo", 800), (None, None)])
+def test_drift_uses_selected_offer_even_when_a_cheaper_plan_is_listed(chosen, expected):
+    from tripwire.detectors.base import measurements
+    from tripwire.schemas.trace import Form, FormField, PriceLine
+
+    trace = read_trace(FIXTURES / "sneaking_clean.json")
+
+    def line(label, minor, step, role):
+        return PriceLine(
+            label=label,
+            amount={"currency": "GBP", "minor": minor},
+            first_step=step,
+            seen_steps=[step],
+            role=role,
+            mandatory=True,
+        )
+
+    trace.commerce.price_ledger[:] = [
+        line("Solo per month", 800, 0, "other"),
+        line("Studio per month", 1800, 0, "other"),
+        line("Monthly total", 2200, 2, "total"),
+        line("Setup charge", 300, 2, "fee"),
+    ]
+    trace.steps[1].forms.append(
+        Form(
+            id="options",
+            fields=[
+                FormField(type="radio", name="membership", label=label, prechecked=label == chosen)
+                for label in ("Studio", "Solo")
+            ],
+        )
+    )
+    drift = measurements(trace).get("sneaking.price_drift")
+    if expected is None:
+        assert drift is None
+    else:
+        assert drift.metrics["advertised_total_minor"] == expected
+        assert drift.metrics["final_total_minor"] == 2500
+
+
+def test_retention_choice_counts_only_while_leaving():
+    from tripwire.detectors.base import measurements
+
+    trace = read_trace(FIXTURES / "obstruction_violating.json")
+    offer = trace.steps[6]
+    offer.overlays.clear()
+    take, decline = offer.ui.elements
+    offer.ui.elements[:] = [
+        take.model_copy(update={"text": "Claim my discount"}),
+        decline.model_copy(update={"text": "Decline and leave"}),
+    ]
+    target = trace.steps[7].action.target.model_copy(
+        update={"accessible_name": "Decline and leave"}
+    )
+    trace.steps[7] = trace.steps[7].model_copy(
+        update={"action": trace.steps[7].action.model_copy(update={"target": target})}
+    )
+    assert 6 in measurements(trace)["obstruction.interposed_friction"].steps

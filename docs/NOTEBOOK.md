@@ -382,8 +382,8 @@ normalizing the per-run loopback port. Validation used system Chromium 156 becau
 cloud network denied the pinned browser download. The detectors were frozen at commit
 `c536b38` before receiving independent fixtures.
 
-The hold-out score is pending the frontend team's three unseen skins and three unseen
-layouts. These grid numbers measure fit to the development sandbox.
+The development grid measures fit to the original sandbox. The independent evaluation
+is recorded below under Hold-out v1.
 
 ### Running the backend
 
@@ -449,3 +449,50 @@ The following entry illustrates the format and does not supply hold-out labels.
 - A synthetic query token survived in the trace header and navigation fields although
   request URLs were redacted. Phase 4 applies the URL redactor to finding URLs. The
   earlier trace capture needs a separate approved correction.
+
+### Hold-out v1
+
+**First-run Tier A precision was 95.24% (20/21) and recall was 83.33% (20/24).**
+Both aggregate targets were met. The frozen detectors from `c536b38` ran on the nine
+independently labeled cases from `holdout/v1` at `23c6d12`, using Chromium 156.
+All nine missions reached their stop conditions. Counts below are rule decisions per case.
+
+| Tier A family | True positives | False positives | Misses | True negatives |
+|---|---:|---:|---:|---:|
+| Consent | 5 | 0 | 0 | 13 |
+| Obstruction | 5 | 0 | 0 | 4 |
+| Sneaking | 10 | 1 | 4 | 6 |
+
+The run exited with status 1. One of 24 decoy checks fired and 29 of 174 labeled
+measurements were missing or outside tolerance. Tier B emitted zero findings and
+missed its one labeled case, so precision was undefined and recall was zero.
+The raw output preserves each discrepancy and the local trace directory.
+[First-run score](eval/holdout-v1-first-score.json)
+
+| First-run issue | Cause observed in the saved evidence | Backend correction |
+|---|---|---|
+| Price drift missed in the subtle and blatant grocery and streaming cases | Nested markup hid final table-row labels. Grocery definition lists also assigned multiple amounts the same label. With multiple subscription prices the detector used the cheapest listing. | Capture term/value pairs and labeled two-cell rows. When recurring offers differ, use the selected radio option to identify the baseline and abstain if ambiguous. |
+| Grocery extras overcounted in all three cases, including one false positive on the clean case | Removing a parenthesized pack size changed the cart item's identity. The purchased item was counted as an extra worth 4,500 paise. The unchecked tip stayed unchecked in the trace. | Preserve product qualifiers when stripping prices. |
+| Streaming friction undercounted by one in each planted case | The full-page retention step offered a deal that the walker declined. Its visible controls lacked the wording used by the original counter. | Recognize the observed decline action paired with a visible offer-acceptance control on the leave path. |
+| One Tier B consent wording miss in the blatant magazine case | The reject text attributed indifference about a personal interest to the user. The original phrase matcher had no such construction. | Recognize first-person disavowal of a personal interest. This English wording heuristic still needs human review. |
+
+Independent regression fixtures exercise the corrections. The first-run figures above
+remain the published measurements for this hold-out. A new blind set is needed to
+quantify generalization of the revised implementation.
+
+#### Label review for the 29 measurement misses
+
+**Proposed label corrections: none.** I compared the original score with the saved
+DOM snapshots and actions, using the metric definitions from fixture commit `23c6d12`.
+The discrepancies break down as follows.
+
+| Measurement | Misses | Evidence from the first run |
+|---|---:|---|
+| Grocery price drift | 15 | Five missing fields per case. The item page showed ₹70 including delivery. The three review pages showed ₹70, ₹84 and ₹165, with late mandatory fees of ₹0, ₹4 and ₹50 respectively. |
+| Grocery pre-added extras | 6 | Both count and amount were high in each case. The walker explicitly added the ₹45 “Bananas (6)” item. Losing its pack size counted it as one extra worth 4,500 paise. |
+| Streaming advertised and final totals | 6 | Each journey selected the ₹299 Standard plan. The fixture defines the final total as monthly charges plus one-time fees, giving ₹299, ₹448 and ₹568. The review pages separately showed ₹0 due today. |
+| Streaming leave-flow friction | 2 | The subtle and blatant traces both departed a retention offer by clicking “No thanks, cancel”. Each labeled count includes that extra step. |
+
+The clean grocery case also explains the decoy result. The evaluator recorded a false
+positive against the unchecked-tip guard because the extras rule fired on that case.
+The captured tip was unchecked and the erroneous ₹45 amount matched the purchased item.

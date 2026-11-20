@@ -8,6 +8,33 @@ _AGREEMENT = re.compile(r"consent|marketing|newsletter|partner|share|offer|promo
 _TRIAL = re.compile(r"trial", re.I)
 
 
+def _selected_offers(candidates, steps):
+    if len({line.amount.minor for line in candidates}) <= 1:
+        return candidates
+    # Use the most recent choice that identifies an advertised offer. Abstain when
+    # several advertised prices remain and there is no evidence which one was chosen.
+    for step in reversed(steps):
+        selected = {
+            text.casefold()
+            for form in step.forms
+            for field in form.fields
+            if field.type == "radio" and field.prechecked
+            for text in (field.label, field.default_value)
+            if text
+        }
+        matches = [
+            line
+            for line in candidates
+            if any(
+                re.search(r"(?<!\w)" + re.escape(name) + r"(?!\w)", line.label.casefold())
+                for name in selected
+            )
+        ]
+        if matches:
+            return matches if len({line.amount.minor for line in matches}) == 1 else []
+    return []
+
+
 def sneaking(trace, config):
     seen = set()
     bundled = []
@@ -82,6 +109,7 @@ def sneaking(trace, config):
                 and re.search(r"per (?:seat|month)", line.label, re.I)
                 and line.amount.currency == final.amount.currency
             ]
+            earlier = _selected_offers(earlier, trace.steps[:final_step])
         if earlier:
             advertised = min(earlier, key=lambda line: line.amount.minor)
             fees = [

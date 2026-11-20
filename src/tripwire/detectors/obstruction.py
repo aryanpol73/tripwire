@@ -6,6 +6,26 @@ from tripwire.detectors.base import Observation
 from tripwire.walker.vocab import LEAVE_ENTRY
 
 
+def _declined_offer(step, action):
+    if not action.target:
+        return False
+    choice = action.target.accessible_name or action.target.visible_text or ""
+    if not re.search(r"\b(?:decline|reject|no thanks|no, thanks)\b", choice, re.I):
+        return False
+    return any(
+        e.role in {"link", "button"}
+        and e.style.visible
+        and not e.disabled
+        and re.search(
+            r"\b(?:accept|take|claim|redeem)\b.*\b(?:offer|discount|deal|savings)\b",
+            e.accessible_name or e.text,
+            re.I,
+        )
+        for e in step.ui.elements
+        if (e.accessible_name or e.text) != choice
+    )
+
+
 def obstruction(trace, config):
     join = next((p for p in trace.paths if p.goal == "sign_up" and p.completed), None)
     leave = next(
@@ -80,6 +100,7 @@ def obstruction(trace, config):
         names = " ".join((e.accessible_name or e.text) for e in step.ui.elements if e.style.visible)
         if (
             overlays & {"survey", "retention"}
+            or _declined_offer(step, trace.steps[i].action)
             or re.search(r"% off|no thanks, continue", names, re.I)
             or any(f.type == "radio" for form in step.forms for f in form.fields)
         ):

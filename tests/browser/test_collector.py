@@ -156,3 +156,24 @@ def test_sale_price_carries_the_crossed_out_price_beside_it(tricky):
     sale = [p for p in tricky.prices if p.parsed and p.parsed.minor == 149900]
     assert len(sale) == 1
     assert sale[0].struck == ["₹2,999"]
+
+
+def test_price_labels_follow_semantic_rows_and_preserve_product_variants(page):
+    from tripwire.walker.commerce import CommerceRecorder
+
+    page.set_content("""
+      <dl><dt>Delivery</dt><dd>£2</dd><dt>Total</dt><dd><em>£14</em></dd></dl>
+      <table><tr><th>Filter (large) \u00d7 1</th><td>£12</td></tr>
+        <tr><th>Total payable</th><td><b><span>£18</span></b></td></tr></table>
+    """)
+    recorder = CommerceRecorder()
+    recorder.record_add("Filter (large)")
+    recorder.observe(0, collect_page(page))
+    commerce = recorder.build()
+    assert [(line.label, line.amount.minor) for line in commerce.price_ledger] == [
+        ("Delivery", 200),
+        ("Total", 1400),
+        ("Filter (large) \u00d7 1", 1200),
+        ("Total payable", 1800),
+    ]
+    assert commerce.cart[0].qty_added_by_walker == 1

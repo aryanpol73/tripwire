@@ -7,6 +7,11 @@ from tripwire.detectors.base import Observation
 MARKETING = re.compile(r"newsletter|marketing|product news|promotional", re.I)
 
 
+# First-person disavowal of a personal interest as the price of declining.
+# A literal refusal of data collection ("I do not want to share ...") is different.
+_DISAVOWAL = re.compile(r"\bi (?:do not|don['\u2019]t) (?:value|care (?:for|about)) my \w+", re.I)
+
+
 def consent(trace, config):
     layers = [(s, o) for s in trace.steps for o in s.overlays if o.purpose == "consent"]
     paths = {p.goal: p for p in trace.paths}
@@ -45,7 +50,8 @@ def consent(trace, config):
         text = no.accessible_name or no.text
         yield Observation(
             "consent.confirmshaming",
-            any(p in text.casefold() for p in config["decline_phrases"]),
+            any(p in text.casefold() for p in config["decline_phrases"])
+            or bool(_DISAVOWAL.search(text)),
             [step.index],
             dict(decline_text=text),
             "The decline option uses wording associated with shaming.",
