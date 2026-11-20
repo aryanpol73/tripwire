@@ -34,9 +34,11 @@ def _clean(text: str) -> str:
 
 
 def _without_amounts(text: str) -> str:
+    # A parenthesized price qualifies a label, while e.g. "(large)" identifies an item.
+    text = re.sub(r"\([^()]*\)", lambda m: " " if find_amounts(m[0]) else m[0], text)
     for amount in reversed(find_amounts(text)):
         text = text[: amount.start] + " " + text[amount.end :]
-    return _clean(re.sub(r"\(.*?\)", " ", text))
+    return _clean(text)
 
 
 def item_name(label: str) -> str:

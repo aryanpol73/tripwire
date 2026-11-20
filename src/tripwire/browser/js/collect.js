@@ -263,8 +263,20 @@
     if (TERMS.test(text)) continue;
     // The label is the nearest short row around the price; big containers are not labels.
     const parent = el.parentElement;
-    const row = parent && clean(parent.innerText).length <= 120 ? parent : el;
-    prices.push({ text, rowText: clean(row.innerText), struck: struckTexts(row), bbox: box(r),
+    let row = parent && clean(parent.innerText).length <= 120 ? parent : el;
+    let rowText = clean(row.innerText);
+    const cell = el.closest("td,th");
+    const description = el.closest("dd");
+    if (cell && cell.parentElement?.cells?.length === 2 && cell.cellIndex === 1) {
+      row = cell.parentElement;
+      rowText = clean(row.innerText);
+    } else if (description) {
+      row = description;
+      let term = description.previousElementSibling;
+      while (term?.tagName === "DD") term = term.previousElementSibling;
+      rowText = term?.tagName === "DT" ? clean(term.innerText + " " + row.innerText) : clean(row.innerText);
+    }
+    prices.push({ text, rowText, struck: struckTexts(row), bbox: box(r),
       inControl: !!el.closest("label,button,a,select,option,[role=button],[role=checkbox]") });
   }
 
