@@ -1,0 +1,12 @@
+{% extends "store/base.html" %}
+{% block content %}
+<h1>Order summary</h1>
+<div class="{{ p }}card">
+  {% for name, qty, total in lines %}<div class="{{ p }}row"><span>{{ name }} ({{ qty }})</span><span>{{ inr(total) }}</span></div>{% endfor %}
+  <div class="{{ p }}row"><span>Delivery</span><span>{{ inr(delivery) }}</span></div>
+  {% if care %}<div class="{{ p }}row"><span>Device care plan</span><span>{{ inr(care) }}</span></div>{% endif %}
+  {% for label, minor in fees %}<div class="{{ p }}row"><span>{{ label }}</span><span>{{ inr(minor) }}</span></div>{% endfor %}
+  <div class="{{ p }}row"><strong>Order total</strong><strong>{{ inr(total) }}</strong></div>
+</div>
+<form method="post" action="/pay"><button type="submit" class="{{ p }}cta">Pay now</button></form>
+{% endblock %}

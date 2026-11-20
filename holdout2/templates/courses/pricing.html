@@ -1,0 +1,15 @@
+{% extends "courses/base.html" %}
+{% block content %}
+<h1>Plans</h1>
+<div class="{{ p }}cards">
+  {% for name, price, action in plans %}
+  <section class="{{ p }}card" aria-label="{{ name }} plan">
+    <h2>{{ name }}</h2>
+    <div>{{ inr(price) }} per month</div>
+    {% if action == "Start free trial" %}<a class="{{ p }}cta" href="/start?plan={{ name }}">{{ action }}</a>
+    {% elif action == "Talk to sales" %}<a class="{{ p }}link" href="/sales">{{ action }}</a>
+    {% else %}<a class="{{ p }}link" href="/sales">{{ action }}</a>{% endif %}
+  </section>
+  {% endfor %}
+</div>
+{% endblock %}

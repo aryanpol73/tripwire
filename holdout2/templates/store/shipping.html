@@ -1,0 +1,16 @@
+{% extends "store/base.html" %}
+{% block content %}
+<h1>Shipping address</h1>
+<form method="post" action="/shipping" class="{{ p }}card">
+  <label class="{{ p }}input">Name <input name="name" required autocomplete="off"></label>
+  <label class="{{ p }}input">Phone <input name="phone" type="tel" required autocomplete="off"></label>
+  <label class="{{ p }}input">Pincode <input name="pincode" required autocomplete="off"></label>
+  <label><input type="checkbox" name="gst_invoice" value="on" checked> Send me a GST invoice by email</label>
+  <input type="hidden" name="xsrf" value="v2-test-token">
+  {% for name, label, how in hidden %}
+    {% if how == "hidden" %}<input type="hidden" name="{{ name }}" value="1">
+    {% else %}<label class="{{ p }}offscreen"><input type="checkbox" name="{{ name }}" value="on" checked> {{ label }}</label>{% endif %}
+  {% endfor %}
+  <p><button type="submit" class="{{ p }}cta">Continue</button></p>
+</form>
+{% endblock %}

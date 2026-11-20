@@ -1,0 +1,20 @@
+{% extends "courses/base.html" %}
+{% block content %}
+<div class="{{ p }}side">
+  <nav aria-label="Account menu">
+    <p><a href="/me">Profile</a></p>
+    <p><a href="/me/billing">Billing</a></p>
+    <p><a href="/me/notifications">Notifications</a></p>
+  </nav>
+  <section class="{{ p }}card">
+    <h1>My account</h1>
+    <p>Pro plan{{ " (cancelled)" if cancelled else ", free trial" }}</p>
+    {% if cfg.entry == "account" %}
+    <div class="{{ p }}actions">
+      <a class="{{ p }}m" href="/pricing" style="{{ ms(change) }}">{{ change.label }}</a>
+      <a class="{{ p }}m" href="/me/leave/0" style="{{ ms(cfg.entry_ctl) }}">{{ cfg.entry_ctl.label }}</a>
+    </div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

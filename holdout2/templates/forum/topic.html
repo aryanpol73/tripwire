@@ -1,0 +1,5 @@
+{% extends "forum/base.html" %}
+{% block content %}
+<h1>{{ title }}</h1>
+{% for slug, t, _ in threads %}<div class="{{ p }}card"><a href="/t/{{ slug }}">{{ t }}</a></div>{% endfor %}
+{% endblock %}

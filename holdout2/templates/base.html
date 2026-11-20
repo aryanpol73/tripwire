@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }} · {{ site_name }}</title>
+{# |safe: generated in app.py from fixed skin values #}
+<style>{{ css|safe }}</style>
+</head>
+<body>
+<div class="{{ p }}bar">
+  <a class="{{ p }}brand" href="/">{{ site_name }}</a>
+  <nav aria-label="Primary"><div class="{{ p }}links">{% block links %}{% endblock %}</div></nav>
+</div>
+<main class="{{ p }}page">{% block content %}{% endblock %}</main>
+<footer class="{{ p }}foot">
+  {% block footer %}{% endblock %}
+  <a href="/terms">Terms</a>
+  <span>Hold-out v2 test site. Fake data only.</span>
+</footer>
+{% if show_banner %}{% include "banner.html" %}{% endif %}
+</body>
+</html>

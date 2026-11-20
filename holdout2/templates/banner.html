@@ -1,0 +1,32 @@
+{% macro m(c, act) -%}
+<button type="button" class="{{ p }}m" style="{{ ms(c) }}" data-do="{{ act }}">{{ c.label }}</button>
+{%- endmacro %}
+<div class="{{ p }}privacy" id="{{ p }}cookies" role="dialog" aria-label="Cookie preferences">
+  <strong>Cookies on {{ site_name }}</strong>
+  <p>We use cookies to remember you, understand how the site is used and show relevant ads.</p>
+  <div class="{{ p }}actions">
+    {{ m(consent.accept, "allow") }}
+    {% if consent.reject %}{{ m(consent.reject, "decline") }}{% endif %}
+    {{ m(consent.manage, "expand") }}
+  </div>
+  {# The choices expand in place: the buttons above stay where they are. #}
+  <div class="{{ p }}more" hidden>
+    {% for key, label in toggles %}
+    <p><label><input type="checkbox" role="switch" name="{{ key }}"{% if key == 'required' or key in consent.on %} checked{% endif %}{% if key == 'required' %} disabled{% endif %}> {{ label }}</label></p>
+    {% endfor %}
+    {% if consent.hidden_reject %}<div class="{{ p }}actions">{{ m(consent.hidden_reject, "decline") }}</div>{% endif %}
+  </div>
+</div>
+<script>
+document.getElementById("{{ p }}cookies").addEventListener("click", function (event) {
+  var b = event.target.closest("[data-do]");
+  if (!b) return;
+  var act = b.getAttribute("data-do");
+  if (act === "expand") { this.querySelector(".{{ p }}more").hidden = false; return; }
+  var state = {};
+  this.querySelectorAll("input[type=checkbox]").forEach(function (i) { state[i.name] = i.checked; });
+  var box = this;
+  fetch("/privacy-choice", { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ choice: act, state: state }) }).then(function () { box.remove(); });
+});
+</script>

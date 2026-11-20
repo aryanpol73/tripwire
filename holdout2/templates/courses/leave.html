@@ -1,0 +1,35 @@
+{% extends "courses/base.html" %}
+{% block content %}
+<section class="{{ p }}card">
+{% if kind == "survey" %}
+  <h1>What made you decide to leave?</h1>
+  <form method="post" action="/me/leave/{{ i }}">
+    {% for reason in ["Price", "Not enough time", "Courses are too basic", "Found another site"] %}
+    <p><label><input type="checkbox" name="reason{{ loop.index }}" value="on"> {{ reason }}</label></p>
+    {% endfor %}
+    <p><button type="submit" class="{{ p }}cta">Next</button></p>
+  </form>
+{% elif kind == "pause" %}
+  <h1>Need a break instead?</h1>
+  <p>Pause your plan for up to 2 months and keep all your progress.</p>
+  <form method="post" action="/me/leave/{{ i }}" class="{{ p }}actions">
+    <a class="{{ p }}cta" href="/me">Pause my plan</a>
+    <button type="submit" class="{{ p }}link">Continue cancelling</button>
+  </form>
+{% elif kind == "sure" %}
+  <h1>Are you sure?</h1>
+  <p>You will lose your certificates and saved projects.</p>
+  <form method="post" action="/me/leave/{{ i }}" class="{{ p }}actions">
+    <a class="{{ p }}cta" href="/me">Go back</a>
+    <button type="submit" class="{{ p }}link">Yes, I'm sure</button>
+  </form>
+{% elif kind == "confirm" %}
+  <h1>Cancel your subscription</h1>
+  <p>Your access continues until the end of the trial.</p>
+  <form method="post" action="/me/leave/{{ i }}"><button type="submit" class="{{ p }}cta">Yes, cancel</button></form>
+{% elif kind == "email" %}
+  <h1>Almost there</h1>
+  <p>To finish cancelling, please email us at {{ email }} from the address on your account.</p>
+{% endif %}
+</section>
+{% endblock %}

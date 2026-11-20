@@ -1,0 +1,819 @@
+{
+  "cases": [
+    {
+      "id": "holdout2-store-forest-clean",
+      "skin": "forest",
+      "layout": "store",
+      "source": {
+        "url": "http://127.0.0.1:8301/",
+        "mission": "reach_payment",
+        "site_type": "shop"
+      },
+      "decoys": {
+        "delivery_shown_on_product_page": [
+          "sneaking.price_drift"
+        ],
+        "gst_invoice_visible_and_prechecked": [
+          "sneaking.bundled_optins"
+        ],
+        "xsrf_hidden_input": [
+          "sneaking.bundled_optins"
+        ],
+        "care_plan_offered_unchecked": [
+          "sneaking.preadded_extras"
+        ]
+      },
+      "expectations": [
+        {
+          "rule": "sneaking.price_drift",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "advertised_total_minor": 34800,
+            "final_total_minor": 34800,
+            "drift_from_mandatory_minor": 0,
+            "late_mandatory_lines": 0,
+            "currency": "INR"
+          }
+        },
+        {
+          "rule": "sneaking.preadded_extras",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "preadded_count": 0,
+            "preadded_minor": 0
+          }
+        },
+        {
+          "rule": "sneaking.bundled_optins",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "hidden_optin_count": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "holdout2-store-candy-subtle",
+      "skin": "candy",
+      "layout": "store",
+      "source": {
+        "url": "http://127.0.0.1:8302/",
+        "mission": "reach_payment",
+        "site_type": "shop"
+      },
+      "decoys": {
+        "delivery_shown_on_product_page": [
+          "sneaking.price_drift"
+        ],
+        "gst_invoice_visible_and_prechecked": [
+          "sneaking.bundled_optins"
+        ],
+        "xsrf_hidden_input": [
+          "sneaking.bundled_optins"
+        ]
+      },
+      "expectations": [
+        {
+          "rule": "sneaking.price_drift",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "advertised_total_minor": 34800,
+            "final_total_minor": 46600,
+            "drift_from_mandatory_minor": 1900,
+            "late_mandatory_lines": 1,
+            "currency": "INR"
+          }
+        },
+        {
+          "rule": "sneaking.preadded_extras",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "preadded_count": 1,
+            "preadded_minor": 9900
+          }
+        },
+        {
+          "rule": "sneaking.bundled_optins",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "hidden_optin_count": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "holdout2-store-mono-blatant",
+      "skin": "mono",
+      "layout": "store",
+      "source": {
+        "url": "http://127.0.0.1:8303/",
+        "mission": "reach_payment",
+        "site_type": "shop"
+      },
+      "decoys": {
+        "delivery_shown_on_product_page": [
+          "sneaking.price_drift"
+        ],
+        "gst_invoice_visible_and_prechecked": [
+          "sneaking.bundled_optins"
+        ],
+        "xsrf_hidden_input": [
+          "sneaking.bundled_optins"
+        ]
+      },
+      "expectations": [
+        {
+          "rule": "sneaking.price_drift",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "advertised_total_minor": 34800,
+            "final_total_minor": 63100,
+            "drift_from_mandatory_minor": 5500,
+            "late_mandatory_lines": 2,
+            "currency": "INR"
+          }
+        },
+        {
+          "rule": "sneaking.preadded_extras",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "preadded_count": 2,
+            "preadded_minor": 22800
+          }
+        },
+        {
+          "rule": "sneaking.bundled_optins",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "hidden_optin_count": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "holdout2-courses-candy-clean",
+      "skin": "candy",
+      "layout": "courses",
+      "source": {
+        "url": "http://127.0.0.1:8304/",
+        "mission": "sign_up_and_leave",
+        "site_type": "saas"
+      },
+      "decoys": {
+        "equal_weight_consent_buttons": [
+          "consent.click_asymmetry",
+          "consent.visual_asymmetry"
+        ],
+        "xsrf_hidden_input": [
+          "sneaking.bundled_optins"
+        ],
+        "cancel_beside_change_plan_same_size": [
+          "obstruction.buried_control"
+        ],
+        "single_confirmation_page": [
+          "obstruction.interposed_friction",
+          "obstruction.roach_motel"
+        ],
+        "extras_offered_unchecked": [
+          "sneaking.preadded_extras"
+        ],
+        "renewal_price_and_date_shown_clearly": [
+          "sneaking.renewal_disclosure"
+        ]
+      },
+      "expectations": [
+        {
+          "rule": "consent.click_asymmetry",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "accept_clicks": 1,
+            "reject_clicks": 1,
+            "extra_clicks_to_reject": 0,
+            "reject_on_first_layer": true,
+            "accept_page_loads": 0,
+            "reject_page_loads": 0
+          }
+        },
+        {
+          "rule": "consent.visual_asymmetry",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "compared_on_layer": 1,
+            "area_ratio": 1.0,
+            "accept_contrast": 6.04,
+            "reject_contrast": 6.04,
+            "accept_font_px": 15,
+            "reject_font_px": 15
+          }
+        },
+        {
+          "rule": "consent.preselected",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "preselected_count": 0
+          }
+        },
+        {
+          "rule": "consent.confirmshaming",
+          "family": "consent_asymmetry",
+          "tier": "B",
+          "should_fire": false,
+          "metrics": {
+            "decline_text": "Decline all"
+          }
+        },
+        {
+          "rule": "sneaking.price_drift",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "advertised_total_minor": 49900,
+            "final_total_minor": 49900,
+            "drift_from_mandatory_minor": 0,
+            "late_mandatory_lines": 0,
+            "currency": "INR"
+          }
+        },
+        {
+          "rule": "sneaking.preadded_extras",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "preadded_count": 0,
+            "preadded_minor": 0
+          }
+        },
+        {
+          "rule": "sneaking.renewal_disclosure",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "renewal_date_shown": true,
+            "renewal_font_px": 16,
+            "renewal_contrast": 15.79
+          }
+        },
+        {
+          "rule": "sneaking.bundled_optins",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "hidden_optin_count": 0
+          }
+        },
+        {
+          "rule": "obstruction.roach_motel",
+          "family": "obstruction",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "sign_up_clicks": 3,
+            "leave_clicks": 2,
+            "extra_clicks_to_leave": -1,
+            "exit_channel": "web",
+            "sign_up_page_loads": 3,
+            "leave_page_loads": 2
+          }
+        },
+        {
+          "rule": "obstruction.buried_control",
+          "family": "obstruction",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "footer_only": false,
+            "click_depth": 0,
+            "font_px": 14,
+            "contrast": 15.79
+          }
+        },
+        {
+          "rule": "obstruction.interposed_friction",
+          "family": "obstruction",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "unneeded_interstitials": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "holdout2-courses-mono-subtle",
+      "skin": "mono",
+      "layout": "courses",
+      "source": {
+        "url": "http://127.0.0.1:8305/",
+        "mission": "sign_up_and_leave",
+        "site_type": "saas"
+      },
+      "decoys": {
+        "equal_weight_consent_buttons": [
+          "consent.click_asymmetry",
+          "consent.visual_asymmetry"
+        ],
+        "xsrf_hidden_input": [
+          "sneaking.bundled_optins"
+        ],
+        "leave_cost_two_extra_clicks_below_threshold": [
+          "obstruction.roach_motel"
+        ]
+      },
+      "expectations": [
+        {
+          "rule": "consent.click_asymmetry",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "accept_clicks": 1,
+            "reject_clicks": 1,
+            "extra_clicks_to_reject": 0,
+            "reject_on_first_layer": true,
+            "accept_page_loads": 0,
+            "reject_page_loads": 0
+          }
+        },
+        {
+          "rule": "consent.visual_asymmetry",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "compared_on_layer": 1,
+            "area_ratio": 1.0,
+            "accept_contrast": 21.0,
+            "reject_contrast": 21.0,
+            "accept_font_px": 15,
+            "reject_font_px": 15
+          }
+        },
+        {
+          "rule": "consent.preselected",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "preselected_count": 0
+          }
+        },
+        {
+          "rule": "consent.confirmshaming",
+          "family": "consent_asymmetry",
+          "tier": "B",
+          "should_fire": false,
+          "metrics": {
+            "decline_text": "Decline all"
+          }
+        },
+        {
+          "rule": "sneaking.price_drift",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "advertised_total_minor": 49900,
+            "final_total_minor": 74800,
+            "drift_from_mandatory_minor": 9900,
+            "late_mandatory_lines": 1,
+            "currency": "INR"
+          }
+        },
+        {
+          "rule": "sneaking.preadded_extras",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "preadded_count": 1,
+            "preadded_minor": 15000
+          }
+        },
+        {
+          "rule": "sneaking.renewal_disclosure",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "renewal_date_shown": true,
+            "renewal_font_px": 10,
+            "renewal_contrast": 2.28
+          }
+        },
+        {
+          "rule": "sneaking.bundled_optins",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "hidden_optin_count": 1
+          }
+        },
+        {
+          "rule": "obstruction.roach_motel",
+          "family": "obstruction",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "sign_up_clicks": 3,
+            "leave_clicks": 5,
+            "extra_clicks_to_leave": 2,
+            "exit_channel": "web",
+            "sign_up_page_loads": 3,
+            "leave_page_loads": 5
+          }
+        },
+        {
+          "rule": "obstruction.buried_control",
+          "family": "obstruction",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "footer_only": false,
+            "click_depth": 1,
+            "font_px": 11,
+            "contrast": 2.28
+          }
+        },
+        {
+          "rule": "obstruction.interposed_friction",
+          "family": "obstruction",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "unneeded_interstitials": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "holdout2-courses-forest-blatant",
+      "skin": "forest",
+      "layout": "courses",
+      "source": {
+        "url": "http://127.0.0.1:8306/",
+        "mission": "sign_up_and_leave",
+        "site_type": "saas"
+      },
+      "decoys": {
+        "equal_weight_consent_buttons": [
+          "consent.click_asymmetry",
+          "consent.visual_asymmetry"
+        ],
+        "xsrf_hidden_input": [
+          "sneaking.bundled_optins"
+        ]
+      },
+      "expectations": [
+        {
+          "rule": "consent.click_asymmetry",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "accept_clicks": 1,
+            "reject_clicks": 1,
+            "extra_clicks_to_reject": 0,
+            "reject_on_first_layer": true,
+            "accept_page_loads": 0,
+            "reject_page_loads": 0
+          }
+        },
+        {
+          "rule": "consent.visual_asymmetry",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "compared_on_layer": 1,
+            "area_ratio": 1.0,
+            "accept_contrast": 5.02,
+            "reject_contrast": 5.02,
+            "accept_font_px": 15,
+            "reject_font_px": 15
+          }
+        },
+        {
+          "rule": "consent.preselected",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "preselected_count": 0
+          }
+        },
+        {
+          "rule": "consent.confirmshaming",
+          "family": "consent_asymmetry",
+          "tier": "B",
+          "should_fire": false,
+          "metrics": {
+            "decline_text": "Decline all"
+          }
+        },
+        {
+          "rule": "sneaking.price_drift",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "advertised_total_minor": 49900,
+            "final_total_minor": 114700,
+            "drift_from_mandatory_minor": 24800,
+            "late_mandatory_lines": 2,
+            "currency": "INR"
+          }
+        },
+        {
+          "rule": "sneaking.preadded_extras",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "preadded_count": 2,
+            "preadded_minor": 40000
+          }
+        },
+        {
+          "rule": "sneaking.renewal_disclosure",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "renewal_date_shown": false,
+            "renewal_font_px": null,
+            "renewal_contrast": null
+          }
+        },
+        {
+          "rule": "sneaking.bundled_optins",
+          "family": "sneaking",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "hidden_optin_count": 2
+          }
+        },
+        {
+          "rule": "obstruction.roach_motel",
+          "family": "obstruction",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "sign_up_clicks": 3,
+            "leave_clicks": 5,
+            "extra_clicks_to_leave": 2,
+            "exit_channel": "email",
+            "sign_up_page_loads": 3,
+            "leave_page_loads": 5
+          }
+        },
+        {
+          "rule": "obstruction.buried_control",
+          "family": "obstruction",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "footer_only": true,
+            "click_depth": 1,
+            "font_px": 10,
+            "contrast": 2.29
+          }
+        },
+        {
+          "rule": "obstruction.interposed_friction",
+          "family": "obstruction",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "unneeded_interstitials": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "holdout2-forum-mono-clean",
+      "skin": "mono",
+      "layout": "forum",
+      "source": {
+        "url": "http://127.0.0.1:8307/",
+        "mission": "first_visit",
+        "site_type": "news"
+      },
+      "decoys": {
+        "equal_weight_buttons": [
+          "consent.click_asymmetry",
+          "consent.visual_asymmetry"
+        ],
+        "locked_required_toggle": [
+          "consent.preselected"
+        ]
+      },
+      "expectations": [
+        {
+          "rule": "consent.click_asymmetry",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "accept_clicks": 1,
+            "reject_clicks": 1,
+            "extra_clicks_to_reject": 0,
+            "reject_on_first_layer": true,
+            "accept_page_loads": 0,
+            "reject_page_loads": 0
+          }
+        },
+        {
+          "rule": "consent.visual_asymmetry",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "compared_on_layer": 1,
+            "area_ratio": 1.0,
+            "accept_contrast": 21.0,
+            "reject_contrast": 21.0,
+            "accept_font_px": 15,
+            "reject_font_px": 15
+          }
+        },
+        {
+          "rule": "consent.preselected",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "preselected_count": 0
+          }
+        },
+        {
+          "rule": "consent.confirmshaming",
+          "family": "consent_asymmetry",
+          "tier": "B",
+          "should_fire": false,
+          "metrics": {
+            "decline_text": "Decline all"
+          }
+        }
+      ]
+    },
+    {
+      "id": "holdout2-forum-forest-subtle",
+      "skin": "forest",
+      "layout": "forum",
+      "source": {
+        "url": "http://127.0.0.1:8308/",
+        "mission": "first_visit",
+        "site_type": "news"
+      },
+      "decoys": {
+        "locked_required_toggle": [
+          "consent.preselected"
+        ],
+        "size_gap_under_threshold": [
+          "consent.visual_asymmetry"
+        ]
+      },
+      "expectations": [
+        {
+          "rule": "consent.click_asymmetry",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "accept_clicks": 1,
+            "reject_clicks": 2,
+            "extra_clicks_to_reject": 1,
+            "reject_on_first_layer": false,
+            "accept_page_loads": 0,
+            "reject_page_loads": 0
+          }
+        },
+        {
+          "rule": "consent.visual_asymmetry",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": false,
+          "metrics": {
+            "compared_on_layer": 2,
+            "area_ratio": 2.33,
+            "accept_contrast": 5.02,
+            "reject_contrast": 12.77,
+            "accept_font_px": 16,
+            "reject_font_px": 14
+          }
+        },
+        {
+          "rule": "consent.preselected",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "preselected_count": 2
+          }
+        },
+        {
+          "rule": "consent.confirmshaming",
+          "family": "consent_asymmetry",
+          "tier": "B",
+          "should_fire": false,
+          "metrics": {
+            "decline_text": "Decline all"
+          }
+        }
+      ]
+    },
+    {
+      "id": "holdout2-forum-candy-blatant",
+      "skin": "candy",
+      "layout": "forum",
+      "source": {
+        "url": "http://127.0.0.1:8309/",
+        "mission": "first_visit",
+        "site_type": "news"
+      },
+      "decoys": {
+        "locked_required_toggle": [
+          "consent.preselected"
+        ]
+      },
+      "expectations": [
+        {
+          "rule": "consent.click_asymmetry",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "accept_clicks": 1,
+            "reject_clicks": 2,
+            "extra_clicks_to_reject": 1,
+            "reject_on_first_layer": false,
+            "accept_page_loads": 0,
+            "reject_page_loads": 0
+          }
+        },
+        {
+          "rule": "consent.visual_asymmetry",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "compared_on_layer": 2,
+            "area_ratio": 4.25,
+            "accept_contrast": 6.04,
+            "reject_contrast": 1.9,
+            "accept_font_px": 18,
+            "reject_font_px": 11
+          }
+        },
+        {
+          "rule": "consent.preselected",
+          "family": "consent_asymmetry",
+          "tier": "A",
+          "should_fire": true,
+          "metrics": {
+            "preselected_count": 3
+          }
+        },
+        {
+          "rule": "consent.confirmshaming",
+          "family": "consent_asymmetry",
+          "tier": "B",
+          "should_fire": true,
+          "metrics": {
+            "decline_text": "Decline and accept a worse experience"
+          }
+        }
+      ]
+    }
+  ]
+}

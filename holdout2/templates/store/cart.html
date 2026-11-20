@@ -1,0 +1,21 @@
+{% extends "store/base.html" %}
+{% block content %}
+<h1>Cart</h1>
+{% if not lines %}<p>Nothing here yet.</p>{% else %}
+<div class="{{ p }}card">
+  <table class="{{ p }}grid3">
+    <thead><tr><th>Item</th><th>Qty</th><th>Price</th></tr></thead>
+    <tbody>
+      {% for name, qty, total in lines %}<tr><td>{{ name }}</td><td>{{ qty }}</td><td>{{ inr(total) }}</td></tr>{% endfor %}
+    </tbody>
+  </table>
+  <div class="{{ p }}row"><span>Delivery</span><span>{{ inr(delivery) }}</span></div>
+  {% if care_on %}<div class="{{ p }}row"><span>Device care plan</span><span>{{ inr(care) }}</span></div>{% endif %}
+  <div class="{{ p }}row"><strong>Cart total</strong><strong>{{ inr(total) }}</strong></div>
+</div>
+<form method="post" action="/cart/care" class="{{ p }}card">
+  <label><input type="checkbox" name="care" value="on"{% if care_on %} checked{% endif %} onchange="this.form.submit()"> Protect your device for 1 year ({{ inr(care) }})</label>
+</form>
+<a class="{{ p }}cta" href="/shipping">Proceed to checkout</a>
+{% endif %}
+{% endblock %}

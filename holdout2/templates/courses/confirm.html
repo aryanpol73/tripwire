@@ -1,0 +1,13 @@
+{% extends "courses/base.html" %}
+{% block content %}
+<h1>Confirm your trial</h1>
+<div class="{{ p }}card">
+  <div class="{{ p }}row"><span>{{ plan[0] }} plan</span><span>{{ inr(plan[1]) }} / month</span></div>
+  {% for label, price in extras %}<div class="{{ p }}row"><span>{{ label }}</span><span>{{ inr(price) }} / month</span></div>{% endfor %}
+  {% for label, minor in fees %}<div class="{{ p }}row"><span>{{ label }}</span><span>{{ inr(minor) }}</span></div>{% endfor %}
+  <div class="{{ p }}row"><span>Due now</span><span>{{ inr(0) }}</span></div>
+  <div class="{{ p }}row"><strong>Monthly total</strong><strong>{{ inr(monthly) }}</strong></div>
+</div>
+{% if renewal %}<p style="{{ renewal.style }}">{{ renewal.text }}</p>{% endif %}
+<form method="post" action="/start/go"><button type="submit" class="{{ p }}cta">Begin trial</button></form>
+{% endblock %}

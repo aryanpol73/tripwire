@@ -1,0 +1,19 @@
+{% extends "courses/base.html" %}
+{% block content %}
+<h1>Create your account</h1>
+<form method="post" action="/start" class="{{ p }}card">
+  <p>Plan: <strong>{{ plan }}</strong></p>
+  <label class="{{ p }}input">Your email <input name="email" type="email" required autocomplete="off"></label>
+  <p>Add to your plan:</p>
+  {% for key, label, price in extras %}
+  <p><label><input type="checkbox" name="{{ key }}" value="on"{% if key in extras_on %} checked{% endif %}> {{ label }} (+{{ inr(price) }} per month)</label></p>
+  {% endfor %}
+  <input type="hidden" name="xsrf" value="v2-test-token">
+  {% for name, label, how in hidden %}
+    {% if how == "hidden" %}<input type="hidden" name="{{ name }}" value="1">
+    {% else %}<label class="{{ p }}offscreen"><input type="checkbox" name="{{ name }}" value="on" checked> {{ label }}</label>{% endif %}
+  {% endfor %}
+  {% if renewal %}<p style="{{ renewal.style }}">{{ renewal.text }}</p>{% endif %}
+  <p><button type="submit" class="{{ p }}cta">Continue</button></p>
+</form>
+{% endblock %}

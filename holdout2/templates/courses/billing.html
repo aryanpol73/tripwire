@@ -1,0 +1,12 @@
+{% extends "courses/base.html" %}
+{% block content %}
+<section class="{{ p }}card">
+  <h1>Billing</h1>
+  <p>{{ plan[0] }} plan, {{ inr(plan[1]) }} per month when your trial ends.</p>
+  <p>No payment method saved (test site).</p>
+  {% if cfg.entry == "billing_body" %}<p><a class="{{ p }}m" href="/me/leave/0" style="{{ ms(cfg.entry_ctl) }}">{{ cfg.entry_ctl.label }}</a></p>{% endif %}
+</section>
+{% endblock %}
+{% block footer %}
+{% if cfg.entry == "billing_footer" %}<a class="{{ p }}m" href="/me/leave/0" style="{{ ms(cfg.entry_ctl) }}">{{ cfg.entry_ctl.label }}</a>{% endif %}
+{% endblock %}
