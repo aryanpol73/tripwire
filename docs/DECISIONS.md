@@ -280,3 +280,25 @@ digit. Regression test added.
 ### D-044 The budget check happens before each action
 `BudgetTracker.check()` stops when another action would reach a limit (`>=`), so a finished
 trace never shows more steps or page loads than allowed. LLM spend still uses `>`.
+
+### D-045 Score rule decisions and measurement errors separately
+
+Detectors consume the trace, the mission's applicable rules and the packaged threshold
+configuration. They receive no scenario labels. The evaluator joins their output to the
+committed ground truth by scenario and rule ID. A correct binary decision can still carry
+an incorrect price or contrast. Either error is visible in the score. Undefined precision
+or recall is reported as null. Tier B wording matches have their own scores.
+The confidence values in findings encode the evidence tier and are uncalibrated.
+
+### D-046 Freeze a development baseline and evaluate the hold-out independently
+
+The CI reference contains measured precision and recall by group. A decrease greater than
+0.02 fails the score check. Separately, the evaluator enforces each Tier A detector's targets
+and checks the labeled measurements. Counts and minor currency units must match exactly.
+Contrast has an absolute tolerance of 0.1. Grid path-load expectations follow the routes:
+consent controls stay on the page, and the required acknowledgement in the SaaS leave flow
+takes one click without a navigation.
+
+The frontend team supplies the independent hold-out layouts, skins and labels after the
+detectors are frozen. The evaluator accepts a live local fixture or a recorded sandbox trace.
+The hold-out has its own aggregate Tier A gate and its own output directory.
