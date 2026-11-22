@@ -27,6 +27,8 @@ Use handoff if the site requires any of that.
 - Keep every default choice the site makes (do not untick boxes, do not remove extras): \
 the tool measures what the site does by default.
 - Act only on ids from the current Controls list.
+- Fill every text field marked required before submitting a form. If a pop-up covers the
+page, close or dismiss it first (or reject it, if it is a consent banner).
 - When the mission is finished, or clearly cannot be finished here, call done.
 
 Tag every action with the purpose it serves: reject_consent, sign_up, leave, add_to_cart, \

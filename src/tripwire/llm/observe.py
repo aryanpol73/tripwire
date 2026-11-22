@@ -80,7 +80,16 @@ def _state(e: UiElement) -> str:
     return ""
 
 
-def observe(obs: PageObservation, page_text: str, nonce: str, path: str) -> Observation:
+def observe(
+    obs: PageObservation,
+    page_text: str,
+    nonce: str,
+    path: str,
+    filled: frozenset[str] = frozenset(),
+) -> Observation:
+    """`filled`: names of text fields the walker has typed into on this page (walker-written
+    state, so the model can tell an empty required field from one already done)."""
+    required = {f.element_id for form in obs.forms for f in form.fields if f.required}
     overlay_of: dict[str, str] = {}
     for o in obs.overlays:
         label = f"{o.purpose.value} {o.kind.value}"
@@ -103,7 +112,12 @@ def observe(obs: PageObservation, page_text: str, nonce: str, path: str) -> Obse
     rows = []
     for e in shown:
         cells = [e.id, e.role, _clean(_name(e), MAX_NAME_CHARS)]
-        extra = [x for x in (_state(e), _where(e, overlay_of)) if x]
+        flags = [_state(e)]
+        if e.id in required:
+            flags.append("required")
+        if _name(e) in filled:
+            flags.append("filled")
+        extra = [x for x in (*flags, _where(e, overlay_of)) if x]
         rows.append(" | ".join(cells + extra))
     controls = "\n".join(rows) or "(no interactive controls found)"
     omitted = len(candidates) - len(shown)
