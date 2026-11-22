@@ -215,6 +215,13 @@ def evaluate_llm(args: argparse.Namespace) -> int:
     cap = round(args.llm_cap * 1_000_000) if args.llm_cap else cap_from_env()
 
     results: list[RunResult] = []
+    done_before: dict[str, RunResult] = {}
+    quota_hit = False
+    previous = out_dir / "summary.json"
+    if args.resume and previous.is_file():
+        for row in json.loads(previous.read_text(encoding="utf-8"))["runs"]:
+            if not row.get("error"):
+                done_before[row["id"]] = RunResult(**row)
     with sync_playwright() as p:
         browser = p.chromium.launch(executable_path=args.chromium_executable or None)
         for i, t in enumerate(targets, 1):
@@ -227,11 +234,24 @@ def evaluate_llm(args: argparse.Namespace) -> int:
                 source = ReplaySource(rec)
             else:
                 source = RecordingSource(model, out_dir / t.id / "llm_decisions.jsonl")
+            if t.id in done_before:
+                results.append(done_before[t.id])
+                continue
             try:
                 result, run_dir = run_target(t, source, out_dir, browser, cap)
             except Exception as err:  # one broken run must not hide the others
+                if type(err).__name__ == "RateLimitError":
+                    # The provider's quota is used up (the SDK already retried). Stop instead
+                    # of failing every remaining run; --resume continues later.
+                    print(
+                        f"[{i}/{len(targets)}] stopped: the provider's rate limit or daily "
+                        "quota is used up. Rerun later with --resume to continue.",
+                        file=sys.stderr,
+                    )
+                    quota_hit = True
+                    break
                 result = RunResult(t.id, t.group, False, "run error", "error", 0, 0, cap, "",
-                                   error=f"{type(err).__name__}: {err}")  # fmt: skip
+                                   error=f"{type(err).__name__}: {str(err)[:200]}")  # fmt: skip
                 run_dir = None
             if args.record_dir and run_dir and not replay:
                 Path(args.record_dir).mkdir(parents=True, exist_ok=True)
@@ -251,6 +271,11 @@ def evaluate_llm(args: argparse.Namespace) -> int:
 
     summary = summarize(results)
     summary["model"] = getattr(model, "model", None) if model else "replay"
+    summary["complete"] = not quota_hit and len(results) == len(targets)
+    if quota_hit:
+        summary["gate_failures"].append(
+            f"incomplete: {len(targets) - len(results)} targets not run (provider quota)"
+        )
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     brief = {k: v for k, v in summary.items() if k != "runs"}

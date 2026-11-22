@@ -13,11 +13,11 @@ from dataclasses import dataclass
 from enum import StrEnum
 from typing import Any
 
+from tripwire.browser.safety_gate import _SECRET_FIELD
 from tripwire.browser.ui_inventory import PageObservation
 from tripwire.schemas.trace import ControlPurpose, UiElement
 
 TEXT_ROLES = {"textbox", "searchbox", "combobox", "spinbutton"}
-SECRET_HINT = ("password", "card", "cvv", "cvc", "otp", "one-time", "upi", "iban", "pin code")
 
 
 class Purpose(StrEnum):
@@ -159,7 +159,7 @@ def check(
         if element.role not in TEXT_ROLES:
             raise Refused("type works only on text fields")
         name = (element.accessible_name or element.text or "").lower()
-        if any(h in name for h in SECRET_HINT):
+        if _SECRET_FIELD.search(name):  # the gate's own definition, so they agree
             raise Refused("secret fields are typed by a human; use handoff")
     return Checked(tool, purpose, element=element, control=control)
 

@@ -135,7 +135,9 @@ class LlmWalker(ExplorerBase):
                 frozenset(self._filled.get(here, ())),
             )
             request = Request(
-                SYSTEM, step_prompt(self.req.mission, self.history, page.text), tools.TOOLS
+                SYSTEM,
+                step_prompt(self.req.mission, self.history, page.text, self._pages_opened()),
+                tools.TOOLS,
             )
             budget = self.s.budget
             if (
@@ -198,6 +200,11 @@ class LlmWalker(ExplorerBase):
                 self.stats.stopped_by = "no progress (page unchanged for several actions)"
                 return
         self.stats.stopped_by = "decision cap"
+
+    def _pages_opened(self) -> int:
+        start = path_of(self.req.start_url).split("?")[0]
+        seen = {path_of(s.url_after).split("?")[0] for s in self.s.steps}
+        return len(seen - {start})
 
     def _account(self, d: Decision) -> None:
         self.stats.calls.append(
@@ -268,7 +275,9 @@ class LlmWalker(ExplorerBase):
         self.purpose_of[step.index] = c.purpose
         after = path_of(step.url_after)
         moved = (
-            "new page" if step.page_load else ("same page" if after == before else "page changed")
+            "new page"
+            if step.page_load and after != before
+            else ("same page, nothing new opened" if after == before else "page changed")
         )
         self.history.append(f"{label} -> {moved}")
 

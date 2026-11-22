@@ -64,14 +64,18 @@ def mission_text(mission: Mission) -> str:
     return f"Mission: {mission.name}\nGoal: {mission.goal}\nWhat to do: {steps}"
 
 
-def step_prompt(mission: Mission, history: list[str], observation: str) -> str:
+def step_prompt(
+    mission: Mission, history: list[str], observation: str, pages_opened: int = 0
+) -> str:
     recent = history[-15:]
     lines = "\n".join(recent) if recent else "(nothing yet)"
     if len(history) > len(recent):
         lines = f"({len(history) - len(recent)} earlier actions not shown)\n" + lines
     return (
         f"{mission_text(mission)}\n\n"
-        f"Your actions so far (written by the walker, trusted):\n{lines}\n\n"
+        f"Your actions so far (written by the walker, trusted):\n{lines}\n"
+        f"Different pages opened so far, not counting the start page (counted by the "
+        f"walker from the addresses actually loaded): {pages_opened}\n\n"
         f"{observation}\n\n"
         "Choose the next action."
     )
