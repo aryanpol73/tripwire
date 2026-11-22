@@ -22,10 +22,16 @@ def _free_port() -> int:
 @contextmanager
 def serve(scenario_id: str) -> Iterator[str]:
     """Yield the base URL of a fresh, running scenario; stop it afterwards."""
+    with serve_app(create_app(scenario_id), scenario_id) as url:
+        yield url
+
+
+@contextmanager
+def serve_app(app, label: str = "app") -> Iterator[str]:
+    """Serve any ASGI app on a free local port (red-team pages, unseen layouts)."""
+    scenario_id = label
     port = _free_port()
-    config = uvicorn.Config(
-        create_app(scenario_id), host="127.0.0.1", port=port, log_level="warning"
-    )
+    config = uvicorn.Config(app, host="127.0.0.1", port=port, log_level="warning")
     server = uvicorn.Server(config)
     thread = threading.Thread(target=server.run, daemon=True)
     thread.start()

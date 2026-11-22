@@ -127,6 +127,12 @@ class BrowserSession:
     def _record(self, request: Request, *, blocked: bool = False) -> None:
         key = id(request)
         if key in self._log.by_request:
+            # The "request" event can fire before the route handler: a request first logged
+            # as allowed may then be aborted by the gate. Mark it, so the trace is accurate.
+            if blocked:
+                index = self._log.by_request[key]
+                record = self._log.records[index]
+                self._log.records[index] = record.model_copy(update={"blocked_by_gate": True})
             return
         self._log.by_request[key] = len(self._log.records)
         self._log.records.append(

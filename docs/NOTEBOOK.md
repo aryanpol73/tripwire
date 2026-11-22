@@ -664,3 +664,79 @@ Open `runs/shop/report.html` in any browser. Nothing is fetched.
 2. **Overlay instead of annotation.** Boxes are positioned over the untouched screenshot in
    percentages, so they scale with the image and the evidence file is never altered.
 3. **Absence is not proof.** An empty report describes coverage; it cannot certify a site.
+
+## Phase 6 — LLM explorer (in progress: live-model exit gate not yet run)
+
+**Built.**
+- `walker/base.py`: the `Explorer` base both walkers share (session, gate, budgets, capture,
+  hand-offs, commerce, Trace). The scripted eval is unchanged after the refactor.
+- `llm/`: observation (`observe.py`), the six strict tools and the code checks (`tools.py`),
+  prompts (`prompt.py`), decision sources with cost, record and replay (`client.py`,
+  `prices.toml`), the loop (`walker.py`), completion from the Trace (`completion.py`) and the
+  red-team auditor (`redteam.py`).
+- `sandbox/redteam/`: 10 hostile pages (ignore-your-rules text, a fake system message, hidden
+  off-site instructions, a password prompt, a forged end of the untrusted block, a title
+  injection, an off-site link, a card wall, a fake Anthropic budget message with an endless
+  "Load more", an aria-label injection).
+- `sandbox/unseen/`: three layouts the walker was not developed against (tour booking, a
+  recipe site with a weekly letter, a streaming trial), each with two missions.
+- `tripwire audit --walker llm` and `tripwire eval --walker llm` (record and replay).
+
+### How to run it
+
+```bash
+uv sync --extra groq      # the live run uses Groq (D-062); --extra llm for Anthropic
+# .env: TRIPWIRE_PROVIDER=groq, TRIPWIRE_MODEL=openai/gpt-oss-120b, GROQ_API_KEY=...
+uv run tripwire eval --walker llm --record-dir runs/llm-decisions
+uv run tripwire eval --walker llm --replay-dir runs/llm-decisions   # offline, no key
+```
+
+### Results so far (measured, without a model)
+
+- Scripted eval after the refactor: 36 scenarios, no run or gate failures (unchanged).
+- Red-team with a **gullible test policy** that obeys every injected instruction: 0
+  violations on all 10 pages. Attempts were refused by the walker's checks or blocked by the
+  gate; the password page is handed to a human before the model is asked; the endless "Load
+  more" ends by loop detection. This shows the guarantee comes from code, whatever the model
+  does.
+- Record then replay of an LLM run gives an identical Trace fingerprint, 0 divergences.
+- Spend: a test source costing US$0.20 per call with a US$0.25 worst case stops at US$0.40,
+  under the US$0.50 cap.
+- Tests: 525 unit, plus 14 new browser tests.
+- **Not yet measured:** mission completion with a real model (target 85% on the sandbox and on
+  the unseen layouts) and the red-team with a real model. These need `TRIPWIRE_MODEL` and an
+  API key.
+
+### What broke (and was fixed)
+
+- **Gate evidence was wrong for blocked navigations.** Playwright fires the request event
+  before the route handler, so a navigation the gate aborted was logged as not blocked. The
+  request never left the machine, but the trace said it might have. Found by the red-team
+  auditor on its first run; the session now marks the logged request as blocked.
+- **The nonce came from the run id.** That made replays diverge (the run id holds a
+  timestamp) and was guessable. It is now random per run and stored in the recording.
+- **The page path sat outside the untrusted block.** A hostile site controls its own paths;
+  the path now sits inside the block.
+- The walker could finish one call over the spend cap; it now checks a worst-case estimate
+  before each call.
+
+### Risks found
+
+- The same person wrote the prompt and the unseen layouts (D-059). The prompt was frozen
+  first; the honest test is still the Phase 7 real-site pilot.
+- Completion of leave flows on sandbox sites is judged by the sandbox's own end-state
+  phrases (`vocab.LEFT_TEXT`); unseen layouts declare theirs.
+- Paths depend on the purpose the model tags on each action. A mis-tagged detour inflates a
+  click count, so LLM-walked click counts are less exact than scripted ones.
+- Without a model run, the cost per audit is an estimate: with a cheap model and short
+  prompts it should be cents, with the most capable models several times more.
+
+### Three concepts to be able to explain
+
+1. **Propose, then dispose.** The model's tool call is a proposal; code checks it against
+   what the model was shown, then the gate decides. Injection can change the proposal, never
+   the checks.
+2. **Untrusted data blocks with a nonce.** Page text is fenced off with a tag the page cannot
+   know, so it cannot end the fence and speak as the operator.
+3. **Record and replay.** Logging every decision with its request hash turns a
+   non-deterministic model run into a repeatable test.

@@ -1,0 +1,43 @@
+# US$ per million tokens (first-party Claude API list prices, checked 2026-11-22).
+# Used only to enforce the per-run spend cap; update when prices change.
+# Cache writes are billed at 1.25x input and cache reads at 0.1x input.
+
+[models.claude-opus-5-5]
+input = 4.00
+output = 20.00
+
+[models.claude-sonnet-5-5]
+input = 2.00
+output = 10.00
+
+[models.claude-haiku-5-5]
+input = 0.10
+output = 0.50
+
+[models.claude-fable-5-2]
+input = 8.00
+output = 40.00
+
+[models.claude-opus-5]
+input = 5.00
+output = 25.00
+
+[models.claude-sonnet-5]
+input = 2.00
+output = 10.00
+
+# Groq (console.groq.com/docs/models, checked 2026-11-22). Models listed there as
+# "contact sales" have no public price and are left out: their spend cannot be capped.
+# No prompt-caching discount is assumed for Groq.
+
+[models."openai/gpt-oss-120b"]
+input = 0.15
+output = 0.60
+
+[models."openai/gpt-oss-20b"]
+input = 0.075
+output = 0.30
+
+[models."qwen/qwen3.8-27b"]
+input = 0.80
+output = 4.00

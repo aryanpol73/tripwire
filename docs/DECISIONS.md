@@ -363,3 +363,95 @@ D-047 added optional fields (`FormField.hidden_boolean_default`, `Form.has_alter
 a new optional field with a default that older files load correctly is additive and keeps
 the version. Renaming, removing or changing the meaning or type of a field bumps it, and the
 fixtures are updated in the same change.
+
+### D-053 One Explorer base; the LLM walker only chooses actions
+
+`walker/base.py` holds what both walkers share: the session, gate, budgets, capture,
+hand-off detection, commerce recording and Trace assembly. `ScriptedWalker` and `LlmWalker`
+implement only `_explore()`. The LLM walker acts through the same `click`, `type_into` and
+`goto` helpers, so it cannot reach the browser any other way and produces the same Trace.
+The scripted eval was re-run after the refactor with no change.
+
+### D-054 The model proposes, code disposes
+
+Six tools: click, type, scroll, navigate, handoff, done, all `strict` with closed schemas.
+Before the gate, `llm/tools.check` refuses: ids not in the observation the model was shown,
+invisible or disabled controls, clicking a consent accept control, typing into a field whose
+name looks secret, typing into a non-text control, and anything but a same-site path for
+navigate. The model never chooses typed text: the walker fills fields from test data by
+label. A refusal is reported back to the model in the action history and counted.
+**Alternatives:** trusting the gate alone (it does not know which ids the model saw, and in
+the sandbox it allows irreversible clicks), letting the model write values (page text could
+steer what is typed).
+
+### D-055 Untrusted block with a random nonce; no host in the prompt
+
+All page-derived text (path, title, control names, visible text) sits inside
+`<untrusted_page_content_NONCE>`. The nonce is random per run and stored in the recording,
+so a page cannot know it and replays rebuild identical prompts. The action history is
+written by the walker from ids, tools, purposes and code-written outcomes only, never page
+text. URLs appear as paths without host or port, which keeps prompts identical across
+sandbox runs on random ports.
+
+### D-056 One self-contained call per step
+
+Each model call carries the system prompt, the mission, the last 15 walker-written history
+lines and the current observation. No conversation history is resent, so cost per call is
+flat, thinking blocks never need replaying, and each call can be recorded and replayed on
+its own. The system prompt and tools are cached.
+
+### D-057 Spend is enforced before the call, not after
+
+Cost is computed from token usage and `llm/prices.toml` in integer micro-dollars (a US$ per
+million tokens price is micro-dollars per token). Before each call the walker estimates its
+worst case (the whole prompt written to the cache plus a full `max_tokens` of output) and
+stops if that could pass the cap. An unknown model is refused unless a price is given, since
+the cap could not be enforced. Every call is logged to `llm_calls.json`.
+The LLM walker's wall-clock budget is four times the mission's, because model calls take
+seconds where scripted steps take milliseconds; steps and page loads are unchanged.
+
+### D-058 Completion is decided by code from the Trace
+
+`llm/completion.py` judges a run the same way for both walkers: consent rejected if a banner
+appeared, then enough internal pages (first_visit), a completed reach_payment path, or a
+sign-up path plus a leave path that ended (left, or phone/email only). The model's `done`
+claim is recorded but never counted. Paths are built from the purpose the model tags on each
+action, so detours tagged `other` stay out of click counts.
+
+### D-059 Unseen layouts declare their own end-state wording
+
+The three unseen layouts use wording the scripted vocabulary does not know ("Reserve this
+tour", "Count me in", "End membership"). Judging their leave flows with the sandbox's
+"subscription cancelled" phrases would test the oracle, not the walker, so each layout
+declares its own end-state text and pay control as ground truth (`RunRequest.left_text`,
+`pay_control`). Caveat: the same person wrote the walker prompt and these layouts. The
+prompt was frozen before the layouts were written and was not changed after running them.
+
+### D-060 Red-team runs apply real-site action rules on the sandbox
+
+`GateConfig.enforce_real_action_rules` makes the gate refuse pay, delete, confirm,
+subscribe and consent-accept clicks on the local red-team pages, as it would on a real site.
+`llm/redteam.audit` reads the finished Trace and counts violations (off-allowlist pages or
+unblocked off-host requests, irreversible or accept clicks, typing into secret fields,
+acting on the case's bait, any budget overrun). Refused or blocked attempts are reported
+separately: they show the attack reached the model and code stopped it.
+
+### D-061 Recorded decisions make LLM evals repeatable
+
+Every live run writes `llm_decisions.jsonl` (nonce first, then one decision per call with
+the request hash, usage and cost). `--replay-dir` plays them back with no network: the same
+decisions, still checked against the page as it is now, with any changed prompt counted as
+a divergence. Once a live eval is recorded, CI can replay it without an API key.
+
+### D-062 Groq as a second model provider
+
+The owner runs the live exit gate on Groq. `GroqSource` sits beside `AnthropicSource` behind
+the same `Decision` interface, so the walker, the checks, the gate, the cap and
+record/replay are unchanged; `TRIPWIRE_PROVIDER` picks one (or the only key present).
+Groq's tool calling is OpenAI-compatible and its docs do not promise schema-strict
+arguments, so unparseable arguments become an empty proposal that `tools.check` refuses, and
+a call Groq itself rejects as malformed (`tool_use_failed`) is a refused proposal charged at
+the worst-case cost. No caching discount is assumed. Only models with a public price on
+Groq's models page are in `prices.toml` (`openai/gpt-oss-120b`, `openai/gpt-oss-20b`,
+`qwen/qwen3.8-27b`); "contact sales" models such as the Llama ones are refused unless the
+owner supplies a price. The kickoff brief named the Anthropic SDK; this is the owner's change.
