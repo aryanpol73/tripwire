@@ -3,6 +3,7 @@
   tripwire audit --scenario <id>            run a sandbox scenario with its mission
   tripwire audit <url> --mission <name>     run a mission on a local (sandbox) URL
   tripwire replay <run_dir>                 re-render a saved trace, no browser needed
+  tripwire report <run_dir>                 write the offline evidence report (report.html)
 
 Real sites are refused until the Phase 7 checklist is confirmed. argparse is enough here.
 """
@@ -71,8 +72,12 @@ def _cmd_audit(args: argparse.Namespace) -> int:
     from tripwire.detectors.base import finding_set, measurements
 
     write_model(finding_set(trace, measurements(trace)), run_dir / "findings.json")
+    from tripwire.report.builder import build_report
+
+    report = build_report(run_dir)
     print(render(trace))
     print(f"\nSaved {run_dir / 'trace.json'}")
+    print(f"Report {report}")
     return 0
 
 
@@ -80,6 +85,17 @@ def _cmd_replay(args: argparse.Namespace) -> int:
     path = Path(args.run)
     trace = read_trace(path / "trace.json" if path.is_dir() else path)
     print(render(trace))
+    return 0
+
+
+def _cmd_report(args: argparse.Namespace) -> int:
+    from tripwire.report.builder import build_report
+
+    run_dir = Path(args.run)
+    if not (run_dir / "trace.json").is_file():
+        print(f"no trace.json in {run_dir}", file=sys.stderr)
+        return 2
+    print(build_report(run_dir, Path(args.out) if args.out else None))
     return 0
 
 
@@ -138,6 +154,11 @@ def build_parser() -> argparse.ArgumentParser:
     replay = sub.add_parser("replay", help="re-render a saved trace without a browser")
     replay.add_argument("run", help="a run folder or a trace.json file")
     replay.set_defaults(func=_cmd_replay)
+
+    report = sub.add_parser("report", help="write the offline evidence report for a run")
+    report.add_argument("run", help="a run folder containing trace.json")
+    report.add_argument("--out", help="output file (default: <run>/report.html)")
+    report.set_defaults(func=_cmd_report)
     return parser
 
 

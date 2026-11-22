@@ -328,3 +328,38 @@ step for review. Mixed cues alone produce no wording finding. When the existing
 confirmshaming rule independently fires on that text, assign confidence 0.50
 instead of the usual Tier B value of 0.70. These are policy values, not calibrated
 probabilities. The decision concerns wording only and applies after the frozen v2 run.
+
+### D-050 One self-contained HTML report per run, rendered from the trace
+
+`tripwire audit` writes `report.html` next to the trace; `tripwire report <run_dir>` rebuilds
+it. The file has inline CSS, screenshots as data URIs and no scripts, so it opens offline,
+survives email and cannot call home. Highlight boxes are absolutely positioned `<div>`s in
+percentages of the PNG size read from its header, not boxes burned into the image: the
+original screenshot stays untouched and the box can be checked against the trace bbox.
+**Alternatives:** a PDF (heavier dependency, harder to diff), a small web app (needs a
+server), drawing on the PNG with Pillow (alters the evidence, adds a dependency).
+
+### D-051 Full-page screenshots
+
+Steps now save `full_page=True` screenshots. A buried control is often in the footer, below
+the first viewport; a viewport-only image could not show the evidence it is cited for. Trace
+bounding boxes are already in page coordinates, so boxes line up without conversion. Cost:
+larger PNGs on long pages. Detector inputs are unchanged, so fingerprints are unaffected.
+
+### D-052 Report wording is built from measured values only
+
+Each card leads with one plain sentence built from the finding's measurements (for example
+"Joining took 3 clicks; leaving took 7 clicks"). The verdict-word guard that protects
+finding summaries is applied to this wording in tests. Missing values are left out of the
+sentence instead of printed as "None". A run with no findings never says "clean": it states
+the mission, step count and status, and that unreached pages were not measured. Tier B and C
+findings sit in a separate "Experimental" section; `review_steps_by_rule` gets its own
+"Needs human review" table and never counts as a finding.
+
+### D-011 amendment: additive optional fields keep the schema version
+
+D-047 added optional fields (`FormField.hidden_boolean_default`, `Form.has_alternative_link`,
+`FindingSet.review_steps_by_rule`) without bumping `schema_version`. That is now the rule:
+a new optional field with a default that older files load correctly is additive and keeps
+the version. Renaming, removing or changing the meaning or type of a field bumps it, and the
+fixtures are updated in the same change.

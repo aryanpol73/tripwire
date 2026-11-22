@@ -583,3 +583,84 @@ Each blatant sneaking scenario expects one confirmed off-screen opt-in and one
 unclassified enabled hidden field. The other applicable scenarios also check
 the review count, including zero for clean decoys. This changes development
 expectations only. Both hold-out records above retain their first-run values.
+
+## Phase 5 — evidence report
+
+**Built.** `src/tripwire/report/builder.py` turns a run folder (trace + findings) into one
+offline `report.html` through a Jinja template. `src/tripwire/report/plain.py` holds the
+plain-language titles, headlines and metric labels. `tripwire audit` now writes the report
+automatically; `tripwire report <run_dir> [--out file]` rebuilds it. Screenshots are now
+full-page (D-051).
+
+**What a reader sees, top to bottom:**
+
+1. Header: site, mission, mode, run date, status, coverage (steps, page loads, seconds) and
+   a fixed notice that this is evidence, not a legal verdict.
+2. Summary by family and tier, or, with no findings, a coverage statement that never says
+   "clean".
+3. One card per finding: a one-sentence headline, chips for family, tier, severity and
+   confidence, the measurement table, "check before trusting this" (false-positive notes),
+   reproduction steps and the evidence screenshots with labelled boxes.
+4. Per-rule extras: the price timeline with late fees marked (price drift), joining against
+   leaving paths (roach motel, click asymmetry), the hidden-field table (bundled opt-ins),
+   redacted network requests, and "how we measured this" (rule question plus thresholds).
+5. "Experimental" (tier B/C) and "Needs human review" sections, then what was checked: the
+   journeys, the 11 rules, run notes, the step-by-step trace and a findings JSON download.
+
+**Box mapping.** Consent rules box the banner's accept (green) and reject (red) controls;
+preselected boxes enabled, non-disabled toggles; buried control boxes elements matching the
+leave vocabulary; pre-added extras box the pre-checked add-on; roach motel and interposed
+friction box the control the walker used next. Price drift and hidden opt-ins use tables,
+because the evidence is a number or a field nobody can see.
+
+### How to run it
+
+```bash
+uv run tripwire audit --scenario sneaking-blatant-skin1 --out runs/shop
+uv run tripwire report runs/shop
+```
+
+Open `runs/shop/report.html` in any browser. Nothing is fetched.
+
+### Results (measured)
+
+- Unit tests: 508 passed, 12 skipped, including 24 for the report (every rule's headline is
+  one sentence with no verdict words, no external assets, the findings download round-trips,
+  the empty view states coverage, missing screenshots are reported).
+- Browser tests: 147 passed, including a real walk of `obstruction-blatant-skin3` that checks
+  the footer sits inside the full-page screenshot and the "Way out" box lands in its lower
+  half.
+- Checked by eye in a browser at 1280px (light and dark) and 375px: the email-field box on
+  the sign-up step and the footer "Cancel subscription" box align with the controls; no
+  horizontal scroll at phone width. Report sizes: 11 KB (no findings) to 490 KB (14 steps).
+- **Exit gate (yours to run):** two people each verify three findings in under 30 seconds
+  per finding. Suggested set: price drift and pre-added extras from `sneaking-blatant-skin1`,
+  buried control from `obstruction-blatant-skin3`, visual asymmetry from
+  `consent_asymmetry-blatant-skin1`.
+
+### What broke (and was fixed)
+
+- A test caught "None:1 contrast" in a headline when contrast was unmeasurable. Headlines now
+  leave out missing values.
+- The "always on" necessary-cookies toggle was boxed as pre-selected. The box filter now
+  skips disabled toggles, the same as the detector.
+- The box label said "Clicked next" when the next action was typing. It now names the action.
+- Roach-motel cards carried 11 screenshots. Cards with more than three show the first and
+  last and fold the rest.
+
+### Risks found
+
+- Boxes assume a device scale factor of 1 (the walker's setting). A run captured at 2x
+  would draw boxes at half size; the PNG size check would need the viewport width.
+- Pages that move after load (sticky headers, lazy images) can shift a full-page capture
+  relative to the bbox measured a moment earlier.
+- Repro steps are the walker's own action words ("type Full name"). Readable, not polished.
+- Long runs on long pages make large files; there is no size cap yet.
+
+### Three concepts to be able to explain
+
+1. **Self-contained HTML.** Data URIs put the bytes inside the page; no network means no
+   tracking and no broken links years later.
+2. **Overlay instead of annotation.** Boxes are positioned over the untouched screenshot in
+   percentages, so they scale with the image and the evidence file is never altered.
+3. **Absence is not proof.** An empty report describes coverage; it cannot certify a site.
