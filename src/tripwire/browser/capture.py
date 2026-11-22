@@ -44,7 +44,8 @@ def capture_step(
     }
     for rel in paths.values():
         (run_dir / rel).parent.mkdir(parents=True, exist_ok=True)
-    page.screenshot(path=run_dir / paths["screenshot"])
+    # Full page, so evidence below the fold (a footer link) can be boxed in the report.
+    page.screenshot(path=run_dir / paths["screenshot"], full_page=True)
     (run_dir / paths["a11y_snapshot"]).write_text(
         page.locator("body").aria_snapshot(), encoding="utf-8"
     )
