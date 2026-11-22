@@ -71,6 +71,14 @@ uv run tripwire audit --scenario obstruction-blatant-skin1
 uv run tripwire replay runs/<run id>
 ```
 
+Each audit also writes `report.html` in the run folder: one offline file with the findings,
+annotated screenshots, reproduction steps and the measurements behind each one. Rebuild it
+from a saved run with:
+
+```bash
+uv run tripwire report runs/<run id>
+```
+
 Optional, for contributors:
 
 ```bash
@@ -98,5 +106,5 @@ The independent fixture format and the measured development results are in
 
 ## Limitations
 
-Desktop sandbox measurements cover the scripted English-language missions. The evidence
-report and real-site pilot are pending.
+Desktop sandbox measurements cover the scripted English-language missions. The real-site
+pilot is pending. The report records evidence; it is not a legal verdict.
