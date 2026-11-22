@@ -442,3 +442,16 @@ Every live run writes `llm_decisions.jsonl` (nonce first, then one decision per 
 the request hash, usage and cost). `--replay-dir` plays them back with no network: the same
 decisions, still checked against the page as it is now, with any changed prompt counted as
 a divergence. Once a live eval is recorded, CI can replay it without an API key.
+
+### D-062 Groq as a second model provider
+
+The owner runs the live exit gate on Groq. `GroqSource` sits beside `AnthropicSource` behind
+the same `Decision` interface, so the walker, the checks, the gate, the cap and
+record/replay are unchanged; `TRIPWIRE_PROVIDER` picks one (or the only key present).
+Groq's tool calling is OpenAI-compatible and its docs do not promise schema-strict
+arguments, so unparseable arguments become an empty proposal that `tools.check` refuses, and
+a call Groq itself rejects as malformed (`tool_use_failed`) is a refused proposal charged at
+the worst-case cost. No caching discount is assumed. Only models with a public price on
+Groq's models page are in `prices.toml` (`openai/gpt-oss-120b`, `openai/gpt-oss-20b`,
+`qwen/qwen3.8-27b`); "contact sales" models such as the Llama ones are refused unless the
+owner supplies a price. The kickoff brief named the Anthropic SDK; this is the owner's change.

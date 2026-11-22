@@ -194,7 +194,7 @@ def evaluate_llm(args: argparse.Namespace) -> int:
     from playwright.sync_api import sync_playwright
 
     from tripwire.cli import load_dotenv
-    from tripwire.llm.client import AnthropicSource, LlmConfigError, RecordingSource, ReplaySource
+    from tripwire.llm.client import LlmConfigError, RecordingSource, ReplaySource, model_source
     from tripwire.llm.walker import cap_from_env
 
     groups = {"sandbox", "unseen", "redteam"} if args.set == "all" else {args.set}
@@ -208,7 +208,7 @@ def evaluate_llm(args: argparse.Namespace) -> int:
     if not replay:
         load_dotenv()
         try:
-            model = AnthropicSource()
+            model = model_source()
         except LlmConfigError as err:
             print(err, file=sys.stderr)
             return 2

@@ -174,6 +174,116 @@ class AnthropicSource:
 # --- record and replay ----------------------------------------------------------------
 
 
+class GroqSource:
+    """Calls Groq's chat completions API (OpenAI-compatible tool calling).
+
+    Groq's docs do not promise schema-strict tool arguments, so the walker's own checks
+    (tools.check) are what stand between a malformed call and the browser: arguments that
+    do not parse, or a call Groq rejects as malformed, become a refused proposal. Cost is
+    charged at the full input price; no caching discount is assumed.
+    """
+
+    def __init__(self, model: str | None = None, effort: str | None = None) -> None:
+        model = model or os.environ.get("TRIPWIRE_MODEL", "")
+        if not model:
+            raise LlmConfigError("set TRIPWIRE_MODEL in .env (a Groq model id)")
+        try:
+            import groq
+        except ImportError as err:
+            raise LlmConfigError("install the Groq extra: uv sync --extra groq") from err
+        self.model = model
+        self.effort = effort or os.environ.get("TRIPWIRE_EFFORT") or None
+        self.price = price_for(model)
+        self._groq = groq
+        # Free-tier rate limits are tight: let the SDK wait out 429s (it honours retry-after).
+        self._client = groq.Groq(max_retries=6)
+
+    def worst_case_micros(self, request: Request) -> int:
+        tokens_in = (len(request.system) + len(request.prompt) + 4000) / CHARS_PER_TOKEN
+        return math.ceil(
+            tokens_in * self.price.input_per_mtok + MAX_TOKENS * self.price.output_per_mtok
+        )
+
+    def decide(self, request: Request) -> Decision:
+        tools = [
+            {
+                "type": "function",
+                "function": {
+                    "name": t["name"],
+                    "description": t["description"],
+                    "parameters": t["input_schema"],
+                },
+            }
+            for t in request.tools
+        ]
+        kwargs: dict[str, Any] = dict(
+            model=self.model,
+            messages=[
+                {"role": "system", "content": request.system},
+                {"role": "user", "content": request.prompt},
+            ],
+            tools=tools,
+            tool_choice="auto",
+            max_completion_tokens=MAX_TOKENS,
+        )
+        if self.effort:
+            kwargs["reasoning_effort"] = self.effort
+        try:
+            response = self._client.chat.completions.create(**kwargs)
+        except self._groq.BadRequestError as err:
+            # Groq rejects a tool call the model malformed (code "tool_use_failed"). Treat it
+            # as a refused proposal, charged at the worst case since usage is not returned.
+            if "tool_use_failed" not in str(err):
+                raise
+            return Decision(
+                tool="malformed_tool_call",
+                model=self.model,
+                stop_reason="tool_use_failed",
+                cost_micros=self.worst_case_micros(request),
+            )
+        choice = response.choices[0]
+        usage = response.usage
+        decision = Decision(
+            tool="none",
+            model=response.model,
+            input_tokens=usage.prompt_tokens if usage else 0,
+            output_tokens=usage.completion_tokens if usage else 0,
+            stop_reason=choice.finish_reason or "",
+            text=choice.message.content or "",
+        )
+        calls = choice.message.tool_calls or []
+        if calls:
+            decision.tool = calls[0].function.name
+            try:
+                args = json.loads(calls[0].function.arguments or "{}")
+                decision.input = args if isinstance(args, dict) else {}
+            except json.JSONDecodeError:
+                decision.input = {}  # tools.check refuses it: no valid element or path
+        decision.cost_micros = self.price.cost_micros(decision)
+        return decision
+
+
+PROVIDERS = {"anthropic": AnthropicSource, "groq": GroqSource}
+
+
+def model_source(env: dict[str, str] | None = None) -> DecisionSource:
+    """The live model named by TRIPWIRE_PROVIDER (anthropic or groq). When it is unset, the
+    provider whose API key is present is used; with both keys present it must be set."""
+    env = dict(os.environ) if env is None else env
+    provider = env.get("TRIPWIRE_PROVIDER", "").strip().lower()
+    if not provider:
+        keys = [name for name, var in (("anthropic", "ANTHROPIC_API_KEY"), ("groq", "GROQ_API_KEY"))
+                if env.get(var)]  # fmt: skip
+        if len(keys) != 1:
+            raise LlmConfigError(
+                "set TRIPWIRE_PROVIDER in .env to anthropic or groq (and that provider's key)"
+            )
+        provider = keys[0]
+    if provider not in PROVIDERS:
+        raise LlmConfigError(f"unknown TRIPWIRE_PROVIDER {provider!r}; use anthropic or groq")
+    return PROVIDERS[provider]()
+
+
 def worst_case(source: DecisionSource, request: Request) -> int:
     estimate = getattr(source, "worst_case_micros", None)
     return estimate(request) if estimate else 0

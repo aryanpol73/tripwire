@@ -25,3 +25,19 @@ output = 25.00
 [models.claude-sonnet-5]
 input = 2.00
 output = 10.00
+
+# Groq (console.groq.com/docs/models, checked 2026-11-22). Models listed there as
+# "contact sales" have no public price and are left out: their spend cannot be capped.
+# No prompt-caching discount is assumed for Groq.
+
+[models."openai/gpt-oss-120b"]
+input = 0.15
+output = 0.60
+
+[models."openai/gpt-oss-20b"]
+input = 0.075
+output = 0.30
+
+[models."qwen/qwen3.8-27b"]
+input = 0.80
+output = 4.00

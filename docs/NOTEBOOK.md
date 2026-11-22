@@ -685,8 +685,8 @@ Open `runs/shop/report.html` in any browser. Nothing is fetched.
 ### How to run it
 
 ```bash
-uv sync --extra llm
-# .env: TRIPWIRE_MODEL=<model id in prices.toml>, ANTHROPIC_API_KEY=...
+uv sync --extra groq      # the live run uses Groq (D-062); --extra llm for Anthropic
+# .env: TRIPWIRE_PROVIDER=groq, TRIPWIRE_MODEL=openai/gpt-oss-120b, GROQ_API_KEY=...
 uv run tripwire eval --walker llm --record-dir runs/llm-decisions
 uv run tripwire eval --walker llm --replay-dir runs/llm-decisions   # offline, no key
 ```

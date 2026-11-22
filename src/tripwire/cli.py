@@ -43,12 +43,12 @@ def load_dotenv(path: Path = Path(".env")) -> None:
 
 def _llm_source(args: argparse.Namespace, run_dir: Path):
     """The decision source for --walker llm: a replay, or the model with recording."""
-    from tripwire.llm.client import AnthropicSource, RecordingSource, ReplaySource
+    from tripwire.llm.client import RecordingSource, ReplaySource, model_source
 
     if args.replay:
         return ReplaySource(Path(args.replay))
     load_dotenv()
-    return RecordingSource(AnthropicSource(), run_dir / "llm_decisions.jsonl")
+    return RecordingSource(model_source(), run_dir / "llm_decisions.jsonl")
 
 
 def _cmd_audit(args: argparse.Namespace) -> int:
