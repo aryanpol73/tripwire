@@ -73,6 +73,8 @@ class GateConfig:
     limits: Budgets
     min_action_interval_s: float = REAL_SITE_MIN_INTERVAL_S
     approved_account_flows: bool = False  # rule 10: the owner approved this run
+    # Red-team runs: apply the real-site action rules on the local sandbox too.
+    enforce_real_action_rules: bool = False
 
     def __post_init__(self) -> None:
         if not self.allowed_hosts:
@@ -148,7 +150,7 @@ class SafetyGate:
     # --- actions --------------------------------------------------------------------
 
     def check_click(self, *, text: str, role: str, in_consent_overlay: bool = False) -> None:
-        if not self.real:
+        if not (self.real or self.config.enforce_real_action_rules):
             return  # sandbox: everything is fake, irreversible actions are allowed (rule 1)
         label = " ".join(text.split())
         if in_consent_overlay and _ACCEPT.search(label):

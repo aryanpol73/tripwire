@@ -10,171 +10,35 @@ it goes back, and those detour steps stay in the trace but not in the path.
 
 from __future__ import annotations
 
-import sys
-from collections.abc import Callable
-from dataclasses import dataclass, field
-from datetime import UTC, datetime
-from pathlib import Path
 from urllib.parse import urlsplit
 
-from playwright.sync_api import Browser
-
-from tripwire.browser.safety_gate import (
-    LOCAL_HOSTS,
-    BudgetExceeded,
-    GateConfig,
-    SafetyBlocked,
-)
-from tripwire.browser.session import BrowserSession, SessionConfig
-from tripwire.mission import Mission
 from tripwire.schemas.trace import (
     ActionKind,
     ControlPurpose,
     Intent,
     IntentGoal,
-    MeasuredPath,
-    Mode,
-    Note,
     NoteKind,
     OverlayPurpose,
     PathGoal,
-    RunStatus,
-    SiteType,
-    Step,
-    Target,
-    Trace,
     UiElement,
 )
 from tripwire.walker import vocab
-from tripwire.walker.commerce import CommerceRecorder
-from tripwire.walker.handoff import detect_handoff
+from tripwire.walker.base import (  # noqa: F401  (re-exported for existing imports)
+    CLICKS,
+    ExplorerBase,
+    HandedOff,
+    RealSitesDisabled,
+    RunRequest,
+)
 
-CLICKS = {ActionKind.CLICK, ActionKind.REJECT_CONSENT}
 TEXT_INPUTS = {"text", "email", "tel", "number", "search", "url", "textarea"}
 
 
-class HandedOff(Exception):
-    pass
-
-
-class RealSitesDisabled(Exception):
-    pass
-
-
-@dataclass
-class RunRequest:
-    start_url: str
-    mission: Mission
-    run_dir: Path
-    run_id: str
-    site_type: SiteType = SiteType.OTHER
-    scenario_id: str | None = None
-    min_action_interval_s: float = 0.0
-    headless: bool = True
-    browser: Browser | None = None
-    log: Callable[[str], None] = field(default=lambda m: print(m, file=sys.stderr))
-
-
-class ScriptedWalker:
-    def __init__(self, request: RunRequest) -> None:
-        self.req = request
-        self.paths: list[MeasuredPath] = []
-        self.intents: list[Intent] = []
-        self.notes: list[Note] = []
-        self.commerce = CommerceRecorder()
-        self.status = RunStatus.COMPLETED
-
-    # --- running --------------------------------------------------------------------
-
-    def run(self) -> Trace:
-        req = self.req
-        host = urlsplit(req.start_url).hostname or ""
-        if host not in LOCAL_HOSTS:
-            raise RealSitesDisabled(
-                "Real sites are disabled until the Phase 7 pre-flight checklist is confirmed."
-            )
-        gate = GateConfig(
-            mode=Mode.SANDBOX,
-            allowed_hosts=(host,),
-            limits=req.mission.budgets,
-            min_action_interval_s=req.min_action_interval_s,
-        )
-        started = datetime.now(UTC)
-        config = SessionConfig(gate=gate, run_dir=req.run_dir, headless=req.headless)
-        with BrowserSession(config, browser=req.browser) as session:
-            self.s = session
-            try:
-                getattr(self, f"_mission_{req.mission.name}")()
-            except BudgetExceeded as err:
-                self.status = RunStatus.BUDGET_EXCEEDED
-                self._note(NoteKind.BUDGET, str(err))
-            except HandedOff:
-                self.status = RunStatus.HANDED_OFF
-            except SafetyBlocked as err:
-                self._note(NoteKind.SAFETY_BLOCK, f"Stopped: {err}")
-            steps, used = session.steps, session.budget.used()
-            for event in session.gate.events:
-                self.notes.append(
-                    Note(kind=NoteKind.SAFETY_BLOCK, message=f"{event.reason}: {event.target}")
-                )
-        if used.exceeds(req.mission.budgets):
-            self.status = RunStatus.BUDGET_EXCEEDED
-        return Trace(
-            run_id=req.run_id,
-            site_url=req.start_url,
-            site_type=req.site_type,
-            mission=req.mission.name,
-            mode=Mode.SANDBOX,
-            scenario_id=req.scenario_id,
-            started_at=started,
-            ended_at=datetime.now(UTC),
-            status=self.status,
-            budget_limits=req.mission.budgets,
-            budgets_used=used,
-            steps=steps,
-            paths=self.paths,
-            intents=self.intents,
-            commerce=self.commerce.build(),
-            notes=self.notes,
-        )
+class ScriptedWalker(ExplorerBase):
+    def _explore(self) -> None:
+        getattr(self, f"_mission_{self.req.mission.name}")()
 
     # --- step helpers ---------------------------------------------------------------
-
-    def _note(self, kind: NoteKind, message: str, step: int | None = None) -> None:
-        self.notes.append(Note(kind=kind, step_index=step, message=message))
-
-    def _after(self, step: Step) -> Step:
-        obs = self.s.last
-        assert obs is not None
-        self.commerce.observe(step.index, obs)
-        text = self.s.page.inner_text("body")
-        if step.page_load and vocab.PAGE_INSTRUCTION_TEXT.search(text):
-            self._note(
-                NoteKind.PAGE_INSTRUCTION,
-                "Page text addressed the agent; ignored (page content is data).",
-                step.index,
-            )
-        handoff = detect_handoff(obs, text, [f.url for f in self.s.page.frames])
-        if handoff:
-            self._note(NoteKind.HANDOFF, f"{handoff.reason}: {handoff.instructions}", step.index)
-            self.req.log(f"[tripwire] hand-off needed ({handoff.reason}): {handoff.instructions}")
-            raise HandedOff(handoff.reason)
-        return step
-
-    def goto(self, url: str) -> Step:
-        return self._after(self.s.goto(url))
-
-    def click(self, element: UiElement, kind: ActionKind = ActionKind.CLICK) -> Step:
-        target = Target(
-            role=element.role,
-            accessible_name=element.accessible_name,
-            visible_text=element.text or None,
-        )
-        return self._after(self.s.click(target, kind=kind))
-
-    def type_into(self, element: UiElement, value: str) -> Step:
-        target = Target(role=element.role, accessible_name=element.accessible_name)
-        return self._after(self.s.type_into(target, value))
 
     def find(self, pattern, roles=("link", "button"), exclude=None) -> list[UiElement]:
         """Visible controls whose name matches, in document order."""
@@ -201,16 +65,6 @@ class ScriptedWalker:
             if found:
                 return found[0]
         return None
-
-    def _record_path(self, name: str, goal: PathGoal, chain: list[int], **extra) -> MeasuredPath:
-        steps = [self.s.steps[i] for i in chain]
-        counts = {
-            "clicks": sum(s.action.kind in CLICKS for s in steps),
-            "page_loads": sum(s.page_load for s in steps),
-        }
-        path = MeasuredPath(name=name, goal=goal, step_indices=chain, **(counts | extra))
-        self.paths.append(path)
-        return path
 
     def _internal_links(self, exclude) -> list[tuple[str, str]]:
         """(accessible name, path) of visible same-site links, in document order."""
@@ -274,11 +128,6 @@ class ScriptedWalker:
 
     # --- consent --------------------------------------------------------------------
 
-    def _consent_overlay(self):
-        obs = self.s.last
-        assert obs is not None
-        return next((o for o in obs.overlays if o.purpose == OverlayPurpose.CONSENT), None)
-
     def _handle_consent(self) -> None:
         overlay = self._consent_overlay()
         if overlay is None:
@@ -327,15 +176,6 @@ class ScriptedWalker:
         )
         if not done:
             self._note(NoteKind.INFO, "No way to reject consent was found.", banner_step)
-
-    def _set_consent_layer(self, index: int, layer: int) -> None:
-        """The collector cannot know which banner layer it sees; the walker does."""
-        step = self.s.steps[index]
-        overlays = [
-            o.model_copy(update={"layer": layer}) if o.purpose == OverlayPurpose.CONSENT else o
-            for o in step.overlays
-        ]
-        self.s.steps[index] = step.model_copy(update={"overlays": overlays})
 
     # --- missions -------------------------------------------------------------------
 
