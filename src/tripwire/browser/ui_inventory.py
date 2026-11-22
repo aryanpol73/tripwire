@@ -16,7 +16,7 @@ from playwright.sync_api import Frame, Page
 from tripwire.browser.color import effective_background, parse_css_color, text_contrast
 from tripwire.browser.consent import control_purpose, overlay_purpose
 from tripwire.browser.price_parse import ParsedPrice, parse_price
-from tripwire.browser.redact import REDACTED, redact_value
+from tripwire.browser.redact import REDACTED, hidden_boolean_default, redact_value
 from tripwire.schemas.common import BoundingBox
 from tripwire.schemas.trace import (
     Form,
@@ -152,12 +152,18 @@ def _form(raw: dict, prefix: str, known: set[str]) -> Form:
         action_url=raw["action"],
         method=raw["method"],
         submit_element_id=ref(raw["submitId"]),
+        has_alternative_link=raw.get("hasAlternativeLink", False),
         fields=[
             FormField(
                 name=f["name"],
                 type=f["type"],
                 label=f["label"],
                 default_value=_field_value(f),
+                hidden_boolean_default=(
+                    hidden_boolean_default(f["name"], f["defaultValue"])
+                    if f["type"] == "hidden"
+                    else None
+                ),
                 prechecked=f["prechecked"],
                 hidden=f["hidden"],
                 off_screen=f["offScreen"],

@@ -71,3 +71,11 @@ def test_har_file_is_scrubbed_in_place(tmp_path):
     text = path.read_text(encoding="utf-8")
     for secret in ("secret", "secret2", "hunter2", "zzz"):
         assert secret not in text
+
+
+def test_boolean_capture_excludes_credentials_and_raw_contact_values():
+    from tripwire.browser.redact import hidden_boolean_default
+
+    assert hidden_boolean_default("contact_email_choice", "yes") is True
+    assert hidden_boolean_default("contact_email_choice", "walker@example.test") is None
+    assert hidden_boolean_default("email_auth_token", "1") is None

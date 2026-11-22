@@ -74,7 +74,7 @@ class CommerceRecorder:
             if e.role not in ("checkbox", "switch") or not e.style.visible:
                 continue
             label = e.accessible_name or e.text
-            parsed = parse_price(label) if label else None
+            parsed = parse_price(label, accounting=False) if label else None
             if label and parsed and parsed.kind == "amount" and label not in self.addons:
                 self.addons[label] = AddOn(
                     label=label,
