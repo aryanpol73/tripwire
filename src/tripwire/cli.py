@@ -2,6 +2,7 @@
 
   tripwire audit --scenario <id>            run a sandbox scenario with its mission
   tripwire audit <url> --mission <name>     run a mission on a local (sandbox) URL
+  tripwire audit ... --walker llm           let the LLM explorer choose the actions
   tripwire replay <run_dir>                 re-render a saved trace, no browser needed
   tripwire report <run_dir>                 write the offline evidence report (report.html)
 
@@ -11,6 +12,7 @@ Real sites are refused until the Phase 7 checklist is confirmed. argparse is eno
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from collections.abc import Sequence
 from contextlib import nullcontext
@@ -25,7 +27,32 @@ from tripwire.schemas.io import read_trace, write_model
 from tripwire.schemas.trace import SiteType
 
 
+def load_dotenv(path: Path = Path(".env")) -> None:
+    """KEY=value lines from .env, without overriding variables already set."""
+    if not path.is_file():
+        return
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        value = value.strip().strip('"').strip("'")
+        if value:
+            os.environ.setdefault(key.strip(), value)
+
+
+def _llm_source(args: argparse.Namespace, run_dir: Path):
+    """The decision source for --walker llm: a replay, or the model with recording."""
+    from tripwire.llm.client import AnthropicSource, RecordingSource, ReplaySource
+
+    if args.replay:
+        return ReplaySource(Path(args.replay))
+    load_dotenv()
+    return RecordingSource(AnthropicSource(), run_dir / "llm_decisions.jsonl")
+
+
 def _cmd_audit(args: argparse.Namespace) -> int:
+    from tripwire.llm.client import LlmConfigError
     from tripwire.walker.scripted_walker import RealSitesDisabled, RunRequest, ScriptedWalker
 
     scenario = None
@@ -50,19 +77,31 @@ def _cmd_audit(args: argparse.Namespace) -> int:
     label = scenario.id if scenario else urlsplit(args.url).hostname
     run_id = f"{mission.name}-{label}-{stamp}"
     run_dir = Path(args.out) if args.out else Path("runs") / run_id
+    if args.walker == "llm":
+        try:
+            source = _llm_source(args, run_dir)
+        except LlmConfigError as err:
+            print(err, file=sys.stderr)
+            return 2
     with server as base:
-        walker = ScriptedWalker(
-            RunRequest(
-                start_url=base + mission.start_path,
-                mission=mission,
-                run_dir=run_dir,
-                run_id=run_id,
-                site_type=scenario.site_type if scenario else SiteType(args.site_type),
-                scenario_id=scenario.id if scenario else None,
-                min_action_interval_s=args.interval,
-                headless=not args.headed,
-            )
+        request = RunRequest(
+            start_url=base + mission.start_path,
+            mission=mission,
+            run_dir=run_dir,
+            run_id=run_id,
+            site_type=scenario.site_type if scenario else SiteType(args.site_type),
+            scenario_id=scenario.id if scenario else None,
+            min_action_interval_s=args.interval,
+            headless=not args.headed,
+            enforce_real_action_rules=args.real_action_rules,
         )
+        if args.walker == "llm":
+            from tripwire.llm.walker import LlmWalker, cap_from_env
+
+            cap = round(args.llm_cap * 1_000_000) if args.llm_cap else cap_from_env()
+            walker = LlmWalker(request, source, cap_micros=cap)
+        else:
+            walker = ScriptedWalker(request)
         try:
             trace = walker.run()
         except RealSitesDisabled as err:
@@ -100,6 +139,10 @@ def _cmd_report(args: argparse.Namespace) -> int:
 
 
 def _cmd_eval(args: argparse.Namespace) -> int:
+    if args.walker == "llm":
+        from tripwire.eval.llm_eval import evaluate_llm
+
+        return evaluate_llm(args)
     if args.holdout:
         from tripwire.eval.holdout import evaluate_holdout
 
@@ -126,10 +169,30 @@ def build_parser() -> argparse.ArgumentParser:
     audit.add_argument("--interval", type=float, default=0.0, help="seconds between actions")
     audit.add_argument("--headed", action="store_true", help="show the browser window")
     audit.add_argument("--site-type", default="other", choices=[s.value for s in SiteType])
+    audit.add_argument("--walker", choices=("scripted", "llm"), default="scripted")
+    audit.add_argument("--replay", help="llm walker: replay a recorded llm_decisions.jsonl")
+    audit.add_argument("--llm-cap", type=float, help="llm walker: spend cap in US$ (0.50)")
+    audit.add_argument(
+        "--real-action-rules",
+        action="store_true",
+        help="apply the real-site action rules on the sandbox (red-team runs)",
+    )
     audit.set_defaults(func=_cmd_audit)
 
     evaluation = sub.add_parser("eval", help="score all 36 labeled sandbox scenarios")
     evaluation.add_argument("--chromium-executable", help="use a local Chromium installation")
+    evaluation.add_argument("--walker", choices=("scripted", "llm"), default="scripted")
+    evaluation.add_argument(
+        "--set",
+        choices=("all", "sandbox", "unseen", "redteam"),
+        default="all",
+        help="llm walker: which targets to run",
+    )
+    evaluation.add_argument("--only", help="llm walker: run only target ids matching this")
+    evaluation.add_argument("--replay-dir", help="llm walker: replay recordings from DIR")
+    evaluation.add_argument("--record-dir", help="llm walker: keep each run's recording in DIR")
+    evaluation.add_argument("--llm-cap", type=float, help="llm walker: spend cap per run, US$")
+    evaluation.add_argument("--out", help="llm walker: output folder")
     evaluation.add_argument(
         "--repeat",
         type=int,
