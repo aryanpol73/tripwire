@@ -104,6 +104,21 @@ three independent runs per scenario. Each audit writes `findings.json` alongside
 The independent fixture format and the measured development results are in
 [the Phase 4 notebook](docs/NOTEBOOK.md#phase-4-backend--detectors-and-evaluation).
 
+## LLM explorer (Phase 6)
+
+For sites nobody scripted, an LLM chooses the actions and code checks each one:
+
+```bash
+uv sync --extra llm
+uv run tripwire audit --scenario sneaking-blatant-skin1 --walker llm
+uv run tripwire eval --walker llm --record-dir runs/llm-decisions
+uv run tripwire eval --walker llm --replay-dir runs/llm-decisions
+```
+
+Set `TRIPWIRE_MODEL` and `ANTHROPIC_API_KEY` in `.env` first (see `.env.example`). Each run
+stops before a model call that could take its spend past `TRIPWIRE_MAX_LLM_USD` (default
+US$0.50). Every decision is recorded in the run folder, so a run can be replayed offline.
+
 ## Limitations
 
 Desktop sandbox measurements cover the scripted English-language missions. The real-site
