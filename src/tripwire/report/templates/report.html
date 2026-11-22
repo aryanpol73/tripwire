@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tripwire report: {{ trace.site_url }}</title>
+<style>
+:root {
+  --bg: #f7f7f5; --panel: #ffffff; --ink: #1b1d21; --muted: #5d6470; --line: #dfe2e6;
+  --accent: #0b5cad; --warn: #9a5b00; --warn-bg: #fff4e0; --accept: #1f7a3a; --reject: #b3261e;
+  --focus: #d14b00; --code: #f0f1f3;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15171a; --panel: #1e2125; --ink: #e8eaed; --muted: #9aa1ab; --line: #33373d;
+    --accent: #7ab4ff; --warn: #ffc46b; --warn-bg: #3a2a10; --accept: #5fd38a; --reject: #ff8a80;
+    --focus: #ff9e5e; --code: #272a2f;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 1080px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 24px; margin: 0 0 4px; }
+h2 { font-size: 19px; margin: 36px 0 12px; }
+h3 { font-size: 17px; margin: 0; }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+.meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px 20px; margin-top: 14px; }
+.meta div span { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.disclaimer { margin-top: 14px; padding: 10px 14px; border-left: 4px solid var(--warn);
+  background: var(--warn-bg); border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; }
+td.num { font-variant-numeric: tabular-nums; }
+.card { margin-top: 18px; }
+.card header { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; justify-content: space-between; }
+.headline { font-size: 18px; font-weight: 600; margin: 10px 0 4px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.chip.tier-A { border-color: var(--accent); color: var(--accent); }
+.grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 18px; margin-top: 14px; }
+@media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
+figure { margin: 0 0 14px; }
+figcaption { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.shot { position: relative; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; max-height: 720px; overflow-y: auto; }
+.shot img { display: block; width: 100%; height: auto; }
+.shot .frame { position: relative; }
+.box { position: absolute; border: 3px solid var(--focus); border-radius: 4px; box-shadow: 0 0 0 2px rgba(255,255,255,.7); }
+.box.accept { border-color: var(--accept); }
+.box.reject { border-color: var(--reject); }
+.box b { position: absolute; left: -3px; bottom: 100%; white-space: nowrap; font-size: 11px; font-weight: 600;
+  background: var(--focus); color: #fff; padding: 1px 6px; border-radius: 4px 4px 0 0; }
+.box.accept b { background: var(--accept); }
+.box.reject b { background: var(--reject); }
+ol.repro { padding-left: 20px; margin: 6px 0; }
+ol.repro li { margin: 3px 0; }
+code, .mono { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 13px; }
+code { background: var(--code); padding: 1px 4px; border-radius: 4px; word-break: break-all; }
+details { margin-top: 10px; }
+summary { cursor: pointer; font-weight: 600; color: var(--accent); }
+.check { margin-top: 12px; padding: 10px 14px; border: 1px dashed var(--line); border-radius: 6px; }
+.late { color: var(--reject); font-weight: 600; }
+.paths { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 640px) { .paths { grid-template-columns: 1fr; } }
+.empty { text-align: left; }
+.section-note { margin: -6px 0 10px; }
+.btn { display: inline-block; padding: 6px 12px; border: 1px solid var(--accent); border-radius: 6px; text-decoration: none; }
+footer { margin-top: 48px; font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+
+<header class="panel">
+  <h1>Tripwire evidence report</h1>
+  <div class="muted">{{ trace.site_url }}</div>
+  <div class="meta">
+    <div><span>Mission</span>{{ trace.mission }}</div>
+    <div><span>Mode</span>{{ trace.mode.value }}{% if trace.scenario_id %} &middot; {{ trace.scenario_id }}{% endif %}</div>
+    <div><span>Run date</span>{{ trace.started_at.strftime("%Y-%m-%d %H:%M UTC") }}</div>
+    <div><span>Run status</span>{{ trace.status.value.replace("_", " ") }}</div>
+    <div><span>Coverage</span>{{ trace.steps|length }} steps &middot; {{ trace.budgets_used.page_loads }} page loads &middot; {{ duration_s }} s</div>
+    <div><span>Findings</span>{{ measured|length }} measured{% if experimental %} &middot; {{ experimental|length }} experimental{% endif %}{% if review %} &middot; {{ review|length }} to review{% endif %}</div>
+  </div>
+  <p class="disclaimer"><strong>This report records evidence, not a legal verdict.</strong>
+    It lists what an automated walker measured on this run: clicks, sizes, contrast, prices
+    and requests. It does not judge intent or whether any law was broken. Check each finding
+    against the screenshots before relying on it.</p>
+</header>
+
+<h2>Summary</h2>
+{% if summary %}
+<div class="panel">
+<table>
+  <tr><th>Family</th><th>Measured (tier A)</th><th>Heuristic (tier B)</th><th>LLM only (tier C)</th></tr>
+  {% for family, row in summary.items() %}
+  <tr><td>{{ family }}</td><td class="num">{{ row.A }}</td><td class="num">{{ row.B }}</td><td class="num">{{ row.C }}</td></tr>
+  {% endfor %}
+</table>
+</div>
+{% else %}
+<div class="panel empty">
+  <p class="headline">No pattern crossed a threshold on this run.</p>
+  <p>That covers only what the walker did: {{ trace.steps|length }} steps of the
+    <strong>{{ trace.mission }}</strong> mission, ending with status
+    <strong>{{ trace.status.value.replace("_", " ") }}</strong>. Pages, flows and states the
+    walker did not reach were not measured, and a different mission, account state or
+    location can show different behaviour. The rules checked are listed under
+    &ldquo;What was checked&rdquo; below.</p>
+</div>
+{% endif %}
+
+{% macro figure(s) %}
+      <figure>
+        {% if s.data_uri %}
+        <div class="shot"><div class="frame">
+          <img src="{{ s.data_uri }}" alt="Screenshot of step {{ s.step }}">
+          {% for b in s.boxes %}
+          <div class="box {{ b.kind }}" style="left:{{ b.left }}%;top:{{ b.top }}%;width:{{ b.width }}%;height:{{ b.height }}%"><b>{{ b.label }}</b></div>
+          {% endfor %}
+        </div></div>
+        {% else %}
+        <div class="check muted">Screenshot for step {{ s.step }} is missing from the run folder.</div>
+        {% endif %}
+        <figcaption>{{ s.caption }}</figcaption>
+      </figure>
+{% endmacro %}
+
+{% macro card(c) %}
+<article class="panel card" id="{{ c.id }}">
+  <header>
+    <h3>{{ c.title }}</h3>
+    <div class="chips">
+      <span class="chip">{{ c.family }}</span>
+      <span class="chip tier-{{ c.tier }}">Tier {{ c.tier }}</span>
+      <span class="chip">Severity {{ c.severity }}</span>
+      <span class="chip">Confidence {{ c.confidence }}</span>
+    </div>
+  </header>
+  <p class="headline">{{ c.headline }}</p>
+  <p class="muted">{{ c.summary }} <span class="mono">({{ c.rule }}, steps {{ c.steps }})</span></p>
+
+  <div class="grid">
+    <div>
+      <table>
+        <tr><th>Measurement</th><th>Value</th></tr>
+        {% for label, value, key in c.metrics %}
+        <tr><td title="{{ key }}">{{ label }}</td><td class="num">{{ value }}</td></tr>
+        {% endfor %}
+      </table>
+
+      <div class="check"><strong>Check before trusting this:</strong> {{ c.false_positive_notes }}</div>
+
+      <h4>Reproduce it</h4>
+      <ol class="repro">
+        {% for r in c.reproduce %}<li>{{ r.action }} <span class="muted">&mdash; <code>{{ r.url }}</code></span></li>{% endfor %}
+      </ol>
+    </div>
+    <div>
+      {% if c.shots|length > 3 %}
+      {{ figure(c.shots[0]) }}
+      {{ figure(c.shots[-1]) }}
+      <details>
+        <summary>The {{ c.shots|length - 2 }} steps in between</summary>
+        {% for s in c.shots[1:-1] %}{{ figure(s) }}{% endfor %}
+      </details>
+      {% else %}
+      {% for s in c.shots %}{{ figure(s) }}{% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  {% if c.prices %}
+  <h4>Price timeline</h4>
+  <table>
+    <tr><th>Line</th><th>Amount</th><th>Kind</th><th>Could be avoided</th><th>First shown</th><th>Seen at steps</th></tr>
+    {% for p in c.prices %}
+    <tr{% if p.late %} class="late"{% endif %}><td>{{ p.label }}</td><td class="num">{{ p.amount }}</td><td>{{ p.role }}</td>
+      <td>{{ "no" if p.mandatory else "yes" }}</td><td class="num">step {{ p.first_step }}</td><td class="num">{{ p.seen }}</td></tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+
+  {% if c.paths and (c.paths.join or c.paths.leave) %}
+  <h4>Joining compared with leaving</h4>
+  <div class="paths">
+    {% for side, label in (("join", "Joining / accepting"), ("leave", "Leaving / rejecting")) %}
+    <div>
+      <strong>{{ label }}</strong>
+      {% for p in c.paths[side] %}
+      <p class="muted">{{ p.clicks }} click{{ "" if p.clicks == 1 else "s" }} &middot; {{ p.page_loads }} page load{{ "" if p.page_loads == 1 else "s" }}{% if p.channel != "web" %} &middot; ends by {{ p.channel }}{% endif %}{% if not p.executed %} &middot; measured, not performed{% endif %}{% if not p.completed %} &middot; not completed{% endif %}</p>
+      <ol class="repro">{% for st in p.steps %}<li>{{ st.split(". ", 1)[1] }} <span class="muted">(step {{ st.split(".", 1)[0] }})</span></li>{% endfor %}</ol>
+      {% else %}<p class="muted">Not measured on this run.</p>{% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if c.hidden_fields %}
+  <h4>Fields the visitor could not see</h4>
+  <table>
+    <tr><th>Step</th><th>Form</th><th>Field</th><th>Type</th><th>How hidden</th><th>Value sent</th></tr>
+    {% for f in c.hidden_fields %}
+    <tr><td class="num">{{ f.step }}</td><td><code>{{ f.form }}</code></td><td><code>{{ f.name }}</code></td><td>{{ f.type }}</td><td>{{ f.how }}</td><td><code>{{ f.value }}</code></td></tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+
+  {% if c.requests %}
+  <details>
+    <summary>Network requests ({{ c.requests|length }})</summary>
+    <table>
+      <tr><th>Step</th><th>Request</th><th>Status</th><th>Body (redacted)</th></tr>
+      {% for r in c.requests %}
+      <tr><td class="num">{{ r.step }}</td><td><code>{{ r.method }} {{ r.url }}</code></td>
+        <td>{{ "blocked by safety gate" if r.blocked else (r.status if r.status is not none else "no response") }}</td>
+        <td>{% if r.body %}<code>{{ r.body }}</code>{% endif %}</td></tr>
+      {% endfor %}
+    </table>
+  </details>
+  {% endif %}
+
+  <details>
+    <summary>How we measured this</summary>
+    <p><strong>Rule question:</strong> {{ c.question }}</p>
+    {% if c.thresholds %}
+    <p>Thresholds in effect for this family:</p>
+    <table>
+      {% for k, v in c.thresholds.items() %}<tr><td><code>{{ k }}</code></td><td>{{ v }}</td></tr>{% endfor %}
+    </table>
+    {% endif %}
+    <p class="muted">Tier A values come straight from the browser (computed styles, bounding
+      boxes, counted clicks, parsed prices). Contrast uses the WCAG 2.x formula on the
+      composited colours.</p>
+  </details>
+</article>
+{% endmacro %}
+
+{% if measured %}
+<h2>Measured findings</h2>
+{% for c in measured %}{{ card(c) }}{% endfor %}
+{% endif %}
+
+{% if experimental %}
+<h2>Experimental findings</h2>
+<p class="muted section-note">Heuristic (tier B) or language-model (tier C) findings. Lower
+  confidence by design; treat these as leads to check, not as measurements.</p>
+{% for c in experimental %}{{ card(c) }}{% endfor %}
+{% endif %}
+
+{% if review %}
+<h2>Needs human review</h2>
+<p class="muted section-note">The walker saw something these rules cover but could not
+  measure it with enough certainty to report a finding.</p>
+<div class="panel">
+<table>
+  <tr><th>Rule</th><th>What to check</th><th>Steps</th></tr>
+  {% for r in review %}
+  <tr><td>{{ r.title }}<br><span class="mono muted">{{ r.rule }}</span></td><td>{{ r.question }}</td><td class="num">{{ r.steps }}</td></tr>
+  {% endfor %}
+</table>
+</div>
+{% endif %}
+
+<h2>What was checked</h2>
+<div class="panel">
+  {% if paths %}
+  <p><strong>Journeys measured</strong></p>
+  <table>
+    <tr><th>Journey</th><th>Goal</th><th>Clicks</th><th>Page loads</th><th>Result</th></tr>
+    {% for p in paths %}
+    <tr><td>{{ p.name }}</td><td>{{ p.goal.value.replace("_", " ") }}</td><td class="num">{{ p.clicks }}</td><td class="num">{{ p.page_loads }}</td>
+      <td>{{ "completed" if p.completed else "not completed" }}{% if not p.executed %}, measured not performed{% endif %}{% if p.exit_channel != "web" %}, ends by {{ p.exit_channel }}{% endif %}</td></tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+  <details>
+    <summary>Rules checked on every run ({{ rules_checked|length }})</summary>
+    <table>
+      {% for r in rules_checked %}<tr><td>{{ r.title }}<br><span class="mono muted">{{ r.id }}</span></td><td>{{ r.question }}</td></tr>{% endfor %}
+    </table>
+  </details>
+  {% if notes %}
+  <details>
+    <summary>Run notes ({{ notes|length }})</summary>
+    <table>
+      {% for n in notes %}<tr><td>{{ n.kind.value.replace("_", " ") }}</td><td class="num">{{ n.step_index if n.step_index is not none else "" }}</td><td>{{ n.message }}</td></tr>{% endfor %}
+    </table>
+  </details>
+  {% endif %}
+  <details>
+    <summary>Step-by-step trace ({{ timeline|length }} steps)</summary>
+    <table>
+      <tr><th>#</th><th>Action</th><th>Page after</th><th>Load</th><th>Requests</th><th>Overlays</th></tr>
+      {% for t in timeline %}
+      <tr><td class="num">{{ t.index }}</td><td>{{ t.what }}</td><td><code>{{ t.url }}</code></td><td>{{ "yes" if t.page_load else "" }}</td>
+        <td class="num">{{ t.requests }}{% if t.blocked %} ({{ t.blocked }} blocked){% endif %}</td><td>{{ t.overlays }}</td></tr>
+      {% endfor %}
+    </table>
+  </details>
+  <p style="margin-top:14px"><a class="btn" href="{{ findings_href }}" download="findings-{{ trace.run_id }}.json">Download findings JSON</a></p>
+</div>
+
+<footer>
+  Generated {{ generated }} by tripwire {{ version }} from run <span class="mono">{{ trace.run_id }}</span>.
+  The full trace, screenshots and DOM snapshots are in the run folder; <code>tripwire replay &lt;run_dir&gt;</code> re-renders it without a browser.
+</footer>
+</main>
+</body>
+</html>
