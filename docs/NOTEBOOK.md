@@ -775,3 +775,23 @@ hand labels are the owner's to write.
 
 **Next (owner).** Choose the sites, label the flows, sign the pre-flight once Phase 6 passes,
 then follow `docs/PILOT.md`.
+
+## Phase 8 — ship v1 (docs done; v0.1.0 not tagged)
+
+**Built.** README with a 60-second demo, a report preview, a commands table, measured results
+and an honest limitations section; `docs/ARCHITECTURE.md`; `CONTRIBUTING.md` (the loop for
+a new pattern: plant, ground truth, detector test-first, eval, report card); two sample
+reports built from sandbox runs only (`docs/sample-report/`, checked for personal paths);
+`docs/INTERVIEW.md`.
+
+**Exit check (measured 2026-11-23).** A fresh clone of `phase-8/ship` into a new folder,
+following only the README: clone 2 s, `uv sync` 2 s, `playwright install chromium` 2 s,
+`tripwire eval` 213 s, green (36 scenarios, no run or gate failures). Total 3 min 39 s,
+under the 10-minute target. Caveat: this machine already had uv's package cache and
+Playwright's Chromium, so the first three steps were near-instant; on a new machine they add
+the download time, while the eval, most of the total, is the same.
+
+**Why no tag yet.** `v0.1.0` means every Phase 0 to 8 exit check passed. Still open: the
+Phase 5 two-person verification (owner), the Phase 6 live gate (running on Groq's free tier)
+and the Phase 7 pilot (owner's sites and labels). Tag after those, then refresh the README
+results table.
