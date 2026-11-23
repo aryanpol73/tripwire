@@ -47,7 +47,7 @@ DEFAULT_CAP_MICROS = 500_000  # US$0.50 per audit
 WALL_FACTOR = 4  # model calls take seconds; the mission's wall budget assumes a script
 MAX_REFUSALS = 6
 LOOP_REPEATS = 3
-STALL_TURNS = 4
+STALL_TURNS = 5  # clicks, scrolls or navigations in a row that change nothing
 
 
 def cap_from_env() -> int:
@@ -93,6 +93,10 @@ class LlmWalker(ExplorerBase):
             source.start(self.nonce)
         self._added_item: str | None = None
         self._consent_layer = 1
+        self._filled: dict[str, set[str]] = {}  # page path -> text fields typed into
+        self._last_text: str | None = None  # page text last shown to the model
+        self._tried: dict[str, set[str]] = {}  # page path -> controls that opened nothing
+        self._dest: dict[str, str] = {}  # link name -> path it opened (walker-observed)
 
     def _limits(self) -> Budgets:
         b = self.req.mission.budgets
@@ -125,9 +129,23 @@ class LlmWalker(ExplorerBase):
             self.s.budget.check()  # steps, time, page loads and spend, before every call
             obs = self.s.last
             assert obs is not None
-            page = observe(obs, self.s.page.inner_text("body"), self.nonce, path_of(obs.url))
+            here = path_of(obs.url)
+            text = self.s.page.inner_text("body")
+            shown_text = "" if text == self._last_text else text
+            self._last_text = text
+            page = observe(
+                obs,
+                shown_text,
+                self.nonce,
+                here,
+                frozenset(self._filled.get(here, ())),
+                frozenset(self._tried.get(here, ())),
+                frozenset(self._leads_to_visited()),
+            )
             request = Request(
-                SYSTEM, step_prompt(self.req.mission, self.history, page.text), tools.TOOLS
+                SYSTEM,
+                step_prompt(self.req.mission, self.history, page.text, self._pages_opened()),
+                tools.TOOLS,
             )
             budget = self.s.budget
             if (
@@ -160,7 +178,12 @@ class LlmWalker(ExplorerBase):
                 self.stats.stopped_by = f"no tool call ({decision.stop_reason or 'text only'})"
                 return
             try:
-                checked = tools.check(decision.tool, decision.input, obs, page.shown_ids)
+                pay = (
+                    (self.req.pay_control or vocab.PAY)
+                    if self.req.mission.name == "reach_payment"
+                    else None
+                )
+                checked = tools.check(decision.tool, decision.input, obs, page.shown_ids, pay)
             except Refused as err:
                 self.stats.refusals += 1
                 self.history.append(f"{n}. {decision.tool} refused by the walker: {err}")
@@ -181,13 +204,25 @@ class LlmWalker(ExplorerBase):
                 self._note(NoteKind.INFO, "Stopped: the same action repeated on an unchanged page.")
                 return
             self._act(n, checked)
-            sha = observe(self.s.last, "", self.nonce, path_of(self.s.last.url)).controls_sha
-            stall = stall + 1 if sha == last_sha else 0
+            # Typing is progress even though it leaves the list of controls unchanged.
+            sha = (path_of(self.s.last.url), observe(self.s.last, "", self.nonce, "").controls_sha)
+            unchanged = sha == last_sha and checked.tool != "type"
+            stall = stall + 1 if unchanged else 0
             last_sha = sha
             if stall >= STALL_TURNS:
                 self.stats.stopped_by = "no progress (page unchanged for several actions)"
                 return
         self.stats.stopped_by = "decision cap"
+
+    def _leads_to_visited(self) -> set[str]:
+        """Link names that, when clicked before, opened a page already visited."""
+        visited = {path_of(s.url_after).split("?")[0] for s in self.s.steps}
+        return {name for name, dest in self._dest.items() if dest in visited}
+
+    def _pages_opened(self) -> int:
+        start = path_of(self.req.start_url).split("?")[0]
+        seen = {path_of(s.url_after).split("?")[0] for s in self.s.steps}
+        return len(seen - {start})
 
     def _account(self, d: Decision) -> None:
         self.stats.calls.append(
@@ -234,6 +269,8 @@ class LlmWalker(ExplorerBase):
                 assert c.element is not None
                 value = vocab.test_value(c.element.accessible_name or c.element.text or "")
                 step = self.type_into(c.element, value)
+                name = c.element.accessible_name or c.element.text or ""
+                self._filled.setdefault(path_of(step.url_after), set()).add(name.strip())
             elif c.tool == "scroll":
                 step = self._after(self.s.scroll())
             else:  # navigate
@@ -246,14 +283,27 @@ class LlmWalker(ExplorerBase):
         except (BudgetExceeded, HandedOff):
             raise
         except Exception as err:  # the control vanished, timed out, or was covered
-            self.history.append(f"{label} -> failed ({type(err).__name__})")
+            self.history.append(
+                f"{label} -> failed ({type(err).__name__}): it could not be used, perhaps "
+                "covered by a pop-up; the page has been read again"
+            )
+            # Re-read the page: what blocked the action (a late pop-up) is usually new.
+            self._after(self.s.wait(300))
             return
         self.purpose_of[step.index] = c.purpose
         after = path_of(step.url_after)
         moved = (
-            "new page" if step.page_load else ("same page" if after == before else "page changed")
+            "new page"
+            if step.page_load and after != before
+            else ("same page, nothing new opened" if after == before else "page changed")
         )
         self.history.append(f"{label} -> {moved}")
+        if c.tool == "click" and c.element is not None:
+            name = (c.element.accessible_name or c.element.text or "").strip()
+            if after == before and not step.page_load:
+                self._tried.setdefault(before, set()).add(name)
+            elif c.element.role == "link":
+                self._dest[name] = after.split("?")[0]
 
     # --- measurements from the tagged steps -------------------------------------------
 
@@ -317,11 +367,12 @@ class LlmWalker(ExplorerBase):
             )
         pay = self._tagged(Purpose.REACH_PAYMENT, Purpose.ADD_TO_CART)
         if self.req.mission.name == "reach_payment" and pay:
-            obs = self.s.last
-            reached = bool(obs) and any(
-                e.style.visible
-                and (self.req.pay_control or vocab.PAY).search(e.accessible_name or e.text or "")
-                for e in obs.elements
+            # Reached = some page after the first cart step showed a control that would pay.
+            marker = self.req.pay_control or vocab.PAY
+            reached = any(
+                e.style.visible and marker.search(e.accessible_name or e.text or "")
+                for s in self.s.steps[pay[0] :]
+                for e in s.ui.elements
                 if e.role in ("button", "link")
             )
             self._record_path("reach_payment", PathGoal.REACH_PAYMENT, pay, completed=reached)

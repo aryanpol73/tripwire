@@ -194,6 +194,11 @@ def build_parser() -> argparse.ArgumentParser:
     evaluation.add_argument("--llm-cap", type=float, help="llm walker: spend cap per run, US$")
     evaluation.add_argument("--out", help="llm walker: output folder")
     evaluation.add_argument(
+        "--resume",
+        action="store_true",
+        help="llm walker: keep finished runs from --out/summary.json, run only the rest",
+    )
+    evaluation.add_argument(
         "--repeat",
         type=int,
         choices=(1, 3),

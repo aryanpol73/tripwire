@@ -178,3 +178,17 @@ def test_replay_returns_recorded_decisions_and_counts_divergence(tmp_path):
     assert replay.divergences == 1
     with pytest.raises(ReplayExhausted):
         replay.decide(Request("s", "p3", []))
+
+
+def test_postal_pin_code_is_not_a_secret_but_a_password_is():
+    obs = page()
+    obs.elements.append(el("e8", "textbox", "PIN code"))
+    shown = observe(obs, "", "n", "/").shown_ids
+    assert tools.check("type", {"element_id": "e8", "purpose": "reach_payment"}, obs, shown)
+    with pytest.raises(tools.Refused, match="secret fields"):
+        tools.check("type", {"element_id": "e4", "purpose": "sign_up"}, obs, shown)
+
+
+def test_prompt_carries_the_walker_page_count():
+    text = step_prompt(load_mission("first_visit"), [], "obs", pages_opened=2)
+    assert "Different pages opened so far" in text and ": 2" in text
