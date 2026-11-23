@@ -35,6 +35,7 @@ def measurements(trace: Trace) -> dict[str, Observation]:
     from tripwire.detectors.consent import consent
     from tripwire.detectors.obstruction import obstruction
     from tripwire.detectors.sneaking import sneaking
+    from tripwire.detectors.urgency import urgency
 
     config = tomllib.loads(files(__package__).joinpath("thresholds.toml").read_text())
     applicable = load_mission(trace.mission).detectors
@@ -43,6 +44,7 @@ def measurements(trace: Trace) -> dict[str, Observation]:
         "consent": consent,
         "obstruction": obstruction,
         "sneaking": sneaking,
+        "urgency": urgency,
     }
     for family, detector in families.items():
         if any(rule.startswith(family + ".") for rule in applicable):

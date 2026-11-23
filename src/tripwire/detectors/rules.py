@@ -83,6 +83,18 @@ RULES: dict[str, Rule] = {
             "Is the leave control only in the footer, deep in the tree, or small and faint?",
         ),
         Rule(
+            "urgency.countdown_reset",
+            Family.URGENCY,
+            Tier.A,
+            "Does a countdown show more time after a reload than a real clock would allow?",
+        ),
+        Rule(
+            "urgency.stock_flux",
+            Family.URGENCY,
+            Tier.A,
+            "Does an 'only N left' count go up after a reload, with nothing bought?",
+        ),
+        Rule(
             "obstruction.interposed_friction",
             Family.OBSTRUCTION,
             Tier.A,

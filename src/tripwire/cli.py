@@ -230,6 +230,11 @@ def build_parser() -> argparse.ArgumentParser:
     evaluation.add_argument("--chromium-executable", help="use a local Chromium installation")
     evaluation.add_argument("--walker", choices=("scripted", "llm"), default="scripted")
     evaluation.add_argument(
+        "--module",
+        choices=("urgency",),
+        help="score a Phase 9 module's own scenario grid instead of the v1 grid",
+    )
+    evaluation.add_argument(
         "--set",
         choices=("all", "sandbox", "unseen", "redteam"),
         default="all",

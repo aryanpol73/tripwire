@@ -24,6 +24,8 @@ from tripwire.schemas.trace import SiteType
 
 GRID = scenarios.grid()
 IDS = [s.id for s in GRID]
+# Phase 9 module scenarios have their own ground truth in the same folder.
+ALL_IDS = [s.id for s in scenarios.every_scenario()]
 
 PAGES = {
     SiteType.SHOP: [
@@ -111,14 +113,15 @@ def test_skins_differ_in_class_prefix_and_wording():
 # --- Ground truth ------------------------------------------------------------------
 
 
-@pytest.mark.parametrize("scenario_id", IDS)
+@pytest.mark.parametrize("scenario_id", ALL_IDS)
 def test_committed_ground_truth_is_valid_and_current(scenario_id):
     # If this fails after changing a pattern, run: uv run evilweb ground-truth
     assert gt(scenario_id) == build(scenario_id)
 
 
-def test_ground_truth_folder_has_exactly_the_grid():
-    assert sorted(p.stem for p in GROUND_TRUTH_DIR.glob("*.json")) == sorted(IDS)
+def test_ground_truth_folder_has_exactly_the_grid_and_modules():
+    assert sorted(p.stem for p in GROUND_TRUTH_DIR.glob("*.json")) == sorted(ALL_IDS)
+    assert len(IDS) == 36  # the v1 grid never grows; modules are separate
 
 
 def test_every_tier_a_rule_has_positives_and_negatives():

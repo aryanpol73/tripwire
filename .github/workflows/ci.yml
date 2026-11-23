@@ -35,3 +35,6 @@ jobs:
 
       - name: Score the labeled sandbox and check for regressions
         run: uv run --locked tripwire eval
+
+      - name: Score the Phase 9 false-urgency module
+        run: uv run --locked tripwire eval --module urgency

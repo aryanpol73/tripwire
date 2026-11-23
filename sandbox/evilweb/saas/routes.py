@@ -39,7 +39,9 @@ def register(app: FastAPI, render, plan: Plan, sim) -> None:
 
     @app.get("/pricing")
     def pricing(request: Request) -> HTMLResponse:
-        return render(request, "pricing.html", title="Pricing")
+        return render(
+            request, "pricing.html", title="Pricing", urgency=plan.urgency.widget(request.app.state)
+        )
 
     @app.get("/signup")
     def signup(request: Request) -> HTMLResponse:

@@ -6,6 +6,7 @@
   <h2>{{ plan_name }}</h2>
   <p class="{{ c('price') }}"><span>Per seat, per month</span><span>{{ inr(plan_minor) }}</span></p>
   <p>{{ trial_days }}-day free trial. Taxes included.</p>
+  {% include "urgency.html" %}
   {% call nest() %}<div class="{{ c('row') }}">{{ button(w("start_trial"), href="/signup") }}</div>{% endcall %}
 </div>
 {% endblock %}

@@ -145,6 +145,12 @@ def _targets(trace: Trace, finding: Finding, step: Step) -> list[tuple[UiElement
             e = by_id.get(addon.element_id or "")
             if addon.preselected and addon.step_index == step.index and e is not None:
                 out.append((e, f"Pre-added: {addon.label[:30]}", "focus"))
+    elif rule.startswith("urgency."):
+        want = "only N left" if rule == "urgency.stock_flux" else None
+        for t in step.timers:
+            e = by_id.get(t.element_id or "")
+            if e is not None and (want is None) == (t.pattern != "only N left"):
+                out.append((e, f"Read: {t.text[:30]}", "focus"))
     elif rule in ("obstruction.roach_motel", "obstruction.interposed_friction"):
         out += [(e, label, "focus") for e, label in _clicked_next(trace, step)]
     return out
@@ -188,6 +194,7 @@ def _step_words(step: Step) -> str:
         "wait": "Waited on",
         "reject_consent": "Rejected cookies via",
         "handoff": "Handed to a human at",
+        "reload": "Reloaded the page",
     }.get(a.kind.value, a.kind.value)
     if a.kind.value == "navigate":
         return f"{verb} {step.url_after}"

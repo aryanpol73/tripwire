@@ -9,7 +9,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from evilweb import scenarios
-from evilweb.patterns import consent, obstruction, sneaking
+from evilweb.patterns import consent, obstruction, sneaking, urgency
 from evilweb.plan import Plan, build_plan
 from tripwire.detectors.rules import RULES
 from tripwire.schemas.finding import Family, Tier
@@ -23,6 +23,7 @@ _CONSENT = [r for r in RULES if r.startswith("consent.")]
 _OBSTRUCTION = [r for r in RULES if r.startswith("obstruction.")]
 _SHOP_SNEAKING = ["sneaking.price_drift", "sneaking.preadded_extras", "sneaking.bundled_optins"]
 _SAAS_SNEAKING = [*_SHOP_SNEAKING, "sneaking.renewal_disclosure"]
+_URGENCY = [r for r in RULES if r.startswith("urgency.")]
 
 # Which rules have something to measure for a given site and mission.
 APPLICABLE: dict[tuple[SiteType, str], list[str]] = {
@@ -45,7 +46,7 @@ def _all_metrics(plan: Plan) -> dict[str, dict]:
     found = plan.consent.metrics(site)
     found |= plan.shop.metrics() if site == SiteType.SHOP else plan.saas_trial.metrics()
     leave = plan.saas_leave if site == SiteType.SAAS else plan.news_leave
-    return found | leave.metrics()
+    return found | leave.metrics() | plan.urgency.metrics()
 
 
 def _decoys(plan: Plan, applicable: list[str]):
@@ -57,6 +58,7 @@ def _decoys(plan: Plan, applicable: list[str]):
         else sneaking.saas_decoys(plan.saas_trial)
     )
     found += obstruction.decoys(plan.saas_leave if site == SiteType.SAAS else plan.news_leave)
+    found += urgency.decoys(plan.urgency)
     # Keep decoys whose guarded rules are measured here; drop guards for rules that are not.
     kept = []
     for decoy in found:
@@ -70,6 +72,8 @@ def build(scenario_id: str) -> GroundTruth:
     plan = build_plan(scenario_id)
     sc = plan.scenario
     applicable = APPLICABLE[(sc.site_type, sc.mission)]
+    if sc.family == Family.URGENCY:  # module scenarios also measure the urgency rules
+        applicable = applicable + _URGENCY
     metrics = _all_metrics(plan)
     planted = sc.state != ScenarioState.CLEAN
 
@@ -77,7 +81,12 @@ def build(scenario_id: str) -> GroundTruth:
     for rule_id in applicable:
         rule = RULES[rule_id]
         own = rule.family == sc.family
-        if rule.tier == Tier.A:
+        if rule.family == Family.URGENCY:
+            # Each urgency pattern is planted on its own (subtle: the countdown only), so
+            # read whether it fires from the Plan's own expected measurement.
+            m = metrics.get(rule_id, {})
+            fires = own and bool(m.get("timer_restarted") or m.get("stock_went_up"))
+        elif rule.tier == Tier.A:
             fires = own and planted
         else:  # Tier B: confirm-shaming wording is planted only in blatant consent scenarios
             fires = own and sc.family == Family.CONSENT_ASYMMETRY and plan.consent.shaming
@@ -104,4 +113,4 @@ def build(scenario_id: str) -> GroundTruth:
 
 
 def write_all(out_dir: Path = GROUND_TRUTH_DIR) -> list[Path]:
-    return [write_model(build(s.id), out_dir / f"{s.id}.json") for s in scenarios.grid()]
+    return [write_model(build(s.id), out_dir / f"{s.id}.json") for s in scenarios.every_scenario()]

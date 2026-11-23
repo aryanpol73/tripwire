@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from functools import cache
 
 from evilweb import scenarios
-from evilweb.patterns import consent, obstruction, sneaking
+from evilweb.patterns import consent, obstruction, sneaking, urgency
 from evilweb.skins import SKINS, Skin
 from tripwire.schemas.finding import Family
 from tripwire.schemas.ground_truth import ScenarioState
@@ -27,6 +27,7 @@ class Plan:
     saas_trial: sneaking.SaasTrialSpec
     saas_leave: obstruction.LeaveSpec
     news_leave: obstruction.LeaveSpec
+    urgency: urgency.UrgencySpec = urgency.NONE
 
 
 @cache
@@ -45,4 +46,8 @@ def build_plan(scenario_id: str) -> Plan:
         saas_trial=sneaking.build_saas(state(Family.SNEAKING), skin),
         saas_leave=obstruction.build_saas(state(Family.OBSTRUCTION), skin),
         news_leave=obstruction.build_news(state(Family.OBSTRUCTION), skin),
+        # Only urgency-module scenarios show the widget; v1 scenarios render as before.
+        urgency=(
+            urgency.build(scenario.state) if scenario.family == Family.URGENCY else urgency.NONE
+        ),
     )

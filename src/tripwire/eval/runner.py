@@ -76,8 +76,10 @@ def evaluate(args):
     score = Score()
     failures = []
     walk = partial(walk_case, repeat=args.repeat, executable=args.chromium_executable)
+    module = getattr(args, "module", None)
+    cases = scenarios.module_grid(module) if module else scenarios.grid()
     with ThreadPoolExecutor(max_workers=args.jobs) as workers:
-        for sc, observations, errors in workers.map(walk, scenarios.grid()):
+        for sc, observations, errors in workers.map(walk, cases):
             failures.extend(errors)
             truth = GroundTruth.model_validate_json(
                 (GROUND_TRUTH_DIR / f"{sc.id}.json").read_text()
@@ -90,10 +92,11 @@ def evaluate(args):
                 observations,
             )
     report = score.report()
-    report["scenario_count"] = len(scenarios.grid())
+    report["module"] = module or "v1"
+    report["scenario_count"] = len(cases)
     report["runs_per_scenario"] = args.repeat
     report["run_failures"] = failures
-    gates = check_targets(report)
+    gates = check_targets(report, compare_baseline=not module)
     report["gate_failures"] = gates
     print(json.dumps(report, indent=2))
     return int(bool(failures or gates or score.differences))
@@ -103,8 +106,10 @@ def read_baseline():
     return json.loads(Path(__file__).with_name("baseline.json").read_text())
 
 
-def check_targets(report):
-    baseline = read_baseline()
+def check_targets(report, compare_baseline: bool = True):
+    """The v1 grid is held to CI's baseline; a Phase 9 module has its own groups, so only
+    the per-detector targets and the decoy rule apply to it."""
+    baseline = read_baseline() if compare_baseline else {}
     failures = []
     for group, reference in baseline.items():
         current = report["groups"].get(group, {})
@@ -113,6 +118,10 @@ def check_targets(report):
             if rate is None or rate + 0.02 + 1e-12 < previous:
                 failures.append(f"{group} {metric} regressed from {previous} to {rate}")
     for group, values in report["groups"].items():
+        if not compare_baseline and not (
+            values.get("tp", 0) + values.get("fp", 0) + values.get("fn", 0)
+        ):
+            continue  # a module grid plants nothing for this detector, and it flagged nothing
         if group.startswith("A/detector/"):
             for key, minimum in (("precision", 0.95), ("recall", 0.90)):
                 if values[key] is None or values[key] < minimum:

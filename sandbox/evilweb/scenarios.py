@@ -15,11 +15,16 @@ from tripwire.schemas.ground_truth import ScenarioState
 from tripwire.schemas.trace import SiteType
 
 SKIN_NUMBERS = (1, 2, 3, 4)
+# The v1 grid stays at 36 scenarios. Phase 9 modules get their own grid (module_grid), so a
+# new family never changes the v1 numbers, CI's baseline or the Phase 6 targets.
+V1_FAMILIES = (Family.CONSENT_ASYMMETRY, Family.SNEAKING, Family.OBSTRUCTION)
+MODULES = {"urgency": Family.URGENCY}
 
 FAMILY_SITES: dict[Family, tuple[SiteType, SiteType]] = {
     Family.CONSENT_ASYMMETRY: (SiteType.NEWS, SiteType.SAAS),  # banner; saas sign-up page
     Family.SNEAKING: (SiteType.SHOP, SiteType.SAAS),  # checkout; saas trial page
     Family.OBSTRUCTION: (SiteType.SAAS, SiteType.NEWS),  # cancel; newsletter unsubscribe
+    Family.URGENCY: (SiteType.SHOP, SiteType.SAAS),  # product page; pricing page
 }
 
 
@@ -54,12 +59,21 @@ class Scenario:
 def grid() -> list[Scenario]:
     return [
         Scenario(family, state, skin)
-        for family, state, skin in product(Family, ScenarioState, SKIN_NUMBERS)
+        for family, state, skin in product(V1_FAMILIES, ScenarioState, SKIN_NUMBERS)
     ]
 
 
+def module_grid(module: str) -> list[Scenario]:
+    family = MODULES[module]
+    return [Scenario(family, state, skin) for state, skin in product(ScenarioState, SKIN_NUMBERS)]
+
+
+def every_scenario() -> list[Scenario]:
+    return grid() + [s for m in MODULES for s in module_grid(m)]
+
+
 def get(scenario_id: str) -> Scenario:
-    for scenario in grid():
+    for scenario in every_scenario():
         if scenario.id == scenario_id:
             return scenario
     raise KeyError(f"unknown scenario {scenario_id!r}; run `evilweb list` to see all ids")

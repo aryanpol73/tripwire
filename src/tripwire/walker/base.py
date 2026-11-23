@@ -216,12 +216,38 @@ class ExplorerBase:
                 "Page text addressed the agent; ignored (page content is data).",
                 step.index,
             )
+        self._probe_urgency(step)
         handoff = detect_handoff(obs, text, [f.url for f in self.s.page.frames])
         if handoff:
             self._note(NoteKind.HANDOFF, f"{handoff.reason}: {handoff.instructions}", step.index)
             self.req.log(f"[tripwire] hand-off needed ({handoff.reason}): {handoff.instructions}")
             raise HandedOff(handoff.reason)
         return step
+
+    def _probe_urgency(self, step: Step) -> None:
+        """Phase 9: the first time a page shows a clock or a stock count, measure it again
+        2 s later on the same page. Only a clock that ticked (a live countdown) or a stock
+        count is then tested with one reload. Static times such as opening hours never
+        tick, so they cost one short wait and no page load."""
+        obs = self.s.last
+        if step.action.kind in (ActionKind.RELOAD, ActionKind.WAIT) or obs is None:
+            return
+        relevant = [t for t in obs.timers if t.seconds_remaining or t.pattern == "only N left"]
+        if not relevant or getattr(self, "_urgency_probed", False):
+            return
+        self._urgency_probed = True
+        before = {t.text: t.seconds_remaining for t in relevant}
+        self._after(self.s.wait(2000))
+        later = self.s.last
+        assert later is not None
+        ticking = any(
+            t.seconds_remaining is not None
+            and any(b is not None and t.seconds_remaining < b for b in before.values())
+            for t in later.timers
+        )
+        stock = any(t.pattern == "only N left" for t in later.timers)
+        if ticking or stock:
+            self._after(self.s.reload(wait_ms=2000))
 
     def goto(self, url: str) -> Step:
         return self._after(self.s.goto(url))
