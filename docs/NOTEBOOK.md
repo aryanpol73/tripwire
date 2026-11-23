@@ -750,3 +750,48 @@ uv run tripwire eval --walker llm --replay-dir runs/llm-decisions   # offline, n
    know, so it cannot end the fence and speak as the operator.
 3. **Record and replay.** Logging every decision with its request hash turns a
    non-deterministic model run into a repeatable test.
+
+## Phase 7 — real-site pilot (prepared; not run)
+
+**Status.** Everything the pilot needs is built and tested on the local sandbox. No real
+site has been visited: the brief requires Phases 4 to 6 to meet their targets first (the
+Phase 6 live gate is still running on Groq's free tier), and the site list and the 30 to 40
+hand labels are the owner's to write.
+
+**Built.**
+- Real-site mode (D-064): `RunRequest.mode = REAL`, refused on a non-local host without a
+  complete, signed `private/pilot/preflight.yaml`; robots.txt, 2 s pacing, 30 page loads,
+  real-site action rules; account flows need per-run approval.
+- `tripwire pilot preflight | labels | run | score` and `docs/PILOT.md`, the runbook.
+- Private labels format and the Tier A precision scorer (D-065). `private/` is git-ignored.
+
+**Measured (sandbox rehearsal, no real site).**
+- Under real-site rules on the local sandbox: actions about 2 s apart; Accept never clicked
+  (the accept path is measured, not executed); a sign-up's account-creating button ("Start
+  my trial") is blocked by the gate, while opening the form is allowed.
+- Every refusal path is tested: no `--real`, an incomplete or future-dated pre-flight, an
+  account flow without approval.
+- Scorer: TP, FP and not-measured flows on fixture traces, and measurement disagreements.
+
+**Next (owner).** Choose the sites, label the flows, sign the pre-flight once Phase 6 passes,
+then follow `docs/PILOT.md`.
+
+## Phase 8 — ship v1 (docs done; v0.1.0 not tagged)
+
+**Built.** README with a 60-second demo, a report preview, a commands table, measured results
+and an honest limitations section; `docs/ARCHITECTURE.md`; `CONTRIBUTING.md` (the loop for
+a new pattern: plant, ground truth, detector test-first, eval, report card); two sample
+reports built from sandbox runs only (`docs/sample-report/`, checked for personal paths);
+`docs/INTERVIEW.md`.
+
+**Exit check (measured 2026-11-23).** A fresh clone of `phase-8/ship` into a new folder,
+following only the README: clone 2 s, `uv sync` 2 s, `playwright install chromium` 2 s,
+`tripwire eval` 213 s, green (36 scenarios, no run or gate failures). Total 3 min 39 s,
+under the 10-minute target. Caveat: this machine already had uv's package cache and
+Playwright's Chromium, so the first three steps were near-instant; on a new machine they add
+the download time, while the eval, most of the total, is the same.
+
+**Why no tag yet.** `v0.1.0` means every Phase 0 to 8 exit check passed. Still open: the
+Phase 5 two-person verification (owner), the Phase 6 live gate (running on Groq's free tier)
+and the Phase 7 pilot (owner's sites and labels). Tag after those, then refresh the README
+results table.

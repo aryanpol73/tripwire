@@ -20,6 +20,8 @@ htmlcov/
 # Run output (traces, screenshots, HAR files, reports). Never commit raw runs:
 # they can contain cookies or personal data. Golden fixtures live in tests/fixtures/.
 runs/
+# Phase 7: the site list, labels, pre-flight and real-site runs. Never committed.
+private/
 *.har
 playwright-profile*/
 

@@ -120,6 +120,53 @@ def _cmd_audit(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_pilot(args: argparse.Namespace) -> int:
+    import json
+
+    from tripwire.pilot.labels import EXAMPLE, LABELS_FILE, RUNS_DIR, load_labels
+    from tripwire.pilot.preflight import PREFLIGHT_FILE, PreflightError, load_preflight, template
+
+    if args.pilot_command == "preflight":
+        if args.check:
+            try:
+                pre = load_preflight(Path(args.file or PREFLIGHT_FILE))
+            except PreflightError as err:
+                print(err, file=sys.stderr)
+                return 1
+            print(f"pre-flight complete, signed by {pre.owner} on {pre.signed_on}")
+            return 0
+        print(template(), end="")
+        return 0
+    if args.pilot_command == "labels":
+        if args.check:
+            labels = load_labels(Path(args.file or LABELS_FILE))
+            print(f"{len(labels.sites)} sites, {len(labels.flows)} flows, "
+                  f"{len(labels.runs())} runs")  # fmt: skip
+            return 0
+        print(EXAMPLE, end="")
+        return 0
+    labels = load_labels(Path(args.labels or LABELS_FILE))
+    runs = Path(args.runs or RUNS_DIR)
+    if args.pilot_command == "run":
+        from tripwire.pilot.runner import run_pilot
+
+        return run_pilot(
+            labels,
+            walker=args.walker,
+            runs=runs,
+            approve_account_flows=args.approve_account_flows,
+            only=args.only,
+            headed=args.headed,
+        )
+    from tripwire.pilot.score import score
+
+    result = score(labels, runs)
+    (runs / "score.json").parent.mkdir(parents=True, exist_ok=True)
+    (runs / "score.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
+    print(json.dumps({k: v for k, v in result.items() if k != "flows"}, indent=2))
+    return 0 if result["gate_passed"] else 1
+
+
 def _cmd_replay(args: argparse.Namespace) -> int:
     path = Path(args.run)
     trace = read_trace(path / "trace.json" if path.is_dir() else path)
@@ -218,6 +265,30 @@ def build_parser() -> argparse.ArgumentParser:
         help="number of independent grid scenarios to walk concurrently",
     )
     evaluation.set_defaults(func=_cmd_eval)
+
+    pilot = sub.add_parser("pilot", help="Phase 7 real-site pilot (private, owner-run)")
+    psub = pilot.add_subparsers(dest="pilot_command", required=True)
+    pre = psub.add_parser("preflight", help="print the pre-flight template, or --check it")
+    pre.add_argument("--check", action="store_true")
+    pre.add_argument("--file")
+    lab = psub.add_parser("labels", help="print an example labels file, or --check yours")
+    lab.add_argument("--check", action="store_true")
+    lab.add_argument("--file")
+    for name, text in (("run", "run every labelled site and mission"),
+                       ("score", "compare runs with the labels")):  # fmt: skip
+        cmd = psub.add_parser(name, help=text)
+        cmd.add_argument("--labels", help="default: private/pilot/labels.yaml")
+        cmd.add_argument("--runs", help="default: private/pilot/runs")
+        if name == "run":
+            cmd.add_argument("--walker", choices=("scripted", "llm"), default="scripted")
+            cmd.add_argument("--only", help="one site id, or site--mission")
+            cmd.add_argument("--headed", action="store_true")
+            cmd.add_argument(
+                "--approve-account-flows",
+                action="store_true",
+                help="ETHICS 10: allow sign_up_and_leave on your own test account, this run",
+            )
+    pilot.set_defaults(func=_cmd_pilot)
 
     replay = sub.add_parser("replay", help="re-render a saved trace without a browser")
     replay.add_argument("run", help="a run folder or a trace.json file")

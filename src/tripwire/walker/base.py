@@ -21,6 +21,7 @@ from playwright.sync_api import Browser
 
 from tripwire.browser.safety_gate import (
     LOCAL_HOSTS,
+    REAL_SITE_MIN_INTERVAL_S,
     BudgetExceeded,
     GateConfig,
     SafetyBlocked,
@@ -78,6 +79,12 @@ class RunRequest:
     # for "you have left" and for its pay control. None means the generic vocabulary.
     left_text: re.Pattern[str] | None = None
     pay_control: re.Pattern[str] | None = None
+    # Phase 7. REAL applies every real-site rule (2 s pacing, robots.txt, 30 page loads,
+    # never accept, nothing irreversible). On a non-local host it also needs the signed
+    # pre-flight. On a local host it is a rehearsal: same rules, no pre-flight.
+    mode: Mode = Mode.SANDBOX
+    preflight: Path | None = None
+    approved_account_flows: bool = False  # ETHICS 10: the owner approved this run
 
 
 class Explorer(Protocol):
@@ -107,25 +114,57 @@ class ExplorerBase:
 
     # --- running --------------------------------------------------------------------
 
+    def _check_real_site(self, host: str) -> None:
+        """Refuse a real-site run unless every Phase 7 condition holds."""
+        from tripwire.pilot.preflight import PREFLIGHT_FILE, PreflightError, load_preflight
+
+        req = self.req
+        if req.mode != Mode.REAL:
+            raise RealSitesDisabled(
+                f"{host} is not a local host. Real sites are Phase 7 only: run them with "
+                "`tripwire pilot run` after signing the pre-flight (see docs/PILOT.md)."
+            )
+        try:
+            load_preflight(req.preflight or PREFLIGHT_FILE)
+        except PreflightError as err:
+            raise RealSitesDisabled(str(err)) from err
+        if req.mission.name == "sign_up_and_leave" and not req.approved_account_flows:
+            raise RealSitesDisabled(
+                "sign_up_and_leave changes accounts: on a real site it needs the owner's "
+                "approval for this run (ETHICS 10)."
+            )
+
     def run(self) -> Trace:
         req = self.req
         host = urlsplit(req.start_url).hostname or ""
+        real = req.mode == Mode.REAL
         if host not in LOCAL_HOSTS:
-            raise RealSitesDisabled(
-                "Real sites are disabled until the Phase 7 pre-flight checklist is confirmed."
-            )
+            self._check_real_site(host)
+        self.mode = req.mode
         limits = self._limits()
+        if real:  # ETHICS 5: at most 30 page loads, one action per 2 seconds
+            limits = limits.model_copy(update={"page_loads": min(limits.page_loads, 30)})
         gate = GateConfig(
-            mode=Mode.SANDBOX,
+            mode=req.mode,
             allowed_hosts=(host,),
             limits=limits,
-            min_action_interval_s=req.min_action_interval_s,
+            min_action_interval_s=(
+                max(req.min_action_interval_s, REAL_SITE_MIN_INTERVAL_S)
+                if real
+                else req.min_action_interval_s
+            ),
             enforce_real_action_rules=req.enforce_real_action_rules,
+            approved_account_flows=req.approved_account_flows,
         )
         started = datetime.now(UTC)
         config = SessionConfig(gate=gate, run_dir=req.run_dir, headless=req.headless)
         with BrowserSession(config, browser=req.browser) as session:
             self.s = session
+            if real:
+                parts = urlsplit(req.start_url)
+                session.load_robots(f"{parts.scheme}://{parts.netloc}")
+                if host in LOCAL_HOSTS:
+                    self._note(NoteKind.INFO, "Rehearsal: real-site rules on a local host.")
             try:
                 self._explore()
             except BudgetExceeded as err:
