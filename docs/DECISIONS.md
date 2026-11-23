@@ -471,3 +471,24 @@ Prompt size was trimmed (shorter tool schemas, page text only when it changed, 6
 **Honest caveat:** the Streamly and Kettle unseen layouts were run during these trials, so
 the fixes were informed by them. They are no longer strictly unseen; the final gate reports
 them, but the Phase 7 real-site pilot is the clean generalisation test.
+
+### D-064 Real-site mode needs a signed pre-flight, and has a local rehearsal
+
+A non-local host is refused unless the run asks for `Mode.REAL` and
+`private/pilot/preflight.yaml` exists, names the owner, is dated, and has every checklist
+item set to true (Phases 4 to 6 targets met, sites chosen privately, flows labelled before
+running, public pages only, findings private). The owner writes that file; the tool only
+prints a template. `sign_up_and_leave` on a real site also needs `--approve-account-flows`
+for that run (ETHICS 10). In real mode the walker loads robots.txt, paces actions at least
+2 s apart, caps page loads at 30, and the gate applies every real-site action rule.
+`Mode.REAL` on a local host is a rehearsal: the same rules, no pre-flight, so the mode is
+tested end to end on the sandbox before any real site. **Alternatives:** a CLI flag alone
+(too easy to pass by habit), an environment variable (invisible in the run record).
+
+### D-065 Pilot labels are private and scored as Tier A precision
+
+The owner's labels live in `private/pilot/labels.yaml` (git-ignored, with an `https` URL
+per site alias). The scorer recomputes detector observations from each run's trace, so a
+rule that did not fire still has its numbers compared with the label. Flows whose run did
+not reach the measurement are "not measured": they neither help nor hurt precision and feed
+the failure taxonomy, so a site that blocks the tool cannot inflate the score.

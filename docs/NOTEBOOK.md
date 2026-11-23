@@ -750,3 +750,28 @@ uv run tripwire eval --walker llm --replay-dir runs/llm-decisions   # offline, n
    know, so it cannot end the fence and speak as the operator.
 3. **Record and replay.** Logging every decision with its request hash turns a
    non-deterministic model run into a repeatable test.
+
+## Phase 7 — real-site pilot (prepared; not run)
+
+**Status.** Everything the pilot needs is built and tested on the local sandbox. No real
+site has been visited: the brief requires Phases 4 to 6 to meet their targets first (the
+Phase 6 live gate is still running on Groq's free tier), and the site list and the 30 to 40
+hand labels are the owner's to write.
+
+**Built.**
+- Real-site mode (D-064): `RunRequest.mode = REAL`, refused on a non-local host without a
+  complete, signed `private/pilot/preflight.yaml`; robots.txt, 2 s pacing, 30 page loads,
+  real-site action rules; account flows need per-run approval.
+- `tripwire pilot preflight | labels | run | score` and `docs/PILOT.md`, the runbook.
+- Private labels format and the Tier A precision scorer (D-065). `private/` is git-ignored.
+
+**Measured (sandbox rehearsal, no real site).**
+- Under real-site rules on the local sandbox: actions about 2 s apart; Accept never clicked
+  (the accept path is measured, not executed); a sign-up's account-creating button ("Start
+  my trial") is blocked by the gate, while opening the form is allowed.
+- Every refusal path is tested: no `--real`, an incomplete or future-dated pre-flight, an
+  account flow without approval.
+- Scorer: TP, FP and not-measured flows on fixture traces, and measurement disagreements.
+
+**Next (owner).** Choose the sites, label the flows, sign the pre-flight once Phase 6 passes,
+then follow `docs/PILOT.md`.

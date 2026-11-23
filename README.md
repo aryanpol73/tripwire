@@ -120,6 +120,12 @@ Set `TRIPWIRE_PROVIDER` (anthropic or groq), `TRIPWIRE_MODEL` and that provider'
 stops before a model call that could take its spend past `TRIPWIRE_MAX_LLM_USD` (default
 US$0.50). Every decision is recorded in the run folder, so a run can be replayed offline.
 
+## Real-site pilot (Phase 7)
+
+Real sites are refused until you sign the pre-flight checklist. The whole procedure, from
+choosing sites and labelling flows to scoring and disclosure, is in
+[docs/PILOT.md](docs/PILOT.md).
+
 ## Limitations
 
 Desktop sandbox measurements cover the scripted English-language missions. The real-site
