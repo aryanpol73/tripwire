@@ -795,3 +795,49 @@ the download time, while the eval, most of the total, is the same.
 Phase 5 two-person verification (owner), the Phase 6 live gate (running on Groq's free tier)
 and the Phase 7 pilot (owner's sites and labels). Tag after those, then refresh the README
 results table.
+
+## Phase 9 — module 1: false urgency
+
+**Built** (branch `phase-9/false-urgency`).
+- Family `urgency`; rules `urgency.countdown_reset` and `urgency.stock_flux` (Tier A).
+- Sandbox: a countdown and stock widget on the shop product page and the SaaS pricing page.
+  Clean: a real 2-hour deadline and a steady "only 3 left" (decoys). Subtle: the countdown
+  restarts at 09:59 on every load. Blatant: it restarts, and stock goes 2, 4, 6 per view.
+- Walker probe in the shared base (D-067), so both walkers measure it; a `reload` action.
+- Ground truth from the Plan, a per-pattern planting rule (D-068), a separate module grid
+  and `tripwire eval --module urgency` (D-066); a report card ("The countdown showed 09:57;
+  after a reload 2 s later it showed 09:59, not 09:55."); the module eval runs in CI.
+
+**Results (measured).**
+- Module grid, 12 scenarios: both rules precision 1.00, recall 1.00; 0 classification
+  errors; both decoys silent; 0 measurement differences over 324 compared values (urgency
+  and v1 rules).
+- v1 grid after the change: 36 scenarios, Tier A precision 1.00, recall 1.00, no errors,
+  baseline check passes.
+- 568 unit tests pass, including 9 new ones for the module.
+
+**What broke (and was fixed).**
+- Opening hours ("10:00 to 16:00") on the v1 phone-only cancel page would have been read as
+  a countdown that restarted, a false positive. Found while checking which v1 pages contain
+  clock-like text; fixed by the tick check before any reload.
+- The first module eval showed recall 0.50 for `stock_flux`. The detector was right: the
+  ground-truth generator assumed every rule of a family is planted together, but the subtle
+  state plants only the countdown. The generator now reads each rule from the Plan.
+
+**Limitations.**
+- No boxes on the screenshot for this module: the collector gives ids only to interactive
+  controls, and a countdown is plain text. The numbers and steps are in the card.
+- One probe per run: a second, different countdown later in the same run is not tested.
+- A per-visitor deadline that is disclosed as such would be flagged; the card's
+  "check before trusting this" says to look for that.
+- Sandbox only; the pilot has not seen real countdowns yet.
+- **Flaky test seen once.** In the full suite, one determinism check
+  (`consent_asymmetry-blatant-skin3`, three runs must fingerprint the same) failed once. That
+  scenario shows no timers, so the probe never runs there; 4 manual repeats and 3 more runs of
+  all determinism tests (27 walks) were identical. Treated as a rare pre-existing timing flake,
+  not caused by this module; worth watching in CI.
+
+**Three concepts.**
+1. **Tick before you test:** a number that looks like a timer is only a timer if it moves.
+2. **Compare against what physics allows:** a real deadline loses exactly the elapsed time.
+3. **Isolate modules:** a new family gets its own grid, so old results cannot drift.

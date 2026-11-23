@@ -113,8 +113,17 @@ Upgrade; a legally required notice step.
 
 On real sites the walker measures discoverability only and stops before any final confirm.
 
-### 3.4 Deferred to Phase 9
-Nagging and forced registration, false urgency, wire-level hidden fields, an LLM
+### 3.4 Phase 9 modules
+**Module 1, false urgency (built).** Two Tier A rules, measured by a probe: the first time a
+page shows a clock or a stock count, the walker reads it again 2 s later on the same page,
+and, if the clock ticked or a stock count is shown, reloads once.
+- `urgency.countdown_reset`: after the reload the countdown shows more than 3 s more than a
+  real clock allows (`excess_s = after - (before - elapsed)`).
+- `urgency.stock_flux`: "only N left" is higher after the reload, with nothing bought.
+A clock that does not tick in 2 s (opening hours, a timestamp) is never tested. The module
+has its own 12-scenario grid (`tripwire eval --module urgency`); the v1 grid stays at 36.
+
+**Still deferred:** nagging and forced registration, wire-level hidden fields, an LLM
 confirm-shaming classifier, taint tracking, a browser extension, personalization probes,
 regulatory mapping.
 

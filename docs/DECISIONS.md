@@ -492,3 +492,33 @@ per site alias). The scorer recomputes detector observations from each run's tra
 rule that did not fire still has its numbers compared with the label. Flows whose run did
 not reach the measurement are "not measured": they neither help nor hurt precision and feed
 the failure taxonomy, so a site that blocks the tool cannot inflate the score.
+
+### D-066 Phase 9 modules get their own scenario grid
+
+The v1 grid is generated from the families it lists (`scenarios.V1_FAMILIES`), not from the
+`Family` enum, so adding a family never grows it. Each module has `module_grid(<module>)`:
+3 states x 4 skins on its own site types, scored by `tripwire eval --module <name>` against
+the per-detector targets and the decoy rule; the v1 baseline check applies only to the v1
+grid. Module scenarios still measure every v1 rule on their pages (all must stay silent,
+with exact numbers), and v1 scenarios render exactly as before (the module widget is absent).
+**Why:** the v1 numbers, CI's baseline and the Phase 6 live-gate targets must not move
+while a module is added. **Alternative:** one 48-scenario grid (changes every v1 result).
+
+### D-067 False urgency is measured by a tick check and one reload
+
+A countdown is tested only if it ticks: the walker reads the page, waits 2 s and reads it
+again on the same page; if a clock went down (or a stock count is shown) it reloads once.
+`countdown_reset` compares the reading after the reload with the reading before minus the
+time between them, with a 3 s tolerance for capture jitter; `stock_flux` flags a count that
+went up. **Why the tick check:** the v1 sandbox's phone-only cancel page says "10:00 to
+16:00"; without it, opening hours would have been read as a countdown that "restarted".
+Cost: one wait step on any page with a clock, plus one page load only for a live countdown
+or a stock count, once per run.
+
+### D-068 Module patterns are planted one at a time
+
+The v1 planting rule says a planted scenario fires every Tier A rule of its family. The
+urgency module plants its patterns separately (subtle: the countdown only; blatant: both),
+so for `PER_PATTERN_FAMILIES` the ground-truth schema requires instead that a clean
+scenario fires none of its family's rules and a planted one fires at least one; whether
+each rule fires is read from the Plan's expected measurement. The v1 rule is unchanged.
