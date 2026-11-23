@@ -18,8 +18,8 @@ from urllib.parse import urlsplit
 from tripwire.browser.ui_inventory import PageObservation
 from tripwire.schemas.trace import ControlPurpose, OverlayPurpose, UiElement
 
-MAX_ELEMENTS = 120
-MAX_TEXT_CHARS = 2000
+MAX_ELEMENTS = 60
+MAX_TEXT_CHARS = 800
 MAX_NAME_CHARS = 80
 INTERACTIVE_ROLES = {
     "button",
@@ -86,6 +86,8 @@ def observe(
     nonce: str,
     path: str,
     filled: frozenset[str] = frozenset(),
+    tried: frozenset[str] = frozenset(),
+    seen_links: frozenset[str] = frozenset(),
 ) -> Observation:
     """`filled`: names of text fields the walker has typed into on this page (walker-written
     state, so the model can tell an empty required field from one already done)."""
@@ -115,6 +117,10 @@ def observe(
         flags = [_state(e)]
         if e.id in required:
             flags.append("required")
+        if _name(e) in tried:
+            flags.append("tried, opened nothing")
+        elif _name(e) in seen_links:
+            flags.append("opens a page you already visited")
         if _name(e) in filled:
             flags.append("filled")
         extra = [x for x in (*flags, _where(e, overlay_of)) if x]
@@ -129,8 +135,12 @@ def observe(
         f"Path: {_clean(path, 200)}\n"
         f"Title: {_clean(obs.title, 200)}\n"
         f"Controls (id | role | name | state, where):\n{controls}\n\n"
-        f"Visible text (first {MAX_TEXT_CHARS} characters):\n"
-        f"{_clean(page_text, MAX_TEXT_CHARS)}"
+        + (
+            f"Visible text (first {MAX_TEXT_CHARS} characters):\n"
+            f"{_clean(page_text, MAX_TEXT_CHARS)}"
+            if page_text
+            else "Visible text: unchanged since your last turn (not repeated)."
+        )
     )
     body = re.sub(r"untrusted_page_content", "untrusted-page-content", body, flags=re.I)
     text = f"<{tag}>\n{body}\n</{tag}>"

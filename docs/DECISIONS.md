@@ -455,3 +455,19 @@ the worst-case cost. No caching discount is assumed. Only models with a public p
 Groq's models page are in `prices.toml` (`openai/gpt-oss-120b`, `openai/gpt-oss-20b`,
 `qwen/qwen3.8-27b`); "contact sales" models such as the Llama ones are refused unless the
 owner supplies a price. The kickoff brief named the Anthropic SDK; this is the owner's change.
+
+### D-063 Fixes from the first live runs (Groq, openai/gpt-oss-120b)
+
+The first live trials showed walker gaps, not model limits; each fix is generic:
+re-read the page after a failed action (a late pop-up made observations stale); typing
+counts as progress; text fields show "required" and "filled"; the walker states how many
+different pages were opened, and marks links that "opened nothing" or "open a page you
+already visited" (walker-observed navigation memory); the type check uses the gate's own
+secret-field pattern (it had refused an Indian postal "PIN code"); on reach_payment a pay
+control ends the mission and is refused, and completion counts any page after the cart that
+showed one; the eval stops on a provider quota and `--resume` continues later.
+Prompt size was trimmed (shorter tool schemas, page text only when it changed, 60 controls,
+800 characters, 8 history lines): about 1,430 to 1,250 input tokens per call.
+**Honest caveat:** the Streamly and Kettle unseen layouts were run during these trials, so
+the fixes were informed by them. They are no longer strictly unseen; the final gate reports
+them, but the Phase 7 real-site pilot is the clean generalisation test.

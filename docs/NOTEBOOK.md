@@ -707,6 +707,16 @@ uv run tripwire eval --walker llm --replay-dir runs/llm-decisions   # offline, n
   the unseen layouts) and the red-team with a real model. These need `TRIPWIRE_MODEL` and an
   API key.
 
+### First live runs (Groq, 2026-11-22/23)
+
+- 13 of 52 runs finished before Groq's free tier daily limit (200,000 tokens per day for
+  `openai/gpt-oss-120b`); 0 violations, US$0.06 spent. The rest failed on the quota.
+- Those runs exposed walker gaps, fixed in D-063. After the fixes, trial runs on every mission
+  type completed (news first visit, shop checkout, recipe newsletter, streaming trial, a
+  red-team page).
+- About 16-19K tokens per run (about 1,250 per call over 10-16 calls), so the free tier fits
+  about 10 runs a day. The full gate is run over several days with `--resume`.
+
 ### What broke (and was fixed)
 
 - **Gate evidence was wrong for blocked navigations.** Playwright fires the request event

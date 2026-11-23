@@ -67,7 +67,7 @@ def mission_text(mission: Mission) -> str:
 def step_prompt(
     mission: Mission, history: list[str], observation: str, pages_opened: int = 0
 ) -> str:
-    recent = history[-15:]
+    recent = history[-8:]
     lines = "\n".join(recent) if recent else "(nothing yet)"
     if len(history) > len(recent):
         lines = f"({len(history) - len(recent)} earlier actions not shown)\n" + lines

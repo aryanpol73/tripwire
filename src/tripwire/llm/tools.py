@@ -9,6 +9,7 @@ never by the model, so page text cannot steer what gets typed.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from enum import StrEnum
 from typing import Any
@@ -44,43 +45,38 @@ def _schema(properties: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-_PURPOSE = {
-    "type": "string",
-    "enum": [p.value for p in Purpose],
-    "description": "Which part of the mission this action serves.",
-}
-_REASON = {"type": "string", "description": "One short sentence: why this action."}
-_ELEMENT = {"type": "string", "description": "An id from the Controls list, e.g. e12."}
+# Kept short on purpose: these schemas are sent with every call, and the system prompt
+# already explains purposes and rules. Field names and enums are unchanged.
+_PURPOSE = {"type": "string", "enum": [p.value for p in Purpose]}
+_REASON = {"type": "string"}
+_ELEMENT = {"type": "string"}
 
 TOOLS: list[dict[str, Any]] = [
     {
         "name": "click",
-        "description": "Click one control from the Controls list.",
+        "description": "Click a control by id.",
         "strict": True,
         "input_schema": _schema({"element_id": _ELEMENT, "purpose": _PURPOSE, "reason": _REASON}),
     },
     {
         "name": "type",
-        "description": (
-            "Fill one text field from the Controls list. The walker chooses the test value "
-            "from the field's label; you only choose the field."
-        ),
+        "description": "Fill a text field by id; the walker picks the test value.",
         "strict": True,
         "input_schema": _schema({"element_id": _ELEMENT, "purpose": _PURPOSE, "reason": _REASON}),
     },
     {
         "name": "scroll",
-        "description": "Scroll down one screen to see more of the page.",
+        "description": "Scroll down one screen.",
         "strict": True,
         "input_schema": _schema({"purpose": _PURPOSE, "reason": _REASON}),
     },
     {
         "name": "navigate",
-        "description": "Open a path on this same site, e.g. /pricing. Other sites are refused.",
+        "description": "Open a path on this site, e.g. /pricing.",
         "strict": True,
         "input_schema": _schema(
             {
-                "path": {"type": "string", "description": "A path starting with /."},
+                "path": {"type": "string"},
                 "purpose": _PURPOSE,
                 "reason": _REASON,
             }
@@ -88,16 +84,13 @@ TOOLS: list[dict[str, Any]] = [
     },
     {
         "name": "handoff",
-        "description": (
-            "Stop and hand over to a human: a CAPTCHA, a login wall, a one-time code, or a "
-            "step that needs real personal or payment data."
-        ),
+        "description": "Hand over to a human (CAPTCHA, login, code, real data needed).",
         "strict": True,
         "input_schema": _schema({"reason": _REASON}),
     },
     {
         "name": "done",
-        "description": "Stop: the mission is finished, or it cannot be finished on this site.",
+        "description": "Stop: mission finished, or impossible here.",
         "strict": True,
         "input_schema": _schema(
             {
@@ -124,8 +117,14 @@ class Checked:
 
 
 def check(
-    tool: str, args: dict[str, Any], obs: PageObservation, shown_ids: frozenset[str]
+    tool: str,
+    args: dict[str, Any],
+    obs: PageObservation,
+    shown_ids: frozenset[str],
+    pay_control: re.Pattern[str] | None = None,
 ) -> Checked:
+    """pay_control: on the reach_payment mission, the pattern of a control that would start
+    payment. Such a control marks the end of the mission, so clicking it is refused."""
     if tool not in TOOL_NAMES or tool in ("done", "handoff"):
         raise Refused(f"unknown or non-action tool {tool!r}")
     try:
@@ -155,6 +154,8 @@ def check(
             raise Refused("that is a text field; use type")
         if control == ControlPurpose.ACCEPT and _in_consent(obs, element_id):
             raise Refused("accepting consent is never done; reject it or open its settings")
+        if pay_control and pay_control.search(element.accessible_name or element.text or ""):
+            raise Refused("that would start payment: this is the last page, so call done")
     if tool == "type":
         if element.role not in TEXT_ROLES:
             raise Refused("type works only on text fields")
