@@ -15,3 +15,5 @@ detectors:
   - sneaking.price_drift
   - sneaking.preadded_extras
   - sneaking.bundled_optins
+  - urgency.countdown_reset
+  - urgency.stock_flux

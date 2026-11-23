@@ -62,6 +62,7 @@ class Family(StrEnum):
     CONSENT_ASYMMETRY = "consent_asymmetry"
     SNEAKING = "sneaking"
     OBSTRUCTION = "obstruction"
+    URGENCY = "urgency"  # Phase 9 module 1: false urgency
 
 
 class Tier(StrEnum):

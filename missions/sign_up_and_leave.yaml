@@ -26,3 +26,5 @@ detectors:
   - obstruction.roach_motel
   - obstruction.buried_control
   - obstruction.interposed_friction
+  - urgency.countdown_reset
+  - urgency.stock_flux

@@ -14,6 +14,7 @@ FAMILY_NAMES = {
     "consent_asymmetry": "Consent and choice",
     "sneaking": "Sneaking and hidden extras",
     "obstruction": "Obstruction",
+    "urgency": "False urgency",
 }
 
 RULE_TITLES = {
@@ -28,6 +29,8 @@ RULE_TITLES = {
     "obstruction.roach_motel": "Leaving is harder than joining",
     "obstruction.buried_control": "The way out is hard to find",
     "obstruction.interposed_friction": "Extra steps on the way out",
+    "urgency.countdown_reset": "A countdown that restarts",
+    "urgency.stock_flux": "A stock count that goes up",
 }
 
 METRIC_LABELS = {
@@ -70,6 +73,14 @@ METRIC_LABELS = {
     "contrast": "Text contrast (WCAG)",
     "tree_depth": "Depth in the page structure",
     "unneeded_interstitials": "Steps that asked for nothing needed",
+    "seconds_before": "Countdown before the reload (s)",
+    "seconds_after": "Countdown after the reload (s)",
+    "elapsed_s": "Seconds between the two readings",
+    "excess_s": "Extra seconds shown after the reload",
+    "timer_restarted": "Countdown restarted",
+    "stock_before": "Stock count before the reload",
+    "stock_after": "Stock count after the reload",
+    "stock_went_up": "Stock count went up",
 }
 
 SYMBOLS = {"INR": "\u20b9", "USD": "$", "EUR": "\u20ac", "GBP": "\u00a3", "JPY": "\u00a5"}
@@ -104,6 +115,13 @@ def num(value: Any) -> str:
     if isinstance(value, float):
         return f"{value:.2f}".rstrip("0").rstrip(".")
     return str(value)
+
+
+def clock(seconds: int) -> str:
+    """599 -> "09:59", 7199 -> "1:59:59", as a countdown shows it."""
+    h, rest = divmod(int(seconds), 3600)
+    mins, secs = divmod(rest, 60)
+    return f"{h}:{mins:02d}:{secs:02d}" if h else f"{mins:02d}:{secs:02d}"
 
 
 def _clicks(n: Any) -> str:
@@ -183,4 +201,17 @@ def headline(rule: str, m: Mapping[str, Any]) -> str:
     if rule == "obstruction.interposed_friction":
         n = m.get("unneeded_interstitials")
         return f"Leaving passed through {n} extra step{'' if n == 1 else 's'} that asked for nothing needed to leave."  # noqa: E501
+    if rule == "urgency.countdown_reset":
+        b, a, gap = m.get("seconds_before"), m.get("seconds_after"), m.get("elapsed_s")
+        if isinstance(b, int) and isinstance(a, int) and isinstance(gap, (int, float)):
+            expected = max(0, round(b - gap))
+            return (
+                f"The countdown showed {clock(b)}; after a reload {round(gap)} s later it "
+                f"showed {clock(a)}, not {clock(expected)}."
+            )
+    if rule == "urgency.stock_flux":
+        return (
+            f"The page said only {m.get('stock_before')} left; after a reload, with nothing "
+            f"bought, it said {m.get('stock_after')} left."
+        )
     return "A measured asymmetry was recorded."

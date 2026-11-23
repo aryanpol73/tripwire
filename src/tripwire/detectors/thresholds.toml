@@ -15,3 +15,8 @@ low_contrast = 3.0
 min_drift_minor = 1
 small_font = 12
 low_contrast = 3.0
+
+[urgency]
+# A real countdown loses the elapsed time across a reload. More than this many extra
+# seconds shown means it restarted. Covers capture jitter (about half a second) with margin.
+reset_tolerance_s = 3.0

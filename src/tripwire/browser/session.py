@@ -281,6 +281,16 @@ class BrowserSession:
         self.page.mouse.wheel(0, dy)
         return self._finish(Action(kind=ActionKind.SCROLL, value=str(dy)), url_before, loads)
 
+    def reload(self, wait_ms: int = 4000) -> Step:
+        """Wait, then reload the same page: a real countdown keeps counting and a real stock
+        count cannot go up in between. Counts as one page load."""
+        self.gate.check_navigation(self.page.url)
+        self._before_action()
+        url_before, loads = self.page.url, self._loads
+        self.page.wait_for_timeout(wait_ms)
+        self.page.reload(wait_until="load")
+        return self._finish(Action(kind=ActionKind.RELOAD, value=str(wait_ms)), url_before, loads)
+
     def wait(self, ms: int = 1000) -> Step:
         """A step with no interaction: re-measure the page after some time."""
         self._before_action()

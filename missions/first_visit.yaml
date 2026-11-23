@@ -17,3 +17,5 @@ detectors:
   - consent.visual_asymmetry
   - consent.preselected
   - consent.confirmshaming
+  - urgency.countdown_reset
+  - urgency.stock_flux

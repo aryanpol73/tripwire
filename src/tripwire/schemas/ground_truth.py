@@ -16,6 +16,9 @@ from tripwire.schemas.finding import Family, Measurement, Tier
 from tripwire.schemas.trace import MissionName, SiteType
 
 GROUND_TRUTH_SCHEMA_VERSION = "0.1.0"
+# Phase 9 modules plant their patterns one at a time (urgency subtle: the countdown only),
+# so for them the all-or-nothing planting rule below is replaced by a per-pattern one.
+PER_PATTERN_FAMILIES = {Family.URGENCY}
 
 
 class ScenarioState(StrEnum):
@@ -70,12 +73,22 @@ class GroundTruth(Model):
         # Planting rule (NOTEBOOK Phase 0, proposal P1): a non-clean scenario plants every
         # applicable Tier A rule of its family; a clean scenario plants none. Rules of other
         # families never fire here, because only one family is planted per scenario.
+        per_pattern = self.family in PER_PATTERN_FAMILIES
         for e in self.expectations:
             planted = e.family == self.family and self.state != ScenarioState.CLEAN
-            if e.tier == Tier.A and e.should_fire != planted:
+            module_rule = per_pattern and e.family == self.family
+            if e.tier == Tier.A and not module_rule and e.should_fire != planted:
                 raise ValueError(f"{e.rule}: should_fire must be {planted} in this scenario")
             if e.family != self.family and e.should_fire:
                 raise ValueError(f"{e.rule}: only the scenario's own family may fire")
+
+        if per_pattern:
+            own = [e for e in self.expectations if e.family == self.family and e.tier == Tier.A]
+            firing = [e for e in own if e.should_fire]
+            if self.state == ScenarioState.CLEAN and firing:
+                raise ValueError("a clean scenario must not fire its own family's rules")
+            if self.state != ScenarioState.CLEAN and not firing:
+                raise ValueError("a planted scenario must fire at least one of its rules")
 
         if self.state == ScenarioState.CLEAN and not self.decoys:
             raise ValueError("clean scenarios must list the decoys that must stay silent")

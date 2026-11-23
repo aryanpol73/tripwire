@@ -88,6 +88,7 @@ class ActionKind(StrEnum):
     WAIT = "wait"
     REJECT_CONSENT = "reject_consent"
     HANDOFF = "handoff"
+    RELOAD = "reload"  # Phase 9: the walker reloads a page to test timers and stock
 
 
 class Target(Model):
