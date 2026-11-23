@@ -35,6 +35,8 @@ SAMPLE_METRICS = {
     "obstruction.roach_motel": dict(sign_up_clicks=3, leave_clicks=7, exit_channel="phone"),
     "obstruction.buried_control": dict(footer_only=True, font_px=10.0, contrast=2.254),
     "obstruction.interposed_friction": dict(unneeded_interstitials=1),
+    "urgency.countdown_reset": dict(seconds_before=597, seconds_after=599, elapsed_s=4.0),
+    "urgency.stock_flux": dict(stock_before=2, stock_after=4),
 }
 
 

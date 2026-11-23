@@ -6,6 +6,7 @@ sandbox. POST /__reset starts a scenario over. Nothing is ever sent off the mach
 
 from __future__ import annotations
 
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -78,6 +79,7 @@ def create_app(scenario_id: str) -> FastAPI:
     plan = build_plan(scenario_id)
     app = FastAPI(title=f"Evil Web: {scenario_id}", docs_url=None, redoc_url=None, openapi_url=None)
     app.state.sim = Sim()
+    app.state.started = time.monotonic()  # the real deadline counts from here
     render = Renderer(plan)
 
     def sim() -> Sim:
@@ -94,6 +96,8 @@ def create_app(scenario_id: str) -> FastAPI:
     @app.post("/__reset", status_code=204)
     def reset() -> Response:
         app.state.sim = Sim()
+        app.state.started = time.monotonic()
+        app.state.urgency_views = 0
         return Response(status_code=204)
 
     @app.get("/__scenario")

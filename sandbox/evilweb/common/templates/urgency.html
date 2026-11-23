@@ -1,0 +1,25 @@
+{# False-urgency widget (Phase 9). Renders nothing for v1 scenarios. #}
+{% if urgency.countdown_seconds is not none or urgency.stock_left is not none %}
+<div class="{{ c('card') }}" id="{{ sid('urgency') }}">
+  {% if urgency.countdown_seconds is not none %}
+  <p>Offer ends in <strong><span data-ew-countdown="{{ urgency.countdown_seconds }}"></span></strong></p>
+  {% endif %}
+  {% if urgency.stock_left is not none %}
+  <p><strong>Only {{ urgency.stock_left }} left in stock</strong></p>
+  {% endif %}
+</div>
+<script>
+(function () {
+  var el = document.querySelector("[data-ew-countdown]");
+  if (!el) return;
+  var left = parseInt(el.getAttribute("data-ew-countdown"), 10);
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function show() {
+    var h = Math.floor(left / 3600), m = Math.floor((left % 3600) / 60), s = left % 60;
+    el.textContent = h > 0 ? h + ":" + pad(m) + ":" + pad(s) : pad(m) + ":" + pad(s);
+  }
+  show();
+  setInterval(function () { if (left > 0) { left -= 1; show(); } }, 1000);
+})();
+</script>
+{% endif %}

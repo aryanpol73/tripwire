@@ -56,6 +56,7 @@ def register(app: FastAPI, render: Callable[..., HTMLResponse], plan: Plan, sim)
         return render(
             request,
             "product.html",
+            urgency=plan.urgency.widget(request.app.state),
             title=item.name,
             product=item,
             delivery=DELIVERY_MINOR,

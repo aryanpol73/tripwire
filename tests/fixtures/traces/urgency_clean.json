@@ -1,0 +1,4246 @@
+{
+  "schema_version": "0.2.0",
+  "run_id": "reach_payment-urgency-clean-skin1-20261123T103949Z",
+  "site_url": "http://127.0.0.1:54706/",
+  "site_type": "shop",
+  "mission": "reach_payment",
+  "mode": "sandbox",
+  "scenario_id": "urgency-clean-skin1",
+  "started_at": "2026-11-23T10:39:49.486360Z",
+  "ended_at": "2026-11-23T10:40:00.124123Z",
+  "status": "completed",
+  "budget_limits": {
+    "steps": 40,
+    "wall_seconds": 240.0,
+    "page_loads": 20,
+    "llm_spend_usd_micros": 0
+  },
+  "budgets_used": {
+    "steps": 12,
+    "wall_seconds": 10.532,
+    "page_loads": 6,
+    "llm_spend_usd_micros": 0
+  },
+  "steps": [
+    {
+      "index": 0,
+      "timestamp": "2026-11-23T10:39:51.155399Z",
+      "action": {
+        "kind": "navigate",
+        "target": null,
+        "value": "http://127.0.0.1:54706/"
+      },
+      "url_before": null,
+      "url_after": "http://127.0.0.1:54706/",
+      "page_load": true,
+      "screenshot": "screens/000.png",
+      "a11y_snapshot": "a11y/000.yaml",
+      "dom_snapshot": "dom/000.html",
+      "requests": [
+        {
+          "id": "r1",
+          "method": "GET",
+          "url": "http://127.0.0.1:54706/",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-23T10:39:50.689668Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "Kirana Goods",
+            "accessible_name": "Kirana Goods",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 141.609375,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Shop",
+            "accessible_name": "Shop",
+            "bbox": {
+              "x": 181.609375,
+              "y": 13.5,
+              "width": 36.0625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Cart (0)",
+            "accessible_name": "Cart (0)",
+            "bbox": {
+              "x": 229.671875,
+              "y": 13.5,
+              "width": 56.09375,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "link",
+            "text": "Notebook Set",
+            "accessible_name": "Notebook Set",
+            "bbox": {
+              "x": 41.0,
+              "y": 186.78125,
+              "width": 164.765625,
+              "height": 27.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "Cotton Tote Bag",
+            "accessible_name": "Cotton Tote Bag",
+            "bbox": {
+              "x": 41.0,
+              "y": 334.59375,
+              "width": 196.765625,
+              "height": 27.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "main"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Steel Water Bottle",
+            "accessible_name": "Steel Water Bottle",
+            "bbox": {
+              "x": 41.0,
+              "y": 482.40625,
+              "width": 224.578125,
+              "height": 27.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "main"
+          },
+          {
+            "id": "e7",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e8",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e9",
+            "role": "button",
+            "text": "Accept all",
+            "accessible_name": "Accept all",
+            "bbox": {
+              "x": 675.0,
+              "y": 655.0,
+              "width": 200.0,
+              "height": 44.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e10",
+            "role": "button",
+            "text": "Reject all",
+            "accessible_name": "Reject all",
+            "bbox": {
+              "x": 887.0,
+              "y": 655.0,
+              "width": 200.0,
+              "height": 44.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e11",
+            "role": "button",
+            "text": "Manage options",
+            "accessible_name": "Manage options",
+            "bbox": {
+              "x": 1099.0,
+              "y": 661.0,
+              "width": 160.0,
+              "height": 32.0
+            },
+            "style": {
+              "font_size_px": 14.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e12",
+            "role": "switch",
+            "text": "",
+            "accessible_name": "Strictly necessary (always on)",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(84, 84, 84)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": true,
+            "selected": null,
+            "disabled": true,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e13",
+            "role": "switch",
+            "text": "",
+            "accessible_name": "Analytics",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e14",
+            "role": "switch",
+            "text": "",
+            "accessible_name": "Marketing",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e15",
+            "role": "switch",
+            "text": "",
+            "accessible_name": "Personalised content",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e16",
+            "role": "button",
+            "text": "Accept all",
+            "accessible_name": "Accept all",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e17",
+            "role": "button",
+            "text": "Reject all",
+            "accessible_name": "Reject all",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e18",
+            "role": "button",
+            "text": "Save choices",
+            "accessible_name": "Save choices",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "o1",
+          "kind": "banner",
+          "purpose": "consent",
+          "layer": 1,
+          "bbox": {
+            "x": 0.0,
+            "y": 583.0,
+            "width": 1280.0,
+            "height": 137.0
+          },
+          "viewport_coverage": 0.1903,
+          "blocks_interaction": false,
+          "controls": [
+            {
+              "element_id": "e9",
+              "purpose": "accept"
+            },
+            {
+              "element_id": "e10",
+              "purpose": "reject"
+            },
+            {
+              "element_id": "e11",
+              "purpose": "settings"
+            }
+          ]
+        }
+      ],
+      "forms": [],
+      "timers": []
+    },
+    {
+      "index": 1,
+      "timestamp": "2026-11-23T10:39:51.566377Z",
+      "action": {
+        "kind": "reject_consent",
+        "target": {
+          "selector": null,
+          "role": "button",
+          "accessible_name": "Reject all",
+          "visible_text": "Reject all"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:54706/",
+      "url_after": "http://127.0.0.1:54706/",
+      "page_load": false,
+      "screenshot": "screens/001.png",
+      "a11y_snapshot": "a11y/001.yaml",
+      "dom_snapshot": "dom/001.html",
+      "requests": [
+        {
+          "id": "r2",
+          "method": "POST",
+          "url": "http://127.0.0.1:54706/consent",
+          "resource_type": "fetch",
+          "status": 204,
+          "timestamp": "2026-11-23T10:39:51.209925Z",
+          "post_data_redacted": "{\"choice\":\"reject\",\"toggles\":{\"necessary\":true,\"analytics\":false,\"marketing\":false,\"personalisation\":false}}",
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "Kirana Goods",
+            "accessible_name": "Kirana Goods",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 141.609375,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Shop",
+            "accessible_name": "Shop",
+            "bbox": {
+              "x": 181.609375,
+              "y": 13.5,
+              "width": 36.0625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Cart (0)",
+            "accessible_name": "Cart (0)",
+            "bbox": {
+              "x": 229.671875,
+              "y": 13.5,
+              "width": 56.09375,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "link",
+            "text": "Notebook Set",
+            "accessible_name": "Notebook Set",
+            "bbox": {
+              "x": 41.0,
+              "y": 186.78125,
+              "width": 164.765625,
+              "height": 27.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "Cotton Tote Bag",
+            "accessible_name": "Cotton Tote Bag",
+            "bbox": {
+              "x": 41.0,
+              "y": 334.59375,
+              "width": 196.765625,
+              "height": 27.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "main"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Steel Water Bottle",
+            "accessible_name": "Steel Water Bottle",
+            "bbox": {
+              "x": 41.0,
+              "y": 482.40625,
+              "width": 224.578125,
+              "height": 27.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "main"
+          },
+          {
+            "id": "e7",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e8",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [],
+      "timers": []
+    },
+    {
+      "index": 2,
+      "timestamp": "2026-11-23T10:39:52.007278Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "link",
+          "accessible_name": "Notebook Set",
+          "visible_text": "Notebook Set"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:54706/",
+      "url_after": "http://127.0.0.1:54706/product/NOTE-03",
+      "page_load": true,
+      "screenshot": "screens/002.png",
+      "a11y_snapshot": "a11y/002.yaml",
+      "dom_snapshot": "dom/002.html",
+      "requests": [
+        {
+          "id": "r3",
+          "method": "GET",
+          "url": "http://127.0.0.1:54706/product/NOTE-03",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-23T10:39:51.609709Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "Kirana Goods",
+            "accessible_name": "Kirana Goods",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 141.609375,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Shop",
+            "accessible_name": "Shop",
+            "bbox": {
+              "x": 181.609375,
+              "y": 13.5,
+              "width": 36.0625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Cart (0)",
+            "accessible_name": "Cart (0)",
+            "bbox": {
+              "x": 229.671875,
+              "y": 13.5,
+              "width": 56.09375,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "button",
+            "text": "Add to cart",
+            "accessible_name": "Add to cart",
+            "bbox": {
+              "x": 809.515625,
+              "y": 477.875,
+              "width": 109.484375,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/cart/add",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "sku",
+              "type": "hidden",
+              "label": null,
+              "default_value": "NOTE-03",
+              "prechecked": false,
+              "hidden": true,
+              "off_screen": false,
+              "required": false,
+              "element_id": null
+            }
+          ],
+          "submit_element_id": "e4"
+        }
+      ],
+      "timers": [
+        {
+          "element_id": null,
+          "text": "1:59:57",
+          "pattern": "hh:mm:ss",
+          "seconds_remaining": 7197,
+          "resets_on_reload": null
+        },
+        {
+          "element_id": null,
+          "text": "Only 3 left in stock",
+          "pattern": "only N left",
+          "seconds_remaining": null,
+          "resets_on_reload": null
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "timestamp": "2026-11-23T10:39:54.373778Z",
+      "action": {
+        "kind": "wait",
+        "target": null,
+        "value": "2000"
+      },
+      "url_before": "http://127.0.0.1:54706/product/NOTE-03",
+      "url_after": "http://127.0.0.1:54706/product/NOTE-03",
+      "page_load": false,
+      "screenshot": "screens/003.png",
+      "a11y_snapshot": "a11y/003.yaml",
+      "dom_snapshot": "dom/003.html",
+      "requests": [],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "Kirana Goods",
+            "accessible_name": "Kirana Goods",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 141.609375,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Shop",
+            "accessible_name": "Shop",
+            "bbox": {
+              "x": 181.609375,
+              "y": 13.5,
+              "width": 36.0625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Cart (0)",
+            "accessible_name": "Cart (0)",
+            "bbox": {
+              "x": 229.671875,
+              "y": 13.5,
+              "width": 56.09375,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "button",
+            "text": "Add to cart",
+            "accessible_name": "Add to cart",
+            "bbox": {
+              "x": 809.515625,
+              "y": 477.875,
+              "width": 109.484375,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/cart/add",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "sku",
+              "type": "hidden",
+              "label": null,
+              "default_value": "NOTE-03",
+              "prechecked": false,
+              "hidden": true,
+              "off_screen": false,
+              "required": false,
+              "element_id": null
+            }
+          ],
+          "submit_element_id": "e4"
+        }
+      ],
+      "timers": [
+        {
+          "element_id": null,
+          "text": "1:59:55",
+          "pattern": "hh:mm:ss",
+          "seconds_remaining": 7195,
+          "resets_on_reload": null
+        },
+        {
+          "element_id": null,
+          "text": "Only 3 left in stock",
+          "pattern": "only N left",
+          "seconds_remaining": null,
+          "resets_on_reload": null
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "timestamp": "2026-11-23T10:39:56.816327Z",
+      "action": {
+        "kind": "reload",
+        "target": null,
+        "value": "2000"
+      },
+      "url_before": "http://127.0.0.1:54706/product/NOTE-03",
+      "url_after": "http://127.0.0.1:54706/product/NOTE-03",
+      "page_load": true,
+      "screenshot": "screens/004.png",
+      "a11y_snapshot": "a11y/004.yaml",
+      "dom_snapshot": "dom/004.html",
+      "requests": [
+        {
+          "id": "r4",
+          "method": "GET",
+          "url": "http://127.0.0.1:54706/product/NOTE-03",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-23T10:39:56.390369Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "Kirana Goods",
+            "accessible_name": "Kirana Goods",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 141.609375,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Shop",
+            "accessible_name": "Shop",
+            "bbox": {
+              "x": 181.609375,
+              "y": 13.5,
+              "width": 36.0625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Cart (0)",
+            "accessible_name": "Cart (0)",
+            "bbox": {
+              "x": 229.671875,
+              "y": 13.5,
+              "width": 56.09375,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "button",
+            "text": "Add to cart",
+            "accessible_name": "Add to cart",
+            "bbox": {
+              "x": 809.515625,
+              "y": 477.875,
+              "width": 109.484375,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/cart/add",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "sku",
+              "type": "hidden",
+              "label": null,
+              "default_value": "NOTE-03",
+              "prechecked": false,
+              "hidden": true,
+              "off_screen": false,
+              "required": false,
+              "element_id": null
+            }
+          ],
+          "submit_element_id": "e4"
+        }
+      ],
+      "timers": [
+        {
+          "element_id": null,
+          "text": "1:59:52",
+          "pattern": "hh:mm:ss",
+          "seconds_remaining": 7192,
+          "resets_on_reload": null
+        },
+        {
+          "element_id": null,
+          "text": "Only 3 left in stock",
+          "pattern": "only N left",
+          "seconds_remaining": null,
+          "resets_on_reload": null
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "timestamp": "2026-11-23T10:39:57.349098Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "button",
+          "accessible_name": "Add to cart",
+          "visible_text": "Add to cart"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:54706/product/NOTE-03",
+      "url_after": "http://127.0.0.1:54706/cart",
+      "page_load": true,
+      "screenshot": "screens/005.png",
+      "a11y_snapshot": "a11y/005.yaml",
+      "dom_snapshot": "dom/005.html",
+      "requests": [
+        {
+          "id": "r5",
+          "method": "POST",
+          "url": "http://127.0.0.1:54706/cart/add",
+          "resource_type": "document",
+          "status": 303,
+          "timestamp": "2026-11-23T10:39:56.892724Z",
+          "post_data_redacted": "sku=NOTE-03",
+          "blocked_by_gate": false
+        },
+        {
+          "id": "r6",
+          "method": "GET",
+          "url": "http://127.0.0.1:54706/cart",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-23T10:39:56.903063Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "Kirana Goods",
+            "accessible_name": "Kirana Goods",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 141.609375,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Shop",
+            "accessible_name": "Shop",
+            "bbox": {
+              "x": 181.609375,
+              "y": 13.5,
+              "width": 36.0625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Cart (1)",
+            "accessible_name": "Cart (1)",
+            "bbox": {
+              "x": 229.671875,
+              "y": 13.5,
+              "width": 53.15625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "Add delivery protection for ₹29",
+            "bbox": {
+              "x": 45.0,
+              "y": 369.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "Checkout",
+            "accessible_name": "Checkout",
+            "bbox": {
+              "x": 837.640625,
+              "y": 420.875,
+              "width": 98.359375,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "main"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e7",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/cart/protection",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "protection",
+              "type": "checkbox",
+              "label": "Add delivery protection for ₹29",
+              "default_value": "1",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e4"
+            }
+          ],
+          "submit_element_id": null
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 6,
+      "timestamp": "2026-11-23T10:39:57.880746Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "link",
+          "accessible_name": "Checkout",
+          "visible_text": "Checkout"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:54706/cart",
+      "url_after": "http://127.0.0.1:54706/checkout/address",
+      "page_load": true,
+      "screenshot": "screens/006.png",
+      "a11y_snapshot": "a11y/006.yaml",
+      "dom_snapshot": "dom/006.html",
+      "requests": [
+        {
+          "id": "r7",
+          "method": "GET",
+          "url": "http://127.0.0.1:54706/checkout/address",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-23T10:39:57.414255Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "Kirana Goods",
+            "accessible_name": "Kirana Goods",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 141.609375,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Shop",
+            "accessible_name": "Shop",
+            "bbox": {
+              "x": 181.609375,
+              "y": 13.5,
+              "width": 36.0625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Cart (1)",
+            "accessible_name": "Cart (1)",
+            "bbox": {
+              "x": 229.671875,
+              "y": 13.5,
+              "width": 53.15625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Full name",
+            "bbox": {
+              "x": 41.0,
+              "y": 199.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Phone",
+            "bbox": {
+              "x": 41.0,
+              "y": 269.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e6",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "PIN code",
+            "bbox": {
+              "x": 41.0,
+              "y": 339.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e7",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "City",
+            "bbox": {
+              "x": 41.0,
+              "y": 409.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e8",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "Remember me on this device",
+            "bbox": {
+              "x": 45.0,
+              "y": 459.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": true,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e9",
+            "role": "button",
+            "text": "Continue",
+            "accessible_name": "Continue",
+            "bbox": {
+              "x": 822.09375,
+              "y": 481.875,
+              "width": 96.90625,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e10",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e11",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/checkout/address",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "name",
+              "type": "text",
+              "label": "Full name",
+              "default_value": "",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e4"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "phone",
+              "type": "tel",
+              "label": "Phone",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e5"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "pincode",
+              "type": "text",
+              "label": "PIN code",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e6"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "city",
+              "type": "text",
+              "label": "City",
+              "default_value": "",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e7"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "csrf_token",
+              "type": "hidden",
+              "label": null,
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": true,
+              "off_screen": false,
+              "required": false,
+              "element_id": null
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "remember_me",
+              "type": "checkbox",
+              "label": "Remember me on this device",
+              "default_value": "1",
+              "prechecked": true,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e8"
+            }
+          ],
+          "submit_element_id": "e9"
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 7,
+      "timestamp": "2026-11-23T10:39:58.266222Z",
+      "action": {
+        "kind": "type",
+        "target": {
+          "selector": null,
+          "role": "textbox",
+          "accessible_name": "Full name",
+          "visible_text": null
+        },
+        "value": "Test Walker"
+      },
+      "url_before": "http://127.0.0.1:54706/checkout/address",
+      "url_after": "http://127.0.0.1:54706/checkout/address",
+      "page_load": false,
+      "screenshot": "screens/007.png",
+      "a11y_snapshot": "a11y/007.yaml",
+      "dom_snapshot": "dom/007.html",
+      "requests": [],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "Kirana Goods",
+            "accessible_name": "Kirana Goods",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 141.609375,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Shop",
+            "accessible_name": "Shop",
+            "bbox": {
+              "x": 181.609375,
+              "y": 13.5,
+              "width": 36.0625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Cart (1)",
+            "accessible_name": "Cart (1)",
+            "bbox": {
+              "x": 229.671875,
+              "y": 13.5,
+              "width": 53.15625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Full name",
+            "bbox": {
+              "x": 41.0,
+              "y": 199.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Phone",
+            "bbox": {
+              "x": 41.0,
+              "y": 269.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e6",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "PIN code",
+            "bbox": {
+              "x": 41.0,
+              "y": 339.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e7",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "City",
+            "bbox": {
+              "x": 41.0,
+              "y": 409.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e8",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "Remember me on this device",
+            "bbox": {
+              "x": 45.0,
+              "y": 459.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": true,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e9",
+            "role": "button",
+            "text": "Continue",
+            "accessible_name": "Continue",
+            "bbox": {
+              "x": 822.09375,
+              "y": 481.875,
+              "width": 96.90625,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e10",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e11",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/checkout/address",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "name",
+              "type": "text",
+              "label": "Full name",
+              "default_value": "",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e4"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "phone",
+              "type": "tel",
+              "label": "Phone",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e5"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "pincode",
+              "type": "text",
+              "label": "PIN code",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e6"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "city",
+              "type": "text",
+              "label": "City",
+              "default_value": "",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e7"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "csrf_token",
+              "type": "hidden",
+              "label": null,
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": true,
+              "off_screen": false,
+              "required": false,
+              "element_id": null
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "remember_me",
+              "type": "checkbox",
+              "label": "Remember me on this device",
+              "default_value": "1",
+              "prechecked": true,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e8"
+            }
+          ],
+          "submit_element_id": "e9"
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 8,
+      "timestamp": "2026-11-23T10:39:58.689974Z",
+      "action": {
+        "kind": "type",
+        "target": {
+          "selector": null,
+          "role": "textbox",
+          "accessible_name": "Phone",
+          "visible_text": null
+        },
+        "value": "9000000000"
+      },
+      "url_before": "http://127.0.0.1:54706/checkout/address",
+      "url_after": "http://127.0.0.1:54706/checkout/address",
+      "page_load": false,
+      "screenshot": "screens/008.png",
+      "a11y_snapshot": "a11y/008.yaml",
+      "dom_snapshot": "dom/008.html",
+      "requests": [],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "Kirana Goods",
+            "accessible_name": "Kirana Goods",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 141.609375,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Shop",
+            "accessible_name": "Shop",
+            "bbox": {
+              "x": 181.609375,
+              "y": 13.5,
+              "width": 36.0625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Cart (1)",
+            "accessible_name": "Cart (1)",
+            "bbox": {
+              "x": 229.671875,
+              "y": 13.5,
+              "width": 53.15625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Full name",
+            "bbox": {
+              "x": 41.0,
+              "y": 199.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Phone",
+            "bbox": {
+              "x": 41.0,
+              "y": 269.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e6",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "PIN code",
+            "bbox": {
+              "x": 41.0,
+              "y": 339.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e7",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "City",
+            "bbox": {
+              "x": 41.0,
+              "y": 409.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e8",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "Remember me on this device",
+            "bbox": {
+              "x": 45.0,
+              "y": 459.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": true,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e9",
+            "role": "button",
+            "text": "Continue",
+            "accessible_name": "Continue",
+            "bbox": {
+              "x": 822.09375,
+              "y": 481.875,
+              "width": 96.90625,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e10",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e11",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/checkout/address",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "name",
+              "type": "text",
+              "label": "Full name",
+              "default_value": "",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e4"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "phone",
+              "type": "tel",
+              "label": "Phone",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e5"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "pincode",
+              "type": "text",
+              "label": "PIN code",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e6"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "city",
+              "type": "text",
+              "label": "City",
+              "default_value": "",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e7"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "csrf_token",
+              "type": "hidden",
+              "label": null,
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": true,
+              "off_screen": false,
+              "required": false,
+              "element_id": null
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "remember_me",
+              "type": "checkbox",
+              "label": "Remember me on this device",
+              "default_value": "1",
+              "prechecked": true,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e8"
+            }
+          ],
+          "submit_element_id": "e9"
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 9,
+      "timestamp": "2026-11-23T10:39:59.085198Z",
+      "action": {
+        "kind": "type",
+        "target": {
+          "selector": null,
+          "role": "textbox",
+          "accessible_name": "PIN code",
+          "visible_text": null
+        },
+        "value": "411001"
+      },
+      "url_before": "http://127.0.0.1:54706/checkout/address",
+      "url_after": "http://127.0.0.1:54706/checkout/address",
+      "page_load": false,
+      "screenshot": "screens/009.png",
+      "a11y_snapshot": "a11y/009.yaml",
+      "dom_snapshot": "dom/009.html",
+      "requests": [],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "Kirana Goods",
+            "accessible_name": "Kirana Goods",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 141.609375,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Shop",
+            "accessible_name": "Shop",
+            "bbox": {
+              "x": 181.609375,
+              "y": 13.5,
+              "width": 36.0625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Cart (1)",
+            "accessible_name": "Cart (1)",
+            "bbox": {
+              "x": 229.671875,
+              "y": 13.5,
+              "width": 53.15625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Full name",
+            "bbox": {
+              "x": 41.0,
+              "y": 199.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Phone",
+            "bbox": {
+              "x": 41.0,
+              "y": 269.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e6",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "PIN code",
+            "bbox": {
+              "x": 41.0,
+              "y": 339.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e7",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "City",
+            "bbox": {
+              "x": 41.0,
+              "y": 409.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e8",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "Remember me on this device",
+            "bbox": {
+              "x": 45.0,
+              "y": 459.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": true,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e9",
+            "role": "button",
+            "text": "Continue",
+            "accessible_name": "Continue",
+            "bbox": {
+              "x": 822.09375,
+              "y": 481.875,
+              "width": 96.90625,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e10",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e11",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/checkout/address",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "name",
+              "type": "text",
+              "label": "Full name",
+              "default_value": "",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e4"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "phone",
+              "type": "tel",
+              "label": "Phone",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e5"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "pincode",
+              "type": "text",
+              "label": "PIN code",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e6"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "city",
+              "type": "text",
+              "label": "City",
+              "default_value": "",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e7"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "csrf_token",
+              "type": "hidden",
+              "label": null,
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": true,
+              "off_screen": false,
+              "required": false,
+              "element_id": null
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "remember_me",
+              "type": "checkbox",
+              "label": "Remember me on this device",
+              "default_value": "1",
+              "prechecked": true,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e8"
+            }
+          ],
+          "submit_element_id": "e9"
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 10,
+      "timestamp": "2026-11-23T10:39:59.508419Z",
+      "action": {
+        "kind": "type",
+        "target": {
+          "selector": null,
+          "role": "textbox",
+          "accessible_name": "City",
+          "visible_text": null
+        },
+        "value": "Pune"
+      },
+      "url_before": "http://127.0.0.1:54706/checkout/address",
+      "url_after": "http://127.0.0.1:54706/checkout/address",
+      "page_load": false,
+      "screenshot": "screens/010.png",
+      "a11y_snapshot": "a11y/010.yaml",
+      "dom_snapshot": "dom/010.html",
+      "requests": [],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "Kirana Goods",
+            "accessible_name": "Kirana Goods",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 141.609375,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Shop",
+            "accessible_name": "Shop",
+            "bbox": {
+              "x": 181.609375,
+              "y": 13.5,
+              "width": 36.0625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Cart (1)",
+            "accessible_name": "Cart (1)",
+            "bbox": {
+              "x": 229.671875,
+              "y": 13.5,
+              "width": 53.15625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Full name",
+            "bbox": {
+              "x": 41.0,
+              "y": 199.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Phone",
+            "bbox": {
+              "x": 41.0,
+              "y": 269.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e6",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "PIN code",
+            "bbox": {
+              "x": 41.0,
+              "y": 339.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e7",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "City",
+            "bbox": {
+              "x": 41.0,
+              "y": 409.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e8",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "Remember me on this device",
+            "bbox": {
+              "x": 45.0,
+              "y": 459.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": true,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e9",
+            "role": "button",
+            "text": "Continue",
+            "accessible_name": "Continue",
+            "bbox": {
+              "x": 822.09375,
+              "y": 481.875,
+              "width": 96.90625,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e10",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e11",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/checkout/address",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "name",
+              "type": "text",
+              "label": "Full name",
+              "default_value": "",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e4"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "phone",
+              "type": "tel",
+              "label": "Phone",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e5"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "pincode",
+              "type": "text",
+              "label": "PIN code",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e6"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "city",
+              "type": "text",
+              "label": "City",
+              "default_value": "",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e7"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "csrf_token",
+              "type": "hidden",
+              "label": null,
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": true,
+              "off_screen": false,
+              "required": false,
+              "element_id": null
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "remember_me",
+              "type": "checkbox",
+              "label": "Remember me on this device",
+              "default_value": "1",
+              "prechecked": true,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e8"
+            }
+          ],
+          "submit_element_id": "e9"
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 11,
+      "timestamp": "2026-11-23T10:40:00.013675Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "button",
+          "accessible_name": "Continue",
+          "visible_text": "Continue"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:54706/checkout/address",
+      "url_after": "http://127.0.0.1:54706/checkout/summary",
+      "page_load": true,
+      "screenshot": "screens/011.png",
+      "a11y_snapshot": "a11y/011.yaml",
+      "dom_snapshot": "dom/011.html",
+      "requests": [
+        {
+          "id": "r8",
+          "method": "POST",
+          "url": "http://127.0.0.1:54706/checkout/address",
+          "resource_type": "document",
+          "status": 303,
+          "timestamp": "2026-11-23T10:39:59.590175Z",
+          "post_data_redacted": "name=Test+Walker&phone=[REDACTED]&pincode=[REDACTED]&city=Pune&csrf_token=[REDACTED]&remember_me=1",
+          "blocked_by_gate": false
+        },
+        {
+          "id": "r9",
+          "method": "GET",
+          "url": "http://127.0.0.1:54706/checkout/summary",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-23T10:39:59.596173Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "Kirana Goods",
+            "accessible_name": "Kirana Goods",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 141.609375,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Shop",
+            "accessible_name": "Shop",
+            "bbox": {
+              "x": 181.609375,
+              "y": 13.5,
+              "width": 36.0625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Cart (1)",
+            "accessible_name": "Cart (1)",
+            "bbox": {
+              "x": 229.671875,
+              "y": 13.5,
+              "width": 53.15625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "link",
+            "text": "Proceed to payment",
+            "accessible_name": "Proceed to payment",
+            "bbox": {
+              "x": 768.171875,
+              "y": 343.875,
+              "width": 167.828125,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [],
+      "timers": []
+    }
+  ],
+  "paths": [
+    {
+      "name": "accept_consent",
+      "goal": "accept_consent",
+      "clicks": 1,
+      "page_loads": 0,
+      "step_indices": [
+        0
+      ],
+      "executed": false,
+      "completed": true,
+      "exit_channel": "web"
+    },
+    {
+      "name": "reject_consent",
+      "goal": "reject_consent",
+      "clicks": 1,
+      "page_loads": 0,
+      "step_indices": [
+        1
+      ],
+      "executed": true,
+      "completed": true,
+      "exit_channel": "web"
+    },
+    {
+      "name": "reach_payment",
+      "goal": "reach_payment",
+      "clicks": 4,
+      "page_loads": 4,
+      "step_indices": [
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "executed": true,
+      "completed": true,
+      "exit_channel": "web"
+    }
+  ],
+  "intents": [
+    {
+      "goal": "reject_consent",
+      "success": true,
+      "cheapest_path": "reject_consent"
+    }
+  ],
+  "commerce": {
+    "price_ledger": [
+      {
+        "label": "Notebook Set",
+        "amount": {
+          "minor": 19900,
+          "currency": "INR"
+        },
+        "role": "item",
+        "mandatory": true,
+        "first_step": 0,
+        "seen_steps": [
+          0,
+          1,
+          5,
+          11
+        ]
+      },
+      {
+        "label": "Cotton Tote Bag",
+        "amount": {
+          "minor": 29900,
+          "currency": "INR"
+        },
+        "role": "other",
+        "mandatory": true,
+        "first_step": 0,
+        "seen_steps": [
+          0,
+          1
+        ]
+      },
+      {
+        "label": "Steel Water Bottle",
+        "amount": {
+          "minor": 54900,
+          "currency": "INR"
+        },
+        "role": "other",
+        "mandatory": true,
+        "first_step": 0,
+        "seen_steps": [
+          0,
+          1
+        ]
+      },
+      {
+        "label": "Price",
+        "amount": {
+          "minor": 19900,
+          "currency": "INR"
+        },
+        "role": "other",
+        "mandatory": true,
+        "first_step": 2,
+        "seen_steps": [
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "label": "Delivery",
+        "amount": {
+          "minor": 4000,
+          "currency": "INR"
+        },
+        "role": "shipping",
+        "mandatory": true,
+        "first_step": 2,
+        "seen_steps": [
+          2,
+          3,
+          4,
+          5,
+          11
+        ]
+      },
+      {
+        "label": "Total with delivery",
+        "amount": {
+          "minor": 23900,
+          "currency": "INR"
+        },
+        "role": "total",
+        "mandatory": true,
+        "first_step": 2,
+        "seen_steps": [
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "label": "Total",
+        "amount": {
+          "minor": 23900,
+          "currency": "INR"
+        },
+        "role": "total",
+        "mandatory": true,
+        "first_step": 5,
+        "seen_steps": [
+          5
+        ]
+      },
+      {
+        "label": "Total payable",
+        "amount": {
+          "minor": 23900,
+          "currency": "INR"
+        },
+        "role": "total",
+        "mandatory": true,
+        "first_step": 11,
+        "seen_steps": [
+          11
+        ]
+      }
+    ],
+    "cart": [
+      {
+        "name": "Notebook Set",
+        "sku": null,
+        "qty": 1,
+        "unit_price": {
+          "minor": 19900,
+          "currency": "INR"
+        },
+        "qty_added_by_walker": 1,
+        "step_index": 11
+      }
+    ],
+    "default_addons": [
+      {
+        "label": "Add delivery protection for ₹29",
+        "price": {
+          "minor": 2900,
+          "currency": "INR"
+        },
+        "preselected": false,
+        "step_index": 5,
+        "element_id": "e4"
+      }
+    ],
+    "terms": []
+  },
+  "notes": [
+    {
+      "kind": "info",
+      "step_index": 11,
+      "message": "Stopped on the last page before payment."
+    }
+  ]
+}

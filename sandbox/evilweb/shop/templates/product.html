@@ -7,6 +7,7 @@
   <p class="{{ c('price') }}"><span>Delivery</span><span>{{ inr(delivery) }}</span></p>
   <p class="{{ c('price', 'total') }}"><span>Total with delivery</span><span>{{ inr(product.price_minor + delivery) }}</span></p>
   <p>Inclusive of all taxes.</p>
+  {% include "urgency.html" %}
   <form method="post" action="/cart/add">
     <input type="hidden" name="sku" value="{{ product.sku }}">
     {% call nest() %}<div class="{{ c('row') }}">{{ button(w("add_to_cart")) }}</div>{% endcall %}
