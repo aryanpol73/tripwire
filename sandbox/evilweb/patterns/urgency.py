@@ -51,6 +51,11 @@ class UrgencySpec:
             stock = None
         return {"countdown_seconds": seconds, "stock_left": stock}
 
+    def fires(self, rule_id: str) -> bool:
+        if rule_id == "urgency.countdown_reset":
+            return self.countdown == "restarts"
+        return self.stock == "refills"
+
     def metrics(self) -> dict[str, dict]:
         """Exact expectations after the walker's probe: one view, then one reload."""
         found: dict[str, dict] = {}

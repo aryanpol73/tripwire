@@ -1,0 +1,3364 @@
+{
+  "schema_version": "0.2.0",
+  "run_id": "sign_up_and_leave-wire-blatant-skin1-20261125T174133Z",
+  "site_url": "http://127.0.0.1:61019/",
+  "site_type": "saas",
+  "mission": "sign_up_and_leave",
+  "mode": "sandbox",
+  "scenario_id": "wire-blatant-skin1",
+  "started_at": "2026-11-25T17:41:33.949802Z",
+  "ended_at": "2026-11-25T17:41:41.146241Z",
+  "status": "completed",
+  "budget_limits": {
+    "steps": 60,
+    "wall_seconds": 300.0,
+    "page_loads": 30,
+    "llm_spend_usd_micros": 0
+  },
+  "budgets_used": {
+    "steps": 11,
+    "wall_seconds": 7.063,
+    "page_loads": 8,
+    "llm_spend_usd_micros": 0
+  },
+  "steps": [
+    {
+      "index": 0,
+      "timestamp": "2026-11-25T17:41:35.459818Z",
+      "action": {
+        "kind": "navigate",
+        "target": null,
+        "value": "http://127.0.0.1:61019/"
+      },
+      "url_before": null,
+      "url_after": "http://127.0.0.1:61019/",
+      "page_load": true,
+      "screenshot": "screens/000.png",
+      "a11y_snapshot": "a11y/000.yaml",
+      "dom_snapshot": "dom/000.html",
+      "requests": [
+        {
+          "id": "r1",
+          "method": "GET",
+          "url": "http://127.0.0.1:61019/",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-25T17:41:34.772253Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "TaskForge",
+            "accessible_name": "TaskForge",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 108.0,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Pricing",
+            "accessible_name": "Pricing",
+            "bbox": {
+              "x": 148.0,
+              "y": 13.5,
+              "width": 50.5625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Account",
+            "accessible_name": "Account",
+            "bbox": {
+              "x": 210.5625,
+              "y": 13.5,
+              "width": 58.078125,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "link",
+            "text": "Start free trial",
+            "accessible_name": "Start free trial",
+            "bbox": {
+              "x": 790.1875,
+              "y": 213.875,
+              "width": 128.8125,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e7",
+            "role": "button",
+            "text": "Accept all",
+            "accessible_name": "Accept all",
+            "bbox": {
+              "x": 675.0,
+              "y": 655.0,
+              "width": 200.0,
+              "height": 44.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e8",
+            "role": "button",
+            "text": "Reject all",
+            "accessible_name": "Reject all",
+            "bbox": {
+              "x": 887.0,
+              "y": 655.0,
+              "width": 200.0,
+              "height": 44.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e9",
+            "role": "button",
+            "text": "Manage options",
+            "accessible_name": "Manage options",
+            "bbox": {
+              "x": 1099.0,
+              "y": 661.0,
+              "width": 160.0,
+              "height": 32.0
+            },
+            "style": {
+              "font_size_px": 14.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e10",
+            "role": "switch",
+            "text": "",
+            "accessible_name": "Strictly necessary (always on)",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(84, 84, 84)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": true,
+            "selected": null,
+            "disabled": true,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e11",
+            "role": "switch",
+            "text": "",
+            "accessible_name": "Analytics",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e12",
+            "role": "switch",
+            "text": "",
+            "accessible_name": "Marketing",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e13",
+            "role": "switch",
+            "text": "",
+            "accessible_name": "Personalised content",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e14",
+            "role": "button",
+            "text": "Accept all",
+            "accessible_name": "Accept all",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e15",
+            "role": "button",
+            "text": "Reject all",
+            "accessible_name": "Reject all",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e16",
+            "role": "button",
+            "text": "Save choices",
+            "accessible_name": "Save choices",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "o1",
+          "kind": "banner",
+          "purpose": "consent",
+          "layer": 1,
+          "bbox": {
+            "x": 0.0,
+            "y": 583.0,
+            "width": 1280.0,
+            "height": 137.0
+          },
+          "viewport_coverage": 0.1903,
+          "blocks_interaction": false,
+          "controls": [
+            {
+              "element_id": "e7",
+              "purpose": "accept"
+            },
+            {
+              "element_id": "e8",
+              "purpose": "reject"
+            },
+            {
+              "element_id": "e9",
+              "purpose": "settings"
+            }
+          ]
+        }
+      ],
+      "forms": [],
+      "timers": []
+    },
+    {
+      "index": 1,
+      "timestamp": "2026-11-25T17:41:35.926260Z",
+      "action": {
+        "kind": "reject_consent",
+        "target": {
+          "selector": null,
+          "role": "button",
+          "accessible_name": "Reject all",
+          "visible_text": "Reject all"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:61019/",
+      "url_after": "http://127.0.0.1:61019/",
+      "page_load": false,
+      "screenshot": "screens/001.png",
+      "a11y_snapshot": "a11y/001.yaml",
+      "dom_snapshot": "dom/001.html",
+      "requests": [
+        {
+          "id": "r2",
+          "method": "POST",
+          "url": "http://127.0.0.1:61019/consent",
+          "resource_type": "fetch",
+          "status": 204,
+          "timestamp": "2026-11-25T17:41:35.534055Z",
+          "post_data_redacted": "{\"choice\":\"reject\",\"toggles\":{\"necessary\":true,\"analytics\":false,\"marketing\":false,\"personalisation\":false}}",
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "TaskForge",
+            "accessible_name": "TaskForge",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 108.0,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Pricing",
+            "accessible_name": "Pricing",
+            "bbox": {
+              "x": 148.0,
+              "y": 13.5,
+              "width": 50.5625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Account",
+            "accessible_name": "Account",
+            "bbox": {
+              "x": 210.5625,
+              "y": 13.5,
+              "width": 58.078125,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "link",
+            "text": "Start free trial",
+            "accessible_name": "Start free trial",
+            "bbox": {
+              "x": 790.1875,
+              "y": 213.875,
+              "width": 128.8125,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [],
+      "timers": []
+    },
+    {
+      "index": 2,
+      "timestamp": "2026-11-25T17:41:36.428022Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "link",
+          "accessible_name": "Pricing",
+          "visible_text": "Pricing"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:61019/",
+      "url_after": "http://127.0.0.1:61019/pricing",
+      "page_load": true,
+      "screenshot": "screens/002.png",
+      "a11y_snapshot": "a11y/002.yaml",
+      "dom_snapshot": "dom/002.html",
+      "requests": [
+        {
+          "id": "r3",
+          "method": "GET",
+          "url": "http://127.0.0.1:61019/pricing",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-25T17:41:35.964795Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "TaskForge",
+            "accessible_name": "TaskForge",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 108.0,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Pricing",
+            "accessible_name": "Pricing",
+            "bbox": {
+              "x": 148.0,
+              "y": 13.5,
+              "width": 50.5625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Account",
+            "accessible_name": "Account",
+            "bbox": {
+              "x": 210.5625,
+              "y": 13.5,
+              "width": 58.078125,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "link",
+            "text": "Start free trial",
+            "accessible_name": "Start free trial",
+            "bbox": {
+              "x": 790.1875,
+              "y": 311.6875,
+              "width": 128.8125,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [],
+      "timers": []
+    },
+    {
+      "index": 3,
+      "timestamp": "2026-11-25T17:41:37.101052Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "link",
+          "accessible_name": "Start free trial",
+          "visible_text": "Start free trial"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:61019/pricing",
+      "url_after": "http://127.0.0.1:61019/signup",
+      "page_load": true,
+      "screenshot": "screens/003.png",
+      "a11y_snapshot": "a11y/003.yaml",
+      "dom_snapshot": "dom/003.html",
+      "requests": [
+        {
+          "id": "r4",
+          "method": "GET",
+          "url": "http://127.0.0.1:61019/signup",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-25T17:41:36.499419Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "TaskForge",
+            "accessible_name": "TaskForge",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 108.0,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Pricing",
+            "accessible_name": "Pricing",
+            "bbox": {
+              "x": 148.0,
+              "y": 13.5,
+              "width": 50.5625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Account",
+            "accessible_name": "Account",
+            "bbox": {
+              "x": 210.5625,
+              "y": 13.5,
+              "width": 58.078125,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Work email",
+            "bbox": {
+              "x": 41.0,
+              "y": 199.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "combobox",
+            "text": "",
+            "accessible_name": "Seats",
+            "bbox": {
+              "x": 41.0,
+              "y": 269.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e6",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "Priority support (+₹199 per month)",
+            "bbox": {
+              "x": 45.0,
+              "y": 319.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e7",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "Email me product news and offers",
+            "bbox": {
+              "x": 45.0,
+              "y": 344.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e8",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "Email me deals from partners",
+            "bbox": {
+              "x": 45.0,
+              "y": 369.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e9",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "Remember me on this device",
+            "bbox": {
+              "x": 45.0,
+              "y": 394.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": true,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e10",
+            "role": "button",
+            "text": "Continue",
+            "accessible_name": "Continue",
+            "bbox": {
+              "x": 822.09375,
+              "y": 461.875,
+              "width": 96.90625,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e11",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e12",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/signup",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "email",
+              "type": "email",
+              "label": "Work email",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e4"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "seats",
+              "type": "select",
+              "label": "Seats",
+              "default_value": "1",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e5"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "support",
+              "type": "checkbox",
+              "label": "Priority support (+₹199 per month)",
+              "default_value": "1",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e6"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "newsletter",
+              "type": "checkbox",
+              "label": "Email me product news and offers",
+              "default_value": "1",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e7"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "partner_deals",
+              "type": "checkbox",
+              "label": "Email me deals from partners",
+              "default_value": "1",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e8"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "csrf_token",
+              "type": "hidden",
+              "label": null,
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": true,
+              "off_screen": false,
+              "required": false,
+              "element_id": null
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "remember_me",
+              "type": "checkbox",
+              "label": "Remember me on this device",
+              "default_value": "1",
+              "prechecked": true,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e9"
+            }
+          ],
+          "submit_element_id": "e10"
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 4,
+      "timestamp": "2026-11-25T17:41:37.544672Z",
+      "action": {
+        "kind": "type",
+        "target": {
+          "selector": null,
+          "role": "textbox",
+          "accessible_name": "Work email",
+          "visible_text": null
+        },
+        "value": "walker@example.test"
+      },
+      "url_before": "http://127.0.0.1:61019/signup",
+      "url_after": "http://127.0.0.1:61019/signup",
+      "page_load": false,
+      "screenshot": "screens/004.png",
+      "a11y_snapshot": "a11y/004.yaml",
+      "dom_snapshot": "dom/004.html",
+      "requests": [],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "TaskForge",
+            "accessible_name": "TaskForge",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 108.0,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Pricing",
+            "accessible_name": "Pricing",
+            "bbox": {
+              "x": 148.0,
+              "y": 13.5,
+              "width": 50.5625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Account",
+            "accessible_name": "Account",
+            "bbox": {
+              "x": 210.5625,
+              "y": 13.5,
+              "width": 58.078125,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Work email",
+            "bbox": {
+              "x": 41.0,
+              "y": 199.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "combobox",
+            "text": "",
+            "accessible_name": "Seats",
+            "bbox": {
+              "x": 41.0,
+              "y": 269.875,
+              "width": 420.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e6",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "Priority support (+₹199 per month)",
+            "bbox": {
+              "x": 45.0,
+              "y": 319.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e7",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "Email me product news and offers",
+            "bbox": {
+              "x": 45.0,
+              "y": 344.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e8",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "Email me deals from partners",
+            "bbox": {
+              "x": 45.0,
+              "y": 369.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e9",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "Remember me on this device",
+            "bbox": {
+              "x": 45.0,
+              "y": 394.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": true,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e10",
+            "role": "button",
+            "text": "Continue",
+            "accessible_name": "Continue",
+            "bbox": {
+              "x": 822.09375,
+              "y": 461.875,
+              "width": 96.90625,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e11",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e12",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/signup",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "email",
+              "type": "email",
+              "label": "Work email",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e4"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "seats",
+              "type": "select",
+              "label": "Seats",
+              "default_value": "1",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e5"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "support",
+              "type": "checkbox",
+              "label": "Priority support (+₹199 per month)",
+              "default_value": "1",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e6"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "newsletter",
+              "type": "checkbox",
+              "label": "Email me product news and offers",
+              "default_value": "1",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e7"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "partner_deals",
+              "type": "checkbox",
+              "label": "Email me deals from partners",
+              "default_value": "1",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e8"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "csrf_token",
+              "type": "hidden",
+              "label": null,
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": true,
+              "off_screen": false,
+              "required": false,
+              "element_id": null
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "remember_me",
+              "type": "checkbox",
+              "label": "Remember me on this device",
+              "default_value": "1",
+              "prechecked": true,
+              "hidden": false,
+              "off_screen": false,
+              "required": false,
+              "element_id": "e9"
+            }
+          ],
+          "submit_element_id": "e10"
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 5,
+      "timestamp": "2026-11-25T17:41:38.146267Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "button",
+          "accessible_name": "Continue",
+          "visible_text": "Continue"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:61019/signup",
+      "url_after": "http://127.0.0.1:61019/signup/review",
+      "page_load": true,
+      "screenshot": "screens/005.png",
+      "a11y_snapshot": "a11y/005.yaml",
+      "dom_snapshot": "dom/005.html",
+      "requests": [
+        {
+          "id": "r5",
+          "method": "POST",
+          "url": "http://127.0.0.1:61019/signup",
+          "resource_type": "document",
+          "status": 303,
+          "timestamp": "2026-11-25T17:41:37.632688Z",
+          "post_data_redacted": "email=[REDACTED]&seats=1&partner_deals=1&csrf_token=[REDACTED]&remember_me=1&partner_data_sharing=1",
+          "blocked_by_gate": false
+        },
+        {
+          "id": "r6",
+          "method": "GET",
+          "url": "http://127.0.0.1:61019/signup/review",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-25T17:41:37.644321Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "TaskForge",
+            "accessible_name": "TaskForge",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 108.0,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Pricing",
+            "accessible_name": "Pricing",
+            "bbox": {
+              "x": 148.0,
+              "y": 13.5,
+              "width": 50.5625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Account",
+            "accessible_name": "Account",
+            "bbox": {
+              "x": 210.5625,
+              "y": 13.5,
+              "width": 58.078125,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "button",
+            "text": "Start my trial",
+            "accessible_name": "Start my trial",
+            "bbox": {
+              "x": 812.109375,
+              "y": 382.875,
+              "width": 123.890625,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/signup/confirm",
+          "method": "POST",
+          "fields": [],
+          "submit_element_id": "e4"
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 6,
+      "timestamp": "2026-11-25T17:41:38.724577Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "button",
+          "accessible_name": "Start my trial",
+          "visible_text": "Start my trial"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:61019/signup/review",
+      "url_after": "http://127.0.0.1:61019/account",
+      "page_load": true,
+      "screenshot": "screens/006.png",
+      "a11y_snapshot": "a11y/006.yaml",
+      "dom_snapshot": "dom/006.html",
+      "requests": [
+        {
+          "id": "r7",
+          "method": "POST",
+          "url": "http://127.0.0.1:61019/signup/confirm",
+          "resource_type": "document",
+          "status": 303,
+          "timestamp": "2026-11-25T17:41:38.241269Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        },
+        {
+          "id": "r8",
+          "method": "GET",
+          "url": "http://127.0.0.1:61019/account",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-25T17:41:38.244434Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "TaskForge",
+            "accessible_name": "TaskForge",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 108.0,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Pricing",
+            "accessible_name": "Pricing",
+            "bbox": {
+              "x": 148.0,
+              "y": 13.5,
+              "width": 50.5625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Account",
+            "accessible_name": "Account",
+            "bbox": {
+              "x": 210.5625,
+              "y": 13.5,
+              "width": 58.078125,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "link",
+            "text": "Upgrade",
+            "accessible_name": "Upgrade",
+            "bbox": {
+              "x": 478.03125,
+              "y": 217.875,
+              "width": 180.0,
+              "height": 44.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "Cancel plan",
+            "accessible_name": "Cancel plan",
+            "bbox": {
+              "x": 670.03125,
+              "y": 217.875,
+              "width": 180.0,
+              "height": 44.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Settings",
+            "accessible_name": "Settings",
+            "bbox": {
+              "x": 862.03125,
+              "y": 230.375,
+              "width": 56.96875,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e7",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e8",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [],
+      "timers": []
+    },
+    {
+      "index": 7,
+      "timestamp": "2026-11-25T17:41:39.329729Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "link",
+          "accessible_name": "Cancel plan",
+          "visible_text": "Cancel plan"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:61019/account",
+      "url_after": "http://127.0.0.1:61019/account/cancel/0",
+      "page_load": true,
+      "screenshot": "screens/007.png",
+      "a11y_snapshot": "a11y/007.yaml",
+      "dom_snapshot": "dom/007.html",
+      "requests": [
+        {
+          "id": "r9",
+          "method": "GET",
+          "url": "http://127.0.0.1:61019/account/cancel/0",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-25T17:41:38.807609Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "TaskForge",
+            "accessible_name": "TaskForge",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 108.0,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Pricing",
+            "accessible_name": "Pricing",
+            "bbox": {
+              "x": 148.0,
+              "y": 13.5,
+              "width": 50.5625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Account",
+            "accessible_name": "Account",
+            "bbox": {
+              "x": 210.5625,
+              "y": 13.5,
+              "width": 58.078125,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "I understand my data will be deleted after 30 days",
+            "bbox": {
+              "x": 45.0,
+              "y": 216.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "button",
+            "text": "Continue",
+            "accessible_name": "Continue",
+            "bbox": {
+              "x": 822.09375,
+              "y": 238.875,
+              "width": 96.90625,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e7",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/account/cancel/0",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "acknowledge",
+              "type": "checkbox",
+              "label": "I understand my data will be deleted after 30 days",
+              "default_value": "1",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e4"
+            }
+          ],
+          "submit_element_id": "e5"
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 8,
+      "timestamp": "2026-11-25T17:41:39.841509Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "checkbox",
+          "accessible_name": "I understand my data will be deleted after 30 days",
+          "visible_text": null
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:61019/account/cancel/0",
+      "url_after": "http://127.0.0.1:61019/account/cancel/0",
+      "page_load": false,
+      "screenshot": "screens/008.png",
+      "a11y_snapshot": "a11y/008.yaml",
+      "dom_snapshot": "dom/008.html",
+      "requests": [],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "TaskForge",
+            "accessible_name": "TaskForge",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 108.0,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Pricing",
+            "accessible_name": "Pricing",
+            "bbox": {
+              "x": 148.0,
+              "y": 13.5,
+              "width": 50.5625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Account",
+            "accessible_name": "Account",
+            "bbox": {
+              "x": 210.5625,
+              "y": 13.5,
+              "width": 58.078125,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "checkbox",
+            "text": "",
+            "accessible_name": "I understand my data will be deleted after 30 days",
+            "bbox": {
+              "x": 45.0,
+              "y": 216.875,
+              "width": 13.0,
+              "height": 13.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": true,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "button",
+            "text": "Continue",
+            "accessible_name": "Continue",
+            "bbox": {
+              "x": 822.09375,
+              "y": 238.875,
+              "width": 96.90625,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e7",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/account/cancel/0",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "acknowledge",
+              "type": "checkbox",
+              "label": "I understand my data will be deleted after 30 days",
+              "default_value": "1",
+              "prechecked": true,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e4"
+            }
+          ],
+          "submit_element_id": "e5"
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 9,
+      "timestamp": "2026-11-25T17:41:40.409005Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "button",
+          "accessible_name": "Continue",
+          "visible_text": "Continue"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:61019/account/cancel/0",
+      "url_after": "http://127.0.0.1:61019/account/cancel/1",
+      "page_load": true,
+      "screenshot": "screens/009.png",
+      "a11y_snapshot": "a11y/009.yaml",
+      "dom_snapshot": "dom/009.html",
+      "requests": [
+        {
+          "id": "r10",
+          "method": "POST",
+          "url": "http://127.0.0.1:61019/account/cancel/0",
+          "resource_type": "document",
+          "status": 303,
+          "timestamp": "2026-11-25T17:41:39.909497Z",
+          "post_data_redacted": "acknowledge=1",
+          "blocked_by_gate": false
+        },
+        {
+          "id": "r11",
+          "method": "GET",
+          "url": "http://127.0.0.1:61019/account/cancel/1",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-25T17:41:39.919534Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "TaskForge",
+            "accessible_name": "TaskForge",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 108.0,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Pricing",
+            "accessible_name": "Pricing",
+            "bbox": {
+              "x": 148.0,
+              "y": 13.5,
+              "width": 50.5625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Account",
+            "accessible_name": "Account",
+            "bbox": {
+              "x": 210.5625,
+              "y": 13.5,
+              "width": 58.078125,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "button",
+            "text": "Confirm",
+            "accessible_name": "Confirm",
+            "bbox": {
+              "x": 827.78125,
+              "y": 213.875,
+              "width": 91.21875,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(0, 82, 204)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 6.82,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/account/cancel/1",
+          "method": "POST",
+          "fields": [],
+          "submit_element_id": "e4"
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 10,
+      "timestamp": "2026-11-25T17:41:40.997830Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "button",
+          "accessible_name": "Confirm",
+          "visible_text": "Confirm"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:61019/account/cancel/1",
+      "url_after": "http://127.0.0.1:61019/account/cancelled",
+      "page_load": true,
+      "screenshot": "screens/010.png",
+      "a11y_snapshot": "a11y/010.yaml",
+      "dom_snapshot": "dom/010.html",
+      "requests": [
+        {
+          "id": "r12",
+          "method": "POST",
+          "url": "http://127.0.0.1:61019/account/cancel/1",
+          "resource_type": "document",
+          "status": 303,
+          "timestamp": "2026-11-25T17:41:40.505933Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        },
+        {
+          "id": "r13",
+          "method": "GET",
+          "url": "http://127.0.0.1:61019/account/cancelled",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-25T17:41:40.514135Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "TaskForge",
+            "accessible_name": "TaskForge",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 108.0,
+              "height": 22.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Pricing",
+            "accessible_name": "Pricing",
+            "bbox": {
+              "x": 148.0,
+              "y": 13.5,
+              "width": 50.5625,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Account",
+            "accessible_name": "Account",
+            "bbox": {
+              "x": 210.5625,
+              "y": 13.5,
+              "width": 58.078125,
+              "height": 19.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.88,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 24.0,
+              "y": 689.0,
+              "width": 34.984375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 74.984375,
+              "y": 689.0,
+              "width": 42.375,
+              "height": 15.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(17, 17, 17)",
+              "background_color": "rgb(246, 247, 249)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 17.62,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [],
+      "timers": []
+    }
+  ],
+  "paths": [
+    {
+      "name": "accept_consent",
+      "goal": "accept_consent",
+      "clicks": 1,
+      "page_loads": 0,
+      "step_indices": [
+        0
+      ],
+      "executed": false,
+      "completed": true,
+      "exit_channel": "web"
+    },
+    {
+      "name": "reject_consent",
+      "goal": "reject_consent",
+      "clicks": 1,
+      "page_loads": 0,
+      "step_indices": [
+        1
+      ],
+      "executed": true,
+      "completed": true,
+      "exit_channel": "web"
+    },
+    {
+      "name": "sign_up",
+      "goal": "sign_up",
+      "clicks": 3,
+      "page_loads": 3,
+      "step_indices": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "executed": true,
+      "completed": true,
+      "exit_channel": "web"
+    },
+    {
+      "name": "cancel",
+      "goal": "cancel",
+      "clicks": 4,
+      "page_loads": 3,
+      "step_indices": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "executed": true,
+      "completed": true,
+      "exit_channel": "web"
+    }
+  ],
+  "intents": [
+    {
+      "goal": "reject_consent",
+      "success": true,
+      "cheapest_path": "reject_consent"
+    },
+    {
+      "goal": "cancel",
+      "success": true,
+      "cheapest_path": "cancel"
+    }
+  ],
+  "commerce": {
+    "price_ledger": [
+      {
+        "label": "Per seat, per month",
+        "amount": {
+          "minor": 79900,
+          "currency": "INR"
+        },
+        "role": "other",
+        "mandatory": true,
+        "first_step": 2,
+        "seen_steps": [
+          2
+        ]
+      },
+      {
+        "label": "Pro plan × 1 seat per month",
+        "amount": {
+          "minor": 79900,
+          "currency": "INR"
+        },
+        "role": "item",
+        "mandatory": true,
+        "first_step": 5,
+        "seen_steps": [
+          5
+        ]
+      },
+      {
+        "label": "Due today (free for 14 days)",
+        "amount": {
+          "minor": 0,
+          "currency": "INR"
+        },
+        "role": "total",
+        "mandatory": true,
+        "first_step": 5,
+        "seen_steps": [
+          5
+        ]
+      },
+      {
+        "label": "Monthly total",
+        "amount": {
+          "minor": 79900,
+          "currency": "INR"
+        },
+        "role": "total",
+        "mandatory": true,
+        "first_step": 5,
+        "seen_steps": [
+          5
+        ]
+      }
+    ],
+    "cart": [
+      {
+        "name": "Pro plan",
+        "sku": null,
+        "qty": 1,
+        "unit_price": {
+          "minor": 79900,
+          "currency": "INR"
+        },
+        "qty_added_by_walker": 1,
+        "step_index": 5
+      }
+    ],
+    "default_addons": [
+      {
+        "label": "Priority support (+₹199 per month)",
+        "price": {
+          "minor": 19900,
+          "currency": "INR"
+        },
+        "preselected": false,
+        "step_index": 3,
+        "element_id": "e6"
+      }
+    ],
+    "terms": [
+      {
+        "step_index": 3,
+        "text": "After your 14-day trial, you pay ₹799 per month from 01 Dec 2026. Cancel anytime.",
+        "font_size_px": 16.0,
+        "contrast_ratio": 18.88,
+        "mentions_price": true,
+        "mentions_date": true
+      }
+    ]
+  },
+  "notes": []
+}
