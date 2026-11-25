@@ -841,3 +841,41 @@ results table.
 1. **Tick before you test:** a number that looks like a timer is only a timer if it moves.
 2. **Compare against what physics allows:** a real deadline loses exactly the elapsed time.
 3. **Isolate modules:** a new family gets its own grid, so old results cannot drift.
+
+## Phase 9 — module 2: what forms really send
+
+**Built** (branch `phase-9/wire-fields`).
+- Family `wire`; rules `wire.flipped_choice` and `wire.injected_optin` (Tier A), D-069.
+- Sandbox: a visible, unticked "Email me deals from partners" box on the SaaS sign-up and the
+  shop address form, with a submit-time script. Clean: adds a security nonce only (decoy).
+  Subtle: ticks the box at submit. Blatant: ticks it and adds `partner_data_sharing=1`.
+- Module specs now say which of their rules fire (`fires()`), shared by both modules'
+  ground truth; `tripwire eval --module wire`; a report card that boxes the flipped box and
+  shows the body; the module eval runs in CI.
+
+**Results (measured).**
+- Module grid, 12 scenarios: both rules precision 1.00, recall 1.00; the decoy silent;
+  0 classification errors; 0 measurement differences over 336 compared values.
+- v1 grid: 36 scenarios, precision 1.00, recall 1.00, no errors (unchanged). Urgency module:
+  12 scenarios, 1.00 / 1.00 (unchanged). All 48 existing ground-truth files byte-identical.
+- On v1's blatant shops the new rules stay silent while `sneaking.bundled_optins` still
+  fires: fields already in the form are v1's, so nothing is counted twice.
+- 594 unit tests pass.
+
+**What broke (and was fixed).**
+- **Field-name collision.** The first names chosen (`partner_offers`, `share_with_partners`)
+  were already v1's planted hidden opt-ins on the shop; a check of which pages show the box
+  caught it before any eval. Renamed to `partner_deals` and `partner_data_sharing`.
+- My worktree's virtual environment had lost packages to temp cleanup again; reinstalled.
+
+**Limitations.**
+- Only url-encoded form posts matched to a measured form; JSON and fetch calls are not read.
+- Redacted values (emails, tokens) cannot be judged; such added fields go to review.
+- A box ticked by a visible, explained script (rare) would still be flagged; the card's
+  "check before trusting this" note says what to look for.
+
+**Three concepts.**
+1. **The wire is the truth:** what a form sends can differ from what it shows.
+2. **Measure at the last moment:** compare with the form as it was just before submit.
+3. **One field, one rule:** fields already in the form belong to v1; only changes at submit
+   belong to this module.
