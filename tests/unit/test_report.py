@@ -37,6 +37,8 @@ SAMPLE_METRICS = {
     "obstruction.interposed_friction": dict(unneeded_interstitials=1),
     "urgency.countdown_reset": dict(seconds_before=597, seconds_after=599, elapsed_s=4.0),
     "urgency.stock_flux": dict(stock_before=2, stock_after=4),
+    "wire.flipped_choice": dict(flipped_count=1, flipped_fields="partner_deals=1"),
+    "wire.injected_optin": dict(injected_fields="partner_data_sharing=1"),
 }
 
 

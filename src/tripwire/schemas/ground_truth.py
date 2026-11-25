@@ -18,7 +18,7 @@ from tripwire.schemas.trace import MissionName, SiteType
 GROUND_TRUTH_SCHEMA_VERSION = "0.1.0"
 # Phase 9 modules plant their patterns one at a time (urgency subtle: the countdown only),
 # so for them the all-or-nothing planting rule below is replaced by a per-pattern one.
-PER_PATTERN_FAMILIES = {Family.URGENCY}
+PER_PATTERN_FAMILIES = {Family.URGENCY, Family.WIRE}
 
 
 class ScenarioState(StrEnum):

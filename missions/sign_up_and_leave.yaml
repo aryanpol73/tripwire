@@ -28,3 +28,5 @@ detectors:
   - obstruction.interposed_friction
   - urgency.countdown_reset
   - urgency.stock_flux
+  - wire.flipped_choice
+  - wire.injected_optin

@@ -63,6 +63,7 @@ class Family(StrEnum):
     SNEAKING = "sneaking"
     OBSTRUCTION = "obstruction"
     URGENCY = "urgency"  # Phase 9 module 1: false urgency
+    WIRE = "wire"  # Phase 9 module 2: what a form sends against what it showed
 
 
 class Tier(StrEnum):

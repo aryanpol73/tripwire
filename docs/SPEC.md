@@ -123,7 +123,18 @@ and, if the clock ticked or a stock count is shown, reloads once.
 A clock that does not tick in 2 s (opening hours, a timestamp) is never tested. The module
 has its own 12-scenario grid (`tripwire eval --module urgency`); the v1 grid stays at 36.
 
-**Still deferred:** nagging and forced registration, wire-level hidden fields, an LLM
+**Module 2, wire-level form checks (built).** For every form the walker submits, the
+request body that left the browser is compared with the same form as measured on the step
+just before the submit click.
+- `wire.flipped_choice`: a checkbox that was visible and unticked is sent as ticked.
+- `wire.injected_optin`: a field that was not in the form is added at submit with a yes-value
+  (`1`, `on`, `true`, `yes`). Security fields (CSRF, nonce, token) are ignored; other added
+  fields go to "needs review". Fields already in the form, hidden or off-screen, stay with
+  v1's `sneaking.bundled_optins`, so the two rules never count the same field.
+Its grid: `tripwire eval --module wire` (12 scenarios on the SaaS sign-up and the shop
+address form).
+
+**Still deferred:** nagging and forced registration, an LLM
 confirm-shaming classifier, taint tracking, a browser extension, personalization probes,
 regulatory mapping.
 

@@ -95,6 +95,18 @@ RULES: dict[str, Rule] = {
             "Does an 'only N left' count go up after a reload, with nothing bought?",
         ),
         Rule(
+            "wire.flipped_choice",
+            Family.WIRE,
+            Tier.A,
+            "Does a submitted form send a checkbox as ticked that the visitor saw unticked?",
+        ),
+        Rule(
+            "wire.injected_optin",
+            Family.WIRE,
+            Tier.A,
+            "Does a submitted form carry an opt-in field that was not in the form shown?",
+        ),
+        Rule(
             "obstruction.interposed_friction",
             Family.OBSTRUCTION,
             Tier.A,
