@@ -36,6 +36,10 @@ class LlmConfigError(Exception):
     pass
 
 
+class QuotaExhausted(Exception):
+    """A host's rate limit or daily quota is used up, after the SDK's own retries."""
+
+
 class ReplayExhausted(Exception):
     pass
 
@@ -174,6 +178,56 @@ class AnthropicSource:
 # --- record and replay ----------------------------------------------------------------
 
 
+def _openai_tools(tools: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [
+        {
+            "type": "function",
+            "function": {
+                "name": t["name"],
+                "description": t["description"],
+                "parameters": t["input_schema"],
+            },
+        }
+        for t in tools
+    ]
+
+
+def _messages(request: Request) -> list[dict[str, str]]:
+    return [
+        {"role": "system", "content": request.system},
+        {"role": "user", "content": request.prompt},
+    ]
+
+
+def _chat_decision(response: Any, price: Price) -> Decision:
+    """A Decision from an OpenAI-style chat completion (Groq, Cloudflare)."""
+    choice = response.choices[0]
+    usage = response.usage
+    decision = Decision(
+        tool="none",
+        model=response.model or "",
+        input_tokens=(usage.prompt_tokens or 0) if usage else 0,
+        output_tokens=(usage.completion_tokens or 0) if usage else 0,
+        stop_reason=choice.finish_reason or "",
+        text=choice.message.content or "",
+    )
+    calls = choice.message.tool_calls or []
+    if calls:
+        decision.tool = calls[0].function.name
+        try:
+            args = json.loads(calls[0].function.arguments or "{}")
+            decision.input = args if isinstance(args, dict) else {}
+        except json.JSONDecodeError:
+            decision.input = {}  # tools.check refuses it: no valid element or path
+    decision.cost_micros = price.cost_micros(decision)
+    return decision
+
+
+def _worst_case(price: Price, request: Request) -> int:
+    tokens_in = (len(request.system) + len(request.prompt) + 4000) / CHARS_PER_TOKEN
+    return math.ceil(tokens_in * price.input_per_mtok + MAX_TOKENS * price.output_per_mtok)
+
+
 class GroqSource:
     """Calls Groq's chat completions API (OpenAI-compatible tool calling).
 
@@ -183,10 +237,12 @@ class GroqSource:
     charged at the full input price; no caching discount is assumed.
     """
 
+    host = "groq"
+
     def __init__(self, model: str | None = None, effort: str | None = None) -> None:
-        model = model or os.environ.get("TRIPWIRE_MODEL", "")
+        model = model or os.environ.get("GROQ_MODEL") or os.environ.get("TRIPWIRE_MODEL", "")
         if not model:
-            raise LlmConfigError("set TRIPWIRE_MODEL in .env (a Groq model id)")
+            raise LlmConfigError("set TRIPWIRE_MODEL (or GROQ_MODEL) in .env (a Groq model id)")
         try:
             import groq
         except ImportError as err:
@@ -199,30 +255,13 @@ class GroqSource:
         self._client = groq.Groq(max_retries=6)
 
     def worst_case_micros(self, request: Request) -> int:
-        tokens_in = (len(request.system) + len(request.prompt) + 4000) / CHARS_PER_TOKEN
-        return math.ceil(
-            tokens_in * self.price.input_per_mtok + MAX_TOKENS * self.price.output_per_mtok
-        )
+        return _worst_case(self.price, request)
 
     def decide(self, request: Request) -> Decision:
-        tools = [
-            {
-                "type": "function",
-                "function": {
-                    "name": t["name"],
-                    "description": t["description"],
-                    "parameters": t["input_schema"],
-                },
-            }
-            for t in request.tools
-        ]
         kwargs: dict[str, Any] = dict(
             model=self.model,
-            messages=[
-                {"role": "system", "content": request.system},
-                {"role": "user", "content": request.prompt},
-            ],
-            tools=tools,
+            messages=_messages(request),
+            tools=_openai_tools(request.tools),
             tool_choice="auto",
             max_completion_tokens=MAX_TOKENS,
         )
@@ -230,6 +269,8 @@ class GroqSource:
             kwargs["reasoning_effort"] = self.effort
         try:
             response = self._client.chat.completions.create(**kwargs)
+        except self._groq.RateLimitError as err:
+            raise QuotaExhausted(f"groq: {str(err)[:160]}") from err
         except self._groq.BadRequestError as err:
             # Groq rejects a tool call the model malformed (code "tool_use_failed"). Treat it
             # as a refused proposal, charged at the worst case since usage is not returned.
@@ -241,29 +282,74 @@ class GroqSource:
                 stop_reason="tool_use_failed",
                 cost_micros=self.worst_case_micros(request),
             )
-        choice = response.choices[0]
-        usage = response.usage
-        decision = Decision(
-            tool="none",
-            model=response.model,
-            input_tokens=usage.prompt_tokens if usage else 0,
-            output_tokens=usage.completion_tokens if usage else 0,
-            stop_reason=choice.finish_reason or "",
-            text=choice.message.content or "",
+        return _chat_decision(response, self.price)
+
+
+class CloudflareSource:
+    """Calls Cloudflare Workers AI through its OpenAI-compatible Chat Completions endpoint.
+
+    Same request shape, checks and cost rules as Groq. The free allocation is a daily neuron
+    budget; when it is used up the host's errors become QuotaExhausted, so a multi-host eval
+    stops this host and lets the others carry on.
+    """
+
+    host = "cloudflare"
+
+    def __init__(self, model: str | None = None, effort: str | None = None) -> None:
+        account = os.environ.get("CLOUDFLARE_ACCOUNT_ID", "")
+        token = os.environ.get("CLOUDFLARE_API_TOKEN", "")
+        model = model or os.environ.get("CLOUDFLARE_MODEL", "")
+        if not (account and token and model):
+            raise LlmConfigError(
+                "set CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_API_TOKEN and CLOUDFLARE_MODEL in .env"
+            )
+        try:
+            import openai
+        except ImportError as err:
+            raise LlmConfigError(
+                "install the Cloudflare extra: uv sync --extra cloudflare"
+            ) from err
+        self.model = model
+        self.effort = effort or os.environ.get("TRIPWIRE_EFFORT") or None
+        self.price = price_for(model)
+        self._openai = openai
+        self._client = openai.OpenAI(
+            api_key=token,
+            base_url=f"https://api.cloudflare.com/client/v4/accounts/{account}/ai/v1",
+            max_retries=6,
         )
-        calls = choice.message.tool_calls or []
-        if calls:
-            decision.tool = calls[0].function.name
-            try:
-                args = json.loads(calls[0].function.arguments or "{}")
-                decision.input = args if isinstance(args, dict) else {}
-            except json.JSONDecodeError:
-                decision.input = {}  # tools.check refuses it: no valid element or path
-        decision.cost_micros = self.price.cost_micros(decision)
-        return decision
+
+    def worst_case_micros(self, request: Request) -> int:
+        return _worst_case(self.price, request)
+
+    def decide(self, request: Request) -> Decision:
+        kwargs: dict[str, Any] = dict(
+            model=self.model,
+            messages=_messages(request),
+            tools=_openai_tools(request.tools),
+            tool_choice="auto",
+            max_tokens=MAX_TOKENS,  # Cloudflare's own default is only 256
+        )
+        if self.effort:
+            kwargs["reasoning_effort"] = self.effort
+        try:
+            response = self._client.chat.completions.create(**kwargs)
+        except self._openai.RateLimitError as err:
+            raise QuotaExhausted(f"cloudflare: {str(err)[:160]}") from err
+        except self._openai.APIStatusError as err:
+            text = str(err).lower()
+            if "neuron" in text or "daily" in text or "quota" in text:
+                raise QuotaExhausted(f"cloudflare: {str(err)[:160]}") from err
+            raise
+        return _chat_decision(response, self.price)
 
 
-PROVIDERS = {"anthropic": AnthropicSource, "groq": GroqSource}
+PROVIDERS = {"anthropic": AnthropicSource, "groq": GroqSource, "cloudflare": CloudflareSource}
+KEY_VARS = {
+    "anthropic": "ANTHROPIC_API_KEY",
+    "groq": "GROQ_API_KEY",
+    "cloudflare": "CLOUDFLARE_API_TOKEN",
+}
 
 
 def model_source(env: dict[str, str] | None = None) -> DecisionSource:
@@ -272,16 +358,29 @@ def model_source(env: dict[str, str] | None = None) -> DecisionSource:
     env = dict(os.environ) if env is None else env
     provider = env.get("TRIPWIRE_PROVIDER", "").strip().lower()
     if not provider:
-        keys = [name for name, var in (("anthropic", "ANTHROPIC_API_KEY"), ("groq", "GROQ_API_KEY"))
-                if env.get(var)]  # fmt: skip
+        keys = [name for name, var in KEY_VARS.items() if env.get(var)]
         if len(keys) != 1:
             raise LlmConfigError(
-                "set TRIPWIRE_PROVIDER in .env to anthropic or groq (and that provider's key)"
+                "set TRIPWIRE_PROVIDER in .env to anthropic, groq or cloudflare "
+                "(or TRIPWIRE_HOSTS for several), with that provider's key"
             )
         provider = keys[0]
     if provider not in PROVIDERS:
-        raise LlmConfigError(f"unknown TRIPWIRE_PROVIDER {provider!r}; use anthropic or groq")
+        raise LlmConfigError(f"unknown TRIPWIRE_PROVIDER {provider!r}; use {', '.join(PROVIDERS)}")
     return PROVIDERS[provider]()
+
+
+def model_sources(env: dict[str, str] | None = None) -> list[DecisionSource]:
+    """Every host named in TRIPWIRE_HOSTS (e.g. "groq,cloudflare"), each serving the same
+    model under its own id; otherwise the single provider from model_source()."""
+    env = dict(os.environ) if env is None else env
+    names = [h.strip().lower() for h in env.get("TRIPWIRE_HOSTS", "").split(",") if h.strip()]
+    if not names:
+        return [model_source(env)]
+    unknown = [h for h in names if h not in PROVIDERS]
+    if unknown:
+        raise LlmConfigError(f"unknown hosts in TRIPWIRE_HOSTS: {unknown}")
+    return [PROVIDERS[h]() for h in dict.fromkeys(names)]
 
 
 def worst_case(source: DecisionSource, request: Request) -> int:

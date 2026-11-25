@@ -96,6 +96,7 @@ class RunResult:
     refusals: int = 0
     divergences: int = 0
     error: str = ""
+    host: str = ""  # which host served the model for this run (D-070)
 
 
 def run_target(
@@ -190,11 +191,21 @@ def summarize(results: list[RunResult]) -> dict[str, Any]:
     }
 
 
+def _is_quota(err: Exception) -> bool:
+    return type(err).__name__ in ("QuotaExhausted", "RateLimitError")
+
+
 def evaluate_llm(args: argparse.Namespace) -> int:
+    """Run the targets on every configured host at once (D-070). Each host is a worker that
+    takes the next target from one shared queue, so the hosts split the work; a host whose
+    quota is used up stops and leaves its target for the others or for --resume."""
+    import threading
+    from collections import deque
+
     from playwright.sync_api import sync_playwright
 
     from tripwire.cli import load_dotenv
-    from tripwire.llm.client import LlmConfigError, RecordingSource, ReplaySource, model_source
+    from tripwire.llm.client import LlmConfigError, RecordingSource, ReplaySource, model_sources
     from tripwire.llm.walker import cap_from_env
 
     groups = {"sandbox", "unseen", "redteam"} if args.set == "all" else {args.set}
@@ -204,77 +215,109 @@ def evaluate_llm(args: argparse.Namespace) -> int:
     stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
     out_dir = Path(args.out) if args.out else Path("runs") / f"llm-eval-{stamp}"
     replay = Path(args.replay_dir) if args.replay_dir else None
-    model = None
+    hosts: list = [None]  # replay needs no host
     if not replay:
         load_dotenv()
         try:
-            model = model_source()
+            hosts = model_sources()
         except LlmConfigError as err:
             print(err, file=sys.stderr)
             return 2
     cap = round(args.llm_cap * 1_000_000) if args.llm_cap else cap_from_env()
 
-    results: list[RunResult] = []
     done_before: dict[str, RunResult] = {}
-    quota_hit = False
     previous = out_dir / "summary.json"
     if args.resume and previous.is_file():
         for row in json.loads(previous.read_text(encoding="utf-8"))["runs"]:
             if not row.get("error"):
                 done_before[row["id"]] = RunResult(**row)
-    with sync_playwright() as p:
-        browser = p.chromium.launch(executable_path=args.chromium_executable or None)
-        for i, t in enumerate(targets, 1):
-            if replay:
-                rec = replay / f"{t.id}.jsonl"
-                if not rec.is_file():
-                    results.append(RunResult(t.id, t.group, False, "no recording", "error",
-                                             0, 0, cap, "", error=f"missing {rec}"))  # fmt: skip
-                    continue
-                source = ReplaySource(rec)
-            else:
-                source = RecordingSource(model, out_dir / t.id / "llm_decisions.jsonl")
-            if t.id in done_before:
-                results.append(done_before[t.id])
-                continue
-            try:
-                result, run_dir = run_target(t, source, out_dir, browser, cap)
-            except Exception as err:  # one broken run must not hide the others
-                if type(err).__name__ == "RateLimitError":
-                    # The provider's quota is used up (the SDK already retried). Stop instead
-                    # of failing every remaining run; --resume continues later.
-                    print(
-                        f"[{i}/{len(targets)}] stopped: the provider's rate limit or daily "
-                        "quota is used up. Rerun later with --resume to continue.",
-                        file=sys.stderr,
-                    )
-                    quota_hit = True
-                    break
-                result = RunResult(t.id, t.group, False, "run error", "error", 0, 0, cap, "",
-                                   error=f"{type(err).__name__}: {str(err)[:200]}")  # fmt: skip
-                run_dir = None
-            if args.record_dir and run_dir and not replay:
-                Path(args.record_dir).mkdir(parents=True, exist_ok=True)
-                shutil.copy(
-                    run_dir / "llm_decisions.jsonl", Path(args.record_dir) / f"{t.id}.jsonl"
-                )
-            mark = "ok " if result.completed else "-- "
-            if result.violations:
-                mark = "VIOLATION "
-            print(
-                f"[{i}/{len(targets)}] {mark}{t.id}: {result.reason} "
-                f"(${result.spend_micros / 1e6:.4f}, {result.steps} steps)",
-                file=sys.stderr,
-            )
-            results.append(result)
-        browser.close()
+    results: dict[str, RunResult] = dict(done_before)
+    pending = deque(t for t in targets if t.id not in done_before)
+    lock = threading.Lock()
+    exhausted: list[str] = []
+    order = {t.id: i for i, t in enumerate(targets, 1)}
 
-    summary = summarize(results)
-    summary["model"] = getattr(model, "model", None) if model else "replay"
-    summary["complete"] = not quota_hit and len(results) == len(targets)
-    if quota_hit:
+    def worker(host) -> None:
+        name = getattr(host, "host", "replay")
+        with sync_playwright() as p:
+            browser = p.chromium.launch(executable_path=args.chromium_executable or None)
+            while True:
+                with lock:
+                    if not pending:
+                        break
+                    t = pending.popleft()
+                if replay:
+                    rec = replay / f"{t.id}.jsonl"
+                    if not rec.is_file():
+                        with lock:
+                            results[t.id] = RunResult(t.id, t.group, False, "no recording",
+                                                      "error", 0, 0, cap, "",
+                                                      error=f"missing {rec}")  # fmt: skip
+                        continue
+                    source = ReplaySource(rec)
+                else:
+                    source = RecordingSource(host, out_dir / t.id / "llm_decisions.jsonl")
+                try:
+                    result, run_dir = run_target(t, source, out_dir, browser, cap)
+                except Exception as err:  # one broken run must not hide the others
+                    if _is_quota(err):
+                        with lock:
+                            pending.appendleft(t)  # another host, or --resume, will run it
+                            exhausted.append(name)
+                        print(f"[{name}] stopped: its rate limit or daily quota is used up.",
+                              file=sys.stderr)  # fmt: skip
+                        break
+                    result = RunResult(
+                        t.id,
+                        t.group,
+                        False,
+                        "run error",
+                        "error",
+                        0,
+                        0,
+                        cap,
+                        "",
+                        error=f"{type(err).__name__}: {str(err)[:200]}",
+                    )
+                    run_dir = None
+                result.host = name
+                if args.record_dir and run_dir and not replay:
+                    Path(args.record_dir).mkdir(parents=True, exist_ok=True)
+                    shutil.copy(
+                        run_dir / "llm_decisions.jsonl", Path(args.record_dir) / f"{t.id}.jsonl"
+                    )
+                mark = "VIOLATION " if result.violations else ("ok " if result.completed else "-- ")
+                print(
+                    f"[{order[t.id]}/{len(targets)} {name}] {mark}{t.id}: {result.reason} "
+                    f"(${result.spend_micros / 1e6:.4f}, {result.steps} steps)",
+                    file=sys.stderr,
+                )
+                with lock:
+                    results[t.id] = result
+            browser.close()
+
+    threads = [threading.Thread(target=worker, args=(h,)) for h in hosts]
+    for th in threads:
+        th.start()
+    for th in threads:
+        th.join()
+
+    ordered = [results[t.id] for t in targets if t.id in results]
+    summary = summarize(ordered)
+    summary["hosts"] = (
+        {getattr(h, "host", "?"): getattr(h, "model", "?") for h in hosts} if not replay else {}
+    )
+    summary["by_host"] = {}
+    for r in ordered:
+        row = summary["by_host"].setdefault(r.host or "earlier run", {"runs": 0, "completed": 0})
+        row["runs"] += 1
+        row["completed"] += int(r.completed)
+    summary["quota_exhausted"] = exhausted
+    left = len(targets) - len(ordered)
+    summary["complete"] = left == 0
+    if left:
         summary["gate_failures"].append(
-            f"incomplete: {len(targets) - len(results)} targets not run (provider quota)"
+            f"incomplete: {left} targets not run (provider quota); rerun with --resume"
         )
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")

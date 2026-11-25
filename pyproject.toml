@@ -25,6 +25,9 @@ llm = [
 groq = [
     "groq>=1.7.0",
 ]
+cloudflare = [
+    "openai>=3.59.0",
+]
 
 [dependency-groups]
 dev = [
