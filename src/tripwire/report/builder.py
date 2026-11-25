@@ -145,6 +145,14 @@ def _targets(trace: Trace, finding: Finding, step: Step) -> list[tuple[UiElement
             e = by_id.get(addon.element_id or "")
             if addon.preselected and addon.step_index == step.index and e is not None:
                 out.append((e, f"Pre-added: {addon.label[:30]}", "focus"))
+    elif rule == "wire.flipped_choice":
+        sent = str(finding.evidence.measurements.get("flipped_fields") or "")
+        names = {pair.split("=", 1)[0] for pair in sent.split(", ") if pair}
+        for form in step.forms:
+            for f in form.fields:
+                e = by_id.get(f.element_id or "")
+                if f.name in names and e is not None:
+                    out.append((e, f"Shown unticked, sent ticked: {f.name}", "focus"))
     elif rule.startswith("urgency."):
         want = "only N left" if rule == "urgency.stock_flux" else None
         for t in step.timers:

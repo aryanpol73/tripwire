@@ -15,6 +15,7 @@ FAMILY_NAMES = {
     "sneaking": "Sneaking and hidden extras",
     "obstruction": "Obstruction",
     "urgency": "False urgency",
+    "wire": "What forms really send",
 }
 
 RULE_TITLES = {
@@ -31,6 +32,8 @@ RULE_TITLES = {
     "obstruction.interposed_friction": "Extra steps on the way out",
     "urgency.countdown_reset": "A countdown that restarts",
     "urgency.stock_flux": "A stock count that goes up",
+    "wire.flipped_choice": "An unticked box sent as ticked",
+    "wire.injected_optin": "An opt-in added when the form was sent",
 }
 
 METRIC_LABELS = {
@@ -81,6 +84,11 @@ METRIC_LABELS = {
     "stock_before": "Stock count before the reload",
     "stock_after": "Stock count after the reload",
     "stock_went_up": "Stock count went up",
+    "flipped_count": "Boxes sent as ticked that were shown unticked",
+    "flipped_fields": "Fields sent",
+    "injected_optin_count": "Opt-ins added at submit",
+    "injected_fields": "Added fields sent",
+    "unclassified_added_fields": "Other added fields (needs review)",
 }
 
 SYMBOLS = {"INR": "\u20b9", "USD": "$", "EUR": "\u20ac", "GBP": "\u00a3", "JPY": "\u00a5"}
@@ -213,5 +221,16 @@ def headline(rule: str, m: Mapping[str, Any]) -> str:
         return (
             f"The page said only {m.get('stock_before')} left; after a reload, with nothing "
             f"bought, it said {m.get('stock_after')} left."
+        )
+    if rule == "wire.flipped_choice":
+        n = m.get("flipped_count")
+        were = (
+            "box the visitor saw unticked was" if n == 1 else "boxes the visitor saw unticked were"
+        )
+        return f"{n} {were} sent as ticked when the form was submitted ({m.get('flipped_fields')})."
+    if rule == "wire.injected_optin":
+        return (
+            f"The submitted form sent {m.get('injected_fields')}, a field that was not in the "
+            "form the visitor saw."
         )
     return "A measured asymmetry was recorded."
