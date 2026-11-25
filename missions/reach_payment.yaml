@@ -17,3 +17,5 @@ detectors:
   - sneaking.bundled_optins
   - urgency.countdown_reset
   - urgency.stock_flux
+  - wire.flipped_choice
+  - wire.injected_optin

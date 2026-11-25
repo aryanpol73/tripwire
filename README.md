@@ -47,6 +47,7 @@ uv run tripwire eval
 | Sneaking | mandatory charges that appear late; extras added without being chosen; renewal terms hidden; hidden opt-ins in forms |
 | Obstruction | leaving is much harder than joining; the way out is buried; extra steps on the way out |
 | False urgency (v2 module) | a countdown that restarts on reload; an "only N left" count that goes up with nothing bought |
+| What forms really send (v2 module) | an unticked box sent as ticked; an opt-in field added when the form is submitted |
 
 Tier A rules are measured from the trace (counts, boxes, computed styles, prices). Tier B
 is heuristic and Tier C model-only; both are shown separately as experimental.
@@ -60,7 +61,7 @@ is heuristic and Tier C model-only; both are shown separately as experimental.
 | `tripwire replay <run_dir>` | Re-read a saved trace as text, no browser |
 | `tripwire eval` | Score all 36 sandbox scenarios against ground truth (`--repeat 3` checks determinism) |
 | `tripwire eval --holdout <manifest>` | Score an independent hold-out |
-| `tripwire eval --module urgency` | Score a Phase 9 module on its own 12-scenario grid |
+| `tripwire eval --module urgency` / `--module wire` | Score a Phase 9 module on its own 12-scenario grid |
 | `tripwire audit ... --walker llm` | Let a model choose the actions; code checks every one (Phase 6) |
 | `tripwire eval --walker llm` | Sandbox, unseen layouts and 10 red-team pages; record or `--replay-dir` |
 | `tripwire pilot ...` | The real-site pilot: pre-flight, labels, run, score (see [PILOT](docs/PILOT.md)) |
@@ -77,6 +78,7 @@ stops before a model call that could take its spend past `TRIPWIRE_MAX_LLM_USD` 
 | Check | Result |
 |---|---|
 | Sandbox, 36 scenarios, Tier A | precision 1.00, recall 1.00 for every detector, family, site type and skin; 0 decoy false positives; deterministic across 3 runs |
+| Wire-level form module, 12 scenarios | precision 1.00, recall 1.00; the decoy (a nonce added at submit) silent; v1 and urgency unchanged |
 | False urgency module, 12 scenarios | precision 1.00, recall 1.00; both decoys silent (a real deadline, a steady stock count); v1 grid unchanged |
 | Hold-out v1 (first run, not tuned) | precision 0.95, recall 0.83; 1 decoy false positive; 29 measurement differences |
 | Hold-out v2 (first run, not tuned) | precision 1.00, recall 0.88; 0 decoy false positives; 21 measurement differences |

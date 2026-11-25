@@ -523,6 +523,20 @@ so for `PER_PATTERN_FAMILIES` the ground-truth schema requires instead that a cl
 scenario fires none of its family's rules and a planted one fires at least one; whether
 each rule fires is read from the Plan's expected measurement. The v1 rule is unchanged.
 
+### D-069 Compare the request body with the form measured just before submit
+
+`wire.*` reads two things the trace already holds: the redacted POST body of the request a
+submit click sent, and the form as measured on the step before that click (whose checkbox
+state is the state at that moment, after any walker clicks). A visible checkbox measured
+unticked but sent is a flipped choice; a field absent from the measured form but sent with a
+yes-value is an injected opt-in. Security-style names (CSRF, nonce, token) are ignored and
+other added fields go to review, because a field's purpose cannot be measured from its
+value. Only url-encoded bodies matched to a measured form by method and action path count;
+JSON calls and unknown bodies are out of scope. **Why:** a script can change a form at the
+moment of submit, after every measurement of the page; the request is the only place it
+shows. **Alternative:** watching DOM mutations at submit (needs page instrumentation and
+still misses requests built without the form).
+
 ### D-070 Several hosts of the same model can split one LLM eval
 
 Groq's free tier fits about 10 LLM runs a day, so the 52-run Phase 6 gate would take about

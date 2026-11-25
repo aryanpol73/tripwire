@@ -8,6 +8,7 @@
   <label class="{{ c('field') }}">PIN code <input name="pincode" inputmode="numeric" autocomplete="off" required></label>
   <label class="{{ c('field') }}">City <input name="city" autocomplete="off" required></label>
   {% for o in optins %}{{ optin(o) }}{% endfor %}
+  {% include "wire.html" %}
   {% call nest() %}<div class="{{ c('row') }}">{{ button(w("continue")) }}</div>{% endcall %}
 </form>
 {% endblock %}

@@ -11,6 +11,7 @@
   </label>
   <label class="{{ c('toggle') }}"><input type="checkbox" name="support" value="1"{% if trial.support_preselected %} checked{% endif %}> {{ support.label }} (+{{ inr(support.minor) }} per month)</label>
   <label class="{{ c('toggle') }}"><input type="checkbox" name="newsletter" value="1"{% if newsletter_prechecked %} checked{% endif %}> Email me product news and offers</label>
+  {% include "wire.html" %}
   {% for o in trial.optins %}{{ optin(o) }}{% endfor %}
   {% if trial.renewal %}<p style="{{ trial.renewal.style }};width:auto;height:auto">{{ trial.renewal.label }}</p>{% endif %}
   {% call nest() %}<div class="{{ c('row') }}">{{ button(w("continue")) }}</div>{% endcall %}
