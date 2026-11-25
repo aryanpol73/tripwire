@@ -522,3 +522,21 @@ urgency module plants its patterns separately (subtle: the countdown only; blata
 so for `PER_PATTERN_FAMILIES` the ground-truth schema requires instead that a clean
 scenario fires none of its family's rules and a planted one fires at least one; whether
 each rule fires is read from the Plan's expected measurement. The v1 rule is unchanged.
+
+### D-070 Several hosts of the same model can split one LLM eval
+
+Groq's free tier fits about 10 LLM runs a day, so the 52-run Phase 6 gate would take about
+five days. `openai/gpt-oss-120b` is an open-weights model, and Cloudflare Workers AI serves
+the same model on a free daily allocation (about 15 of our runs). With
+`TRIPWIRE_HOSTS=groq,cloudflare` the eval runs one worker per host, each taking the next
+target from one shared queue; a host whose quota is used up (`QuotaExhausted`) stops and
+puts its unfinished target back for another host or for `--resume`. Every run records its
+host and the summary reports completion per host, so a difference between hosts shows.
+**Rules:** one account per host, used within that host's own free tier; never several
+accounts at one host to multiply a free tier (against providers' terms). Only hosts serving
+the *same* model are mixed, so the gate stays one model's measurement. **Alternatives
+rejected:** several Groq accounts (breaks Groq's terms); mixing different models, e.g.
+Nemotron (the completion rate would no longer belong to one model); OpenRouter's free tier
+(50 requests a day, about 4 runs); Cerebras (needs a payment method for its trial credit).
+**Caveat:** hosts may serve the model with different inference stacks, so results can
+differ slightly between hosts; the per-host breakdown is reported, not averaged away.

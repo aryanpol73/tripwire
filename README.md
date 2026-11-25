@@ -66,7 +66,9 @@ is heuristic and Tier C model-only; both are shown separately as experimental.
 | `tripwire pilot ...` | The real-site pilot: pre-flight, labels, run, score (see [PILOT](docs/PILOT.md)) |
 | `evilweb list` / `evilweb serve <id>` | Browse the sandbox scenarios yourself |
 
-The LLM walker needs `uv sync --extra groq` (or `--extra llm` for Anthropic) and
+Several hosts serving the same open-weights model can split one LLM eval: set
+`TRIPWIRE_HOSTS=groq,cloudflare` and `uv sync --extra groq --extra cloudflare`; every run
+records which host served it. The LLM walker needs `uv sync --extra groq` (or `--extra llm` for Anthropic) and
 `TRIPWIRE_PROVIDER`, `TRIPWIRE_MODEL` and the API key in `.env` (see `.env.example`). Each run
 stops before a model call that could take its spend past `TRIPWIRE_MAX_LLM_USD` (US$0.50).
 
