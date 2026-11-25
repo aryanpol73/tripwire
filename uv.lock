@@ -562,6 +562,23 @@ wheels = [
 ]
 
 [[package]]
+name = "openai"
+version = "3.59.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "anyio" },
+    { name = "httpx2" },
+    { name = "jiter" },
+    { name = "pydantic" },
+    { name = "sniffio" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7d/ca/d9d1549c71723eb8fd2af7173b1c22ed065d10107b1b6438453a1b3f2ae2/openai-3.59.0.tar.gz", hash = "sha256:e4e57d5c28bed6efe6483c9f61ba59be13fa16edde4b771cdaf5c7ca70bc9ff1", size = 2429198, upload-time = "2026-11-24T19:19:44.198Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/76/05/a7afe3729b624e2a19215463c73778208a916e57eb7d33e0fb885bba8160/openai-3.59.0-py3-none-any.whl", hash = "sha256:e613537ac5f082c58f652a536ed4215b19a29d360c4348cca86f0e563f7a0b1f", size = 2454193, upload-time = "2026-11-24T19:19:42.189Z" },
+]
+
+[[package]]
 name = "opentelemetry-api"
 version = "1.45.2"
 source = { registry = "https://pypi.org/simple" }
@@ -913,6 +930,9 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
+cloudflare = [
+    { name = "openai" },
+]
 groq = [
     { name = "groq" },
 ]
@@ -934,13 +954,14 @@ requires-dist = [
     { name = "fastapi", specifier = ">=0.115" },
     { name = "groq", marker = "extra == 'groq'", specifier = ">=1.7.0" },
     { name = "jinja2", specifier = ">=3.1" },
+    { name = "openai", marker = "extra == 'cloudflare'", specifier = ">=3.59.0" },
     { name = "playwright", specifier = ">=1.49" },
     { name = "pydantic", specifier = ">=2.9,<3" },
     { name = "python-multipart", specifier = ">=0.0.12" },
     { name = "pyyaml", specifier = ">=6" },
     { name = "uvicorn", specifier = ">=0.32" },
 ]
-provides-extras = ["llm", "groq"]
+provides-extras = ["llm", "groq", "cloudflare"]
 
 [package.metadata.requires-dev]
 dev = [

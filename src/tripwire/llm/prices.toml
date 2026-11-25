@@ -41,3 +41,10 @@ output = 0.30
 [models."qwen/qwen3.8-27b"]
 input = 0.80
 output = 4.00
+
+# Cloudflare Workers AI (developers.cloudflare.com/workers-ai/platform/pricing, checked
+# 2026-11-25). Free use is 10,000 neurons per day; these are the rates beyond it, used for
+# the spend cap.
+[models."@cf/openai/gpt-oss-120b"]
+input = 0.35
+output = 0.75

@@ -717,6 +717,16 @@ uv run tripwire eval --walker llm --replay-dir runs/llm-decisions   # offline, n
 - About 16-19K tokens per run (about 1,250 per call over 10-16 calls), so the free tier fits
   about 10 runs a day. The full gate is run over several days with `--resume`.
 
+### Two hosts for the live gate (2026-11-25)
+
+Groq's free tier fits about 10 runs a day. Checked other hosts' own pages for free access to
+the same model: Cloudflare Workers AI serves `@cf/openai/gpt-oss-120b` on 10,000 free
+neurons a day (about 15 of our runs, from its per-token neuron rates), with tool calling and
+an OpenAI-compatible endpoint; Cerebras needs a payment method for its trial credit;
+OpenRouter's free models allow 50 requests a day; GitHub Models was retired on 2026-07-30;
+NVIDIA's API trial states no limits. The eval now splits one run across hosts of the same
+model (D-070), about 25 runs a day for Groq plus Cloudflare.
+
 ### What broke (and was fixed)
 
 - **Gate evidence was wrong for blocked navigations.** Playwright fires the request event
