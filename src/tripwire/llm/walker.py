@@ -50,6 +50,12 @@ LOOP_REPEATS = 3
 STALL_TURNS = 5  # clicks, scrolls or navigations in a row that change nothing
 
 
+def page_status(step) -> int | None:
+    """The HTTP status of the page a step loaded (its last document request), if any."""
+    docs = [r for r in step.requests if r.resource_type == "document" and r.status is not None]
+    return docs[-1].status if docs else None
+
+
 def cap_from_env() -> int:
     value = os.environ.get("TRIPWIRE_MAX_LLM_USD")
     return round(float(value) * 1_000_000) if value else DEFAULT_CAP_MICROS
@@ -165,6 +171,14 @@ class LlmWalker(ExplorerBase):
             self._account(decision)
             n = len(self.history) + 1
             if decision.tool == "done":
+                unmet = self._unmet_order(decision.input.get("outcome") == "completed")
+                if unmet:
+                    self.stats.refusals += 1
+                    self.history.append(f"{n}. done refused by the walker: {unmet}")
+                    if self.stats.refusals > MAX_REFUSALS:
+                        self.stats.stopped_by = "too many refused actions"
+                        return
+                    continue
                 self.stats.stopped_by = f"done ({decision.input.get('outcome', '')})"
                 return
             if decision.tool == "handoff":
@@ -184,6 +198,8 @@ class LlmWalker(ExplorerBase):
                     else None
                 )
                 checked = tools.check(decision.tool, decision.input, obs, page.shown_ids, pay)
+                if checked.purpose == Purpose.LEAVE and (unmet := self._unmet_order(True)):
+                    raise Refused(unmet)
             except Refused as err:
                 self.stats.refusals += 1
                 self.history.append(f"{n}. {decision.tool} refused by the walker: {err}")
@@ -218,6 +234,19 @@ class LlmWalker(ExplorerBase):
         """Link names that, when clicked before, opened a page already visited."""
         visited = {path_of(s.url_after).split("?")[0] for s in self.s.steps}
         return {name for name, dest in self._dest.items() if dest in visited}
+
+    def _unmet_order(self, finishing: bool) -> str:
+        """sign_up_and_leave joins first, then leaves. Returns why a leave step or a
+        completed `done` is out of order, or "" when it is fine. Checked in code, so the
+        model cannot skip the sign-up by declaring the mission finished."""
+        if self.req.mission.name != "sign_up_and_leave" or not finishing:
+            return ""
+        if not self._tagged(Purpose.SIGN_UP):
+            return (
+                "nothing has been joined yet: sign up first (a free trial, or the newsletter if "
+                "there is no trial), then look for the way out"
+            )
+        return ""
 
     def _pages_opened(self) -> int:
         start = path_of(self.req.start_url).split("?")[0]
@@ -297,6 +326,13 @@ class LlmWalker(ExplorerBase):
             if step.page_load and after != before
             else ("same page, nothing new opened" if after == before else "page changed")
         )
+        status = page_status(step)
+        if status is not None and status >= 400:
+            # Measured by the walker from the page's own response, not read from the page.
+            moved = (
+                f"page not found (HTTP {status}): this address does not exist here; "
+                "use links you can see instead of guessing addresses"
+            )
         self.history.append(f"{label} -> {moved}")
         if c.tool == "click" and c.element is not None:
             name = (c.element.accessible_name or c.element.text or "").strip()

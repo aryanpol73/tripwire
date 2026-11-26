@@ -554,3 +554,20 @@ Nemotron (the completion rate would no longer belong to one model); OpenRouter's
 (50 requests a day, about 4 runs); Cerebras (needs a payment method for its trial credit).
 **Caveat:** hosts may serve the model with different inference stacks, so results can
 differ slightly between hosts; the per-host breakdown is reported, not averaged away.
+
+### D-071 Tell the model about missing pages; check "join before leave" in code
+
+From the first full live gate (2026-11-25/26). Two of three misses were the walker's to fix:
+- **Missing pages.** On an unseen layout the model guessed addresses (`/account`,
+  `/account/billing`) that do not exist, and the walker reported each as "new page". The
+  walker now reads the HTTP status of the page a step loaded and writes "page not found
+  (HTTP 404)" into its own, trusted action history. The status is measured from the
+  response, never read from page text.
+- **Order of the mission.** On a newsletter site the model opened the unsubscribe flow of a
+  newsletter it never joined and declared the mission done. On `sign_up_and_leave` a
+  `leave` action or a completed `done` is now refused until some step was tagged
+  `sign_up`; the refusal says why. `done(impossible)` is still accepted.
+**Why in code:** the completion check already judges from the Trace; refusing the out-of-
+order step is the same rule applied before the model wastes the run. **Caveat:** the fixes
+were made after seeing these runs, including one on an unseen layout (Streamly), so the
+whole gate is re-run on the fixed code, and Streamly is now twice-informed (see D-063).
