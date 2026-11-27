@@ -107,6 +107,18 @@ RULES: dict[str, Rule] = {
             "Does a submitted form carry an opt-in field that was not in the form shown?",
         ),
         Rule(
+            "nagging.repeat_popup",
+            Family.NAGGING,
+            Tier.A,
+            "Does a pop-up the visitor closed come back on a later page?",
+        ),
+        Rule(
+            "nagging.forced_registration",
+            Family.NAGGING,
+            Tier.A,
+            "Does an account wall block a page reached by an ordinary link?",
+        ),
+        Rule(
             "obstruction.interposed_friction",
             Family.OBSTRUCTION,
             Tier.A,

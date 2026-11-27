@@ -16,6 +16,7 @@ FAMILY_NAMES = {
     "obstruction": "Obstruction",
     "urgency": "False urgency",
     "wire": "What forms really send",
+    "nagging": "Nagging and forced registration",
 }
 
 RULE_TITLES = {
@@ -34,6 +35,8 @@ RULE_TITLES = {
     "urgency.stock_flux": "A stock count that goes up",
     "wire.flipped_choice": "An unticked box sent as ticked",
     "wire.injected_optin": "An opt-in added when the form was sent",
+    "nagging.repeat_popup": "A closed pop-up that comes back",
+    "nagging.forced_registration": "An account wall on an ordinary page",
 }
 
 METRIC_LABELS = {
@@ -89,6 +92,12 @@ METRIC_LABELS = {
     "injected_optin_count": "Opt-ins added at submit",
     "injected_fields": "Added fields sent",
     "unclassified_added_fields": "Other added fields (needs review)",
+    "dismissals": "Pop-ups closed",
+    "reappearances": "Later pages where it came back",
+    "popup_returned": "Pop-up came back after closing",
+    "popup_purpose": "Pop-up kind",
+    "account_wall": "Account wall on an ordinary page",
+    "reached_by": "Page reached by",
 }
 
 SYMBOLS = {"INR": "\u20b9", "USD": "$", "EUR": "\u20ac", "GBP": "\u00a3", "JPY": "\u00a5"}
@@ -221,6 +230,17 @@ def headline(rule: str, m: Mapping[str, Any]) -> str:
         return (
             f"The page said only {m.get('stock_before')} left; after a reload, with nothing "
             f"bought, it said {m.get('stock_after')} left."
+        )
+    if rule == "nagging.repeat_popup":
+        n = m.get("reappearances")
+        kind = m.get("popup_purpose") or "pop-up"
+        return (
+            f"A {kind} pop-up that was closed came back on {n} later page{'' if n == 1 else 's'}."
+        )
+    if rule == "nagging.forced_registration":
+        return (
+            f"An ordinary page, reached by \u201c{m.get('reached_by')}\u201d, asked the "
+            "visitor to create an account before it could be read."
         )
     if rule == "wire.flipped_choice":
         n = m.get("flipped_count")
