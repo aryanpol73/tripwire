@@ -134,7 +134,15 @@ just before the submit click.
 Its grid: `tripwire eval --module wire` (12 scenarios on the SaaS sign-up and the shop
 address form).
 
-**Still deferred:** nagging and forced registration, an LLM
+**Module 3, nagging and forced registration (built).**
+- `nagging.repeat_popup`: the walker closed a pop-up (its close or decline control) and a
+  pop-up with the same purpose came back on a later page.
+- `nagging.forced_registration`: the run was handed to a human at a login wall (a password
+  field) on a page reached by an ordinary link, not an account, sign-in or sign-up link.
+Its grid: `tripwire eval --module nagging` (12 scenarios on the news articles, first visit).
+A nagging scenario that stops at its planted wall is a correct run, not a failure.
+
+**Still deferred:** an LLM
 confirm-shaming classifier, taint tracking, a browser extension, personalization probes,
 regulatory mapping.
 

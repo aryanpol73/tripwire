@@ -30,3 +30,5 @@ detectors:
   - urgency.stock_flux
   - wire.flipped_choice
   - wire.injected_optin
+  - nagging.repeat_popup
+  - nagging.forced_registration

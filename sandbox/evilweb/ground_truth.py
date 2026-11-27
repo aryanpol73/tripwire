@@ -9,7 +9,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from evilweb import scenarios
-from evilweb.patterns import consent, obstruction, sneaking, urgency, wire
+from evilweb.patterns import consent, nagging, obstruction, sneaking, urgency, wire
 from evilweb.plan import Plan, build_plan
 from tripwire.detectors.rules import RULES
 from tripwire.schemas.finding import Family, Tier
@@ -25,7 +25,8 @@ _SHOP_SNEAKING = ["sneaking.price_drift", "sneaking.preadded_extras", "sneaking.
 _SAAS_SNEAKING = [*_SHOP_SNEAKING, "sneaking.renewal_disclosure"]
 _URGENCY = [r for r in RULES if r.startswith("urgency.")]
 _WIRE = [r for r in RULES if r.startswith("wire.")]
-MODULE_RULES = {Family.URGENCY: _URGENCY, Family.WIRE: _WIRE}
+_NAGGING = [r for r in RULES if r.startswith("nagging.")]
+MODULE_RULES = {Family.URGENCY: _URGENCY, Family.WIRE: _WIRE, Family.NAGGING: _NAGGING}
 
 # Which rules have something to measure for a given site and mission.
 APPLICABLE: dict[tuple[SiteType, str], list[str]] = {
@@ -48,7 +49,13 @@ def _all_metrics(plan: Plan) -> dict[str, dict]:
     found = plan.consent.metrics(site)
     found |= plan.shop.metrics() if site == SiteType.SHOP else plan.saas_trial.metrics()
     leave = plan.saas_leave if site == SiteType.SAAS else plan.news_leave
-    return found | leave.metrics() | plan.urgency.metrics() | plan.wire.metrics()
+    return (
+        found
+        | leave.metrics()
+        | plan.urgency.metrics()
+        | plan.wire.metrics()
+        | plan.nagging.metrics()
+    )
 
 
 def _decoys(plan: Plan, applicable: list[str]):
@@ -62,6 +69,7 @@ def _decoys(plan: Plan, applicable: list[str]):
     found += obstruction.decoys(plan.saas_leave if site == SiteType.SAAS else plan.news_leave)
     found += urgency.decoys(plan.urgency)
     found += wire.decoys(plan.wire)
+    found += nagging.decoys(plan.nagging)
     # Keep decoys whose guarded rules are measured here; drop guards for rules that are not.
     kept = []
     for decoy in found:

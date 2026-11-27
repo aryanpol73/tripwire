@@ -48,6 +48,7 @@ uv run tripwire eval
 | Obstruction | leaving is much harder than joining; the way out is buried; extra steps on the way out |
 | False urgency (v2 module) | a countdown that restarts on reload; an "only N left" count that goes up with nothing bought |
 | What forms really send (v2 module) | an unticked box sent as ticked; an opt-in field added when the form is submitted |
+| Nagging (v2 module) | a closed pop-up that comes back; an account wall on an ordinary page |
 
 Tier A rules are measured from the trace (counts, boxes, computed styles, prices). Tier B
 is heuristic and Tier C model-only; both are shown separately as experimental.
@@ -61,7 +62,7 @@ is heuristic and Tier C model-only; both are shown separately as experimental.
 | `tripwire replay <run_dir>` | Re-read a saved trace as text, no browser |
 | `tripwire eval` | Score all 36 sandbox scenarios against ground truth (`--repeat 3` checks determinism) |
 | `tripwire eval --holdout <manifest>` | Score an independent hold-out |
-| `tripwire eval --module urgency` / `--module wire` | Score a Phase 9 module on its own 12-scenario grid |
+| `tripwire eval --module urgency` / `wire` / `nagging` | Score a Phase 9 module on its own 12-scenario grid |
 | `tripwire audit ... --walker llm` | Let a model choose the actions; code checks every one (Phase 6) |
 | `tripwire eval --walker llm` | Sandbox, unseen layouts and 10 red-team pages; record or `--replay-dir` |
 | `tripwire pilot ...` | The real-site pilot: pre-flight, labels, run, score (see [PILOT](docs/PILOT.md)) |

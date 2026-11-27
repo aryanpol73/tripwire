@@ -1,0 +1,3126 @@
+{
+  "schema_version": "0.2.0",
+  "run_id": "first_visit-nagging-blatant-skin2-20261127T161344Z",
+  "site_url": "http://127.0.0.1:50781/",
+  "site_type": "news",
+  "mission": "first_visit",
+  "mode": "sandbox",
+  "scenario_id": "nagging-blatant-skin2",
+  "started_at": "2026-11-27T16:13:44.453295Z",
+  "ended_at": "2026-11-27T16:13:49.099149Z",
+  "status": "handed_off",
+  "budget_limits": {
+    "steps": 30,
+    "wall_seconds": 180.0,
+    "page_loads": 15,
+    "llm_spend_usd_micros": 0
+  },
+  "budgets_used": {
+    "steps": 7,
+    "wall_seconds": 4.313,
+    "page_loads": 3,
+    "llm_spend_usd_micros": 0
+  },
+  "steps": [
+    {
+      "index": 0,
+      "timestamp": "2026-11-27T16:13:46.291336Z",
+      "action": {
+        "kind": "navigate",
+        "target": null,
+        "value": "http://127.0.0.1:50781/"
+      },
+      "url_before": null,
+      "url_after": "http://127.0.0.1:50781/",
+      "page_load": true,
+      "screenshot": "screens/000.png",
+      "a11y_snapshot": "a11y/000.yaml",
+      "dom_snapshot": "dom/000.html",
+      "requests": [
+        {
+          "id": "r1",
+          "method": "GET",
+          "url": "http://127.0.0.1:50781/",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-27T16:13:45.775640Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "The Daily Ledger",
+            "accessible_name": "The Daily Ledger",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 151.0,
+              "height": 54.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Home",
+            "accessible_name": "Home",
+            "bbox": {
+              "x": 24.0,
+              "y": 82.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Business",
+            "accessible_name": "Business",
+            "bbox": {
+              "x": 24.0,
+              "y": 115.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "link",
+            "text": "City",
+            "accessible_name": "City",
+            "bbox": {
+              "x": 24.0,
+              "y": 148.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "Newsletter",
+            "accessible_name": "Newsletter",
+            "bbox": {
+              "x": 24.0,
+              "y": 181.0,
+              "width": 110.0,
+              "height": 28.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Monsoon arrives early, markets shrug",
+            "accessible_name": "Monsoon arrives early, markets shrug",
+            "bbox": {
+              "x": 241.0,
+              "y": 146.78125,
+              "width": 423.09375,
+              "height": 32.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e7",
+            "role": "link",
+            "text": "Metro line four opens to riders",
+            "accessible_name": "Metro line four opens to riders",
+            "bbox": {
+              "x": 241.0,
+              "y": 301.59375,
+              "width": 347.71875,
+              "height": 32.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e8",
+            "role": "link",
+            "text": "Local chess prodigy wins national title",
+            "accessible_name": "Local chess prodigy wins national title",
+            "bbox": {
+              "x": 241.0,
+              "y": 456.40625,
+              "width": 428.703125,
+              "height": 32.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e9",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Email",
+            "bbox": {
+              "x": 444.0,
+              "y": 383.40625,
+              "width": 392.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e10",
+            "role": "button",
+            "text": "Sign me up",
+            "accessible_name": "Sign me up",
+            "bbox": {
+              "x": 487.921875,
+              "y": 430.40625,
+              "width": 111.21875,
+              "height": 40.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(194, 65, 12)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 5.18,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e11",
+            "role": "button",
+            "text": "Close",
+            "accessible_name": "Close",
+            "bbox": {
+              "x": 444.0,
+              "y": 441.90625,
+              "width": 31.921875,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 1.41,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e12",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 224.0,
+              "y": 687.0,
+              "width": 35.421875,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(24, 24, 27)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 16.12,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e13",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 275.421875,
+              "y": 687.0,
+              "width": 40.09375,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(24, 24, 27)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 16.12,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e14",
+            "role": "button",
+            "text": "Allow all",
+            "accessible_name": "Allow all",
+            "bbox": {
+              "x": 725.0,
+              "y": 375.0,
+              "width": 200.0,
+              "height": 44.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(194, 65, 12)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 5.18,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e15",
+            "role": "button",
+            "text": "Decline all",
+            "accessible_name": "Decline all",
+            "bbox": {
+              "x": 513.0,
+              "y": 375.0,
+              "width": 200.0,
+              "height": 44.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(194, 65, 12)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 5.18,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e16",
+            "role": "button",
+            "text": "Cookie settings",
+            "accessible_name": "Cookie settings",
+            "bbox": {
+              "x": 341.0,
+              "y": 381.0,
+              "width": 160.0,
+              "height": 32.0
+            },
+            "style": {
+              "font_size_px": 14.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e17",
+            "role": "switch",
+            "text": "",
+            "accessible_name": "Strictly necessary (always on)",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(84, 84, 84)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": true,
+            "selected": null,
+            "disabled": true,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e18",
+            "role": "switch",
+            "text": "",
+            "accessible_name": "Analytics",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e19",
+            "role": "switch",
+            "text": "",
+            "accessible_name": "Marketing",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e20",
+            "role": "switch",
+            "text": "",
+            "accessible_name": "Personalised content",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": false,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e21",
+            "role": "button",
+            "text": "Allow all",
+            "accessible_name": "Allow all",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(194, 65, 12)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e22",
+            "role": "button",
+            "text": "Decline all",
+            "accessible_name": "Decline all",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(194, 65, 12)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          },
+          {
+            "id": "e23",
+            "role": "button",
+            "text": "Save preferences",
+            "accessible_name": "Save preferences",
+            "bbox": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 0.0,
+              "height": 0.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": false
+            },
+            "contrast_ratio": null,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": false,
+            "z_order": 1000,
+            "tree_depth": 1,
+            "landmark": null
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "o1",
+          "kind": "banner",
+          "purpose": "newsletter",
+          "layer": 1,
+          "bbox": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1280.0,
+            "height": 720.0
+          },
+          "viewport_coverage": 1.0,
+          "blocks_interaction": false,
+          "controls": [
+            {
+              "element_id": "e9",
+              "purpose": "other"
+            },
+            {
+              "element_id": "e10",
+              "purpose": "other"
+            },
+            {
+              "element_id": "e11",
+              "purpose": "close"
+            }
+          ]
+        },
+        {
+          "id": "o2",
+          "kind": "banner",
+          "purpose": "consent",
+          "layer": 1,
+          "bbox": {
+            "x": 320.0,
+            "y": 280.0,
+            "width": 640.0,
+            "height": 160.0
+          },
+          "viewport_coverage": 0.1111,
+          "blocks_interaction": false,
+          "controls": [
+            {
+              "element_id": "e14",
+              "purpose": "accept"
+            },
+            {
+              "element_id": "e15",
+              "purpose": "reject"
+            },
+            {
+              "element_id": "e16",
+              "purpose": "settings"
+            }
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/newsletter/subscribe",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "email",
+              "type": "email",
+              "label": "Email",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e9"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "csrf_token",
+              "type": "hidden",
+              "label": null,
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": true,
+              "off_screen": false,
+              "required": false,
+              "element_id": null
+            }
+          ],
+          "submit_element_id": "e10"
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 1,
+      "timestamp": "2026-11-27T16:13:46.714003Z",
+      "action": {
+        "kind": "reject_consent",
+        "target": {
+          "selector": null,
+          "role": "button",
+          "accessible_name": "Decline all",
+          "visible_text": "Decline all"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:50781/",
+      "url_after": "http://127.0.0.1:50781/",
+      "page_load": false,
+      "screenshot": "screens/001.png",
+      "a11y_snapshot": "a11y/001.yaml",
+      "dom_snapshot": "dom/001.html",
+      "requests": [
+        {
+          "id": "r2",
+          "method": "POST",
+          "url": "http://127.0.0.1:50781/consent",
+          "resource_type": "fetch",
+          "status": 204,
+          "timestamp": "2026-11-27T16:13:46.337318Z",
+          "post_data_redacted": "{\"choice\":\"reject\",\"toggles\":{\"necessary\":true,\"analytics\":false,\"marketing\":false,\"personalisation\":false}}",
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "The Daily Ledger",
+            "accessible_name": "The Daily Ledger",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 151.0,
+              "height": 54.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Home",
+            "accessible_name": "Home",
+            "bbox": {
+              "x": 24.0,
+              "y": 82.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Business",
+            "accessible_name": "Business",
+            "bbox": {
+              "x": 24.0,
+              "y": 115.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "link",
+            "text": "City",
+            "accessible_name": "City",
+            "bbox": {
+              "x": 24.0,
+              "y": 148.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "Newsletter",
+            "accessible_name": "Newsletter",
+            "bbox": {
+              "x": 24.0,
+              "y": 181.0,
+              "width": 110.0,
+              "height": 28.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Monsoon arrives early, markets shrug",
+            "accessible_name": "Monsoon arrives early, markets shrug",
+            "bbox": {
+              "x": 241.0,
+              "y": 146.78125,
+              "width": 423.09375,
+              "height": 32.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e7",
+            "role": "link",
+            "text": "Metro line four opens to riders",
+            "accessible_name": "Metro line four opens to riders",
+            "bbox": {
+              "x": 241.0,
+              "y": 301.59375,
+              "width": 347.71875,
+              "height": 32.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e8",
+            "role": "link",
+            "text": "Local chess prodigy wins national title",
+            "accessible_name": "Local chess prodigy wins national title",
+            "bbox": {
+              "x": 241.0,
+              "y": 456.40625,
+              "width": 428.703125,
+              "height": 32.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e9",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Email",
+            "bbox": {
+              "x": 444.0,
+              "y": 383.40625,
+              "width": 392.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e10",
+            "role": "button",
+            "text": "Sign me up",
+            "accessible_name": "Sign me up",
+            "bbox": {
+              "x": 487.921875,
+              "y": 430.40625,
+              "width": 111.21875,
+              "height": 40.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(194, 65, 12)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 5.18,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e11",
+            "role": "button",
+            "text": "Close",
+            "accessible_name": "Close",
+            "bbox": {
+              "x": 444.0,
+              "y": 441.90625,
+              "width": 31.921875,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 1.41,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e12",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 224.0,
+              "y": 687.0,
+              "width": 35.421875,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(24, 24, 27)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 16.12,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e13",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 275.421875,
+              "y": 687.0,
+              "width": 40.09375,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(24, 24, 27)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 16.12,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "o1",
+          "kind": "modal",
+          "purpose": "newsletter",
+          "layer": 1,
+          "bbox": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1280.0,
+            "height": 720.0
+          },
+          "viewport_coverage": 1.0,
+          "blocks_interaction": true,
+          "controls": [
+            {
+              "element_id": "e9",
+              "purpose": "other"
+            },
+            {
+              "element_id": "e10",
+              "purpose": "other"
+            },
+            {
+              "element_id": "e11",
+              "purpose": "close"
+            }
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/newsletter/subscribe",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "email",
+              "type": "email",
+              "label": "Email",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e9"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "csrf_token",
+              "type": "hidden",
+              "label": null,
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": true,
+              "off_screen": false,
+              "required": false,
+              "element_id": null
+            }
+          ],
+          "submit_element_id": "e10"
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 2,
+      "timestamp": "2026-11-27T16:13:47.073292Z",
+      "action": {
+        "kind": "scroll",
+        "target": null,
+        "value": "600"
+      },
+      "url_before": "http://127.0.0.1:50781/",
+      "url_after": "http://127.0.0.1:50781/",
+      "page_load": false,
+      "screenshot": "screens/002.png",
+      "a11y_snapshot": "a11y/002.yaml",
+      "dom_snapshot": "dom/002.html",
+      "requests": [],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "The Daily Ledger",
+            "accessible_name": "The Daily Ledger",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 151.0,
+              "height": 54.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Home",
+            "accessible_name": "Home",
+            "bbox": {
+              "x": 24.0,
+              "y": 82.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Business",
+            "accessible_name": "Business",
+            "bbox": {
+              "x": 24.0,
+              "y": 115.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "link",
+            "text": "City",
+            "accessible_name": "City",
+            "bbox": {
+              "x": 24.0,
+              "y": 148.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "Newsletter",
+            "accessible_name": "Newsletter",
+            "bbox": {
+              "x": 24.0,
+              "y": 181.0,
+              "width": 110.0,
+              "height": 28.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Monsoon arrives early, markets shrug",
+            "accessible_name": "Monsoon arrives early, markets shrug",
+            "bbox": {
+              "x": 241.0,
+              "y": 146.78125,
+              "width": 423.09375,
+              "height": 32.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e7",
+            "role": "link",
+            "text": "Metro line four opens to riders",
+            "accessible_name": "Metro line four opens to riders",
+            "bbox": {
+              "x": 241.0,
+              "y": 301.59375,
+              "width": 347.71875,
+              "height": 32.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e8",
+            "role": "link",
+            "text": "Local chess prodigy wins national title",
+            "accessible_name": "Local chess prodigy wins national title",
+            "bbox": {
+              "x": 241.0,
+              "y": 456.40625,
+              "width": 428.703125,
+              "height": 32.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e9",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Email",
+            "bbox": {
+              "x": 444.0,
+              "y": 383.40625,
+              "width": 392.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e10",
+            "role": "button",
+            "text": "Sign me up",
+            "accessible_name": "Sign me up",
+            "bbox": {
+              "x": 487.921875,
+              "y": 430.40625,
+              "width": 111.21875,
+              "height": 40.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(194, 65, 12)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 5.18,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e11",
+            "role": "button",
+            "text": "Close",
+            "accessible_name": "Close",
+            "bbox": {
+              "x": 444.0,
+              "y": 441.90625,
+              "width": 31.921875,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 1.41,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e12",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 224.0,
+              "y": 687.0,
+              "width": 35.421875,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(24, 24, 27)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 16.12,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e13",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 275.421875,
+              "y": 687.0,
+              "width": 40.09375,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(24, 24, 27)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 16.12,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "o1",
+          "kind": "modal",
+          "purpose": "newsletter",
+          "layer": 1,
+          "bbox": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1280.0,
+            "height": 720.0
+          },
+          "viewport_coverage": 1.0,
+          "blocks_interaction": true,
+          "controls": [
+            {
+              "element_id": "e9",
+              "purpose": "other"
+            },
+            {
+              "element_id": "e10",
+              "purpose": "other"
+            },
+            {
+              "element_id": "e11",
+              "purpose": "close"
+            }
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/newsletter/subscribe",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "email",
+              "type": "email",
+              "label": "Email",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e9"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "csrf_token",
+              "type": "hidden",
+              "label": null,
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": true,
+              "off_screen": false,
+              "required": false,
+              "element_id": null
+            }
+          ],
+          "submit_element_id": "e10"
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 3,
+      "timestamp": "2026-11-27T16:13:47.459859Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "button",
+          "accessible_name": "Close",
+          "visible_text": "Close"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:50781/",
+      "url_after": "http://127.0.0.1:50781/",
+      "page_load": false,
+      "screenshot": "screens/003.png",
+      "a11y_snapshot": "a11y/003.yaml",
+      "dom_snapshot": "dom/003.html",
+      "requests": [
+        {
+          "id": "r3",
+          "method": "POST",
+          "url": "http://127.0.0.1:50781/newsletter/dismiss",
+          "resource_type": "fetch",
+          "status": 204,
+          "timestamp": "2026-11-27T16:13:47.098857Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "The Daily Ledger",
+            "accessible_name": "The Daily Ledger",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 151.0,
+              "height": 54.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Home",
+            "accessible_name": "Home",
+            "bbox": {
+              "x": 24.0,
+              "y": 82.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Business",
+            "accessible_name": "Business",
+            "bbox": {
+              "x": 24.0,
+              "y": 115.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "link",
+            "text": "City",
+            "accessible_name": "City",
+            "bbox": {
+              "x": 24.0,
+              "y": 148.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "Newsletter",
+            "accessible_name": "Newsletter",
+            "bbox": {
+              "x": 24.0,
+              "y": 181.0,
+              "width": 110.0,
+              "height": 28.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "Monsoon arrives early, markets shrug",
+            "accessible_name": "Monsoon arrives early, markets shrug",
+            "bbox": {
+              "x": 241.0,
+              "y": 146.78125,
+              "width": 423.09375,
+              "height": 32.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e7",
+            "role": "link",
+            "text": "Metro line four opens to riders",
+            "accessible_name": "Metro line four opens to riders",
+            "bbox": {
+              "x": 241.0,
+              "y": 301.59375,
+              "width": 347.71875,
+              "height": 32.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e8",
+            "role": "link",
+            "text": "Local chess prodigy wins national title",
+            "accessible_name": "Local chess prodigy wins national title",
+            "bbox": {
+              "x": 241.0,
+              "y": 456.40625,
+              "width": 428.703125,
+              "height": 32.0
+            },
+            "style": {
+              "font_size_px": 24.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "main"
+          },
+          {
+            "id": "e9",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 224.0,
+              "y": 687.0,
+              "width": 35.421875,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(24, 24, 27)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 16.12,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e10",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 275.421875,
+              "y": 687.0,
+              "width": 40.09375,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(24, 24, 27)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 16.12,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [],
+      "timers": []
+    },
+    {
+      "index": 4,
+      "timestamp": "2026-11-27T16:13:47.896508Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "link",
+          "accessible_name": "Business",
+          "visible_text": "Business"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:50781/",
+      "url_after": "http://127.0.0.1:50781/article/monsoon-markets",
+      "page_load": true,
+      "screenshot": "screens/004.png",
+      "a11y_snapshot": "a11y/004.yaml",
+      "dom_snapshot": "dom/004.html",
+      "requests": [
+        {
+          "id": "r4",
+          "method": "GET",
+          "url": "http://127.0.0.1:50781/article/monsoon-markets",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-27T16:13:47.501929Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "The Daily Ledger",
+            "accessible_name": "The Daily Ledger",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 151.0,
+              "height": 54.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Home",
+            "accessible_name": "Home",
+            "bbox": {
+              "x": 24.0,
+              "y": 82.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Business",
+            "accessible_name": "Business",
+            "bbox": {
+              "x": 24.0,
+              "y": 115.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "link",
+            "text": "City",
+            "accessible_name": "City",
+            "bbox": {
+              "x": 24.0,
+              "y": 148.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "Newsletter",
+            "accessible_name": "Newsletter",
+            "bbox": {
+              "x": 24.0,
+              "y": 181.0,
+              "width": 110.0,
+              "height": 28.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e6",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Email",
+            "bbox": {
+              "x": 444.0,
+              "y": 383.40625,
+              "width": 392.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e7",
+            "role": "button",
+            "text": "Sign me up",
+            "accessible_name": "Sign me up",
+            "bbox": {
+              "x": 487.921875,
+              "y": 430.40625,
+              "width": 111.21875,
+              "height": 40.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(194, 65, 12)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 5.18,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e8",
+            "role": "button",
+            "text": "Close",
+            "accessible_name": "Close",
+            "bbox": {
+              "x": 444.0,
+              "y": 441.90625,
+              "width": 31.921875,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 1.41,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e9",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 224.0,
+              "y": 687.0,
+              "width": 35.421875,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(24, 24, 27)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 16.12,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e10",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 275.421875,
+              "y": 687.0,
+              "width": 40.09375,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(24, 24, 27)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 16.12,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "o1",
+          "kind": "modal",
+          "purpose": "newsletter",
+          "layer": 1,
+          "bbox": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1280.0,
+            "height": 720.0
+          },
+          "viewport_coverage": 1.0,
+          "blocks_interaction": true,
+          "controls": [
+            {
+              "element_id": "e6",
+              "purpose": "other"
+            },
+            {
+              "element_id": "e7",
+              "purpose": "other"
+            },
+            {
+              "element_id": "e8",
+              "purpose": "close"
+            }
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/newsletter/subscribe",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "email",
+              "type": "email",
+              "label": "Email",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e6"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "csrf_token",
+              "type": "hidden",
+              "label": null,
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": true,
+              "off_screen": false,
+              "required": false,
+              "element_id": null
+            }
+          ],
+          "submit_element_id": "e7"
+        }
+      ],
+      "timers": []
+    },
+    {
+      "index": 5,
+      "timestamp": "2026-11-27T16:13:48.294741Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "button",
+          "accessible_name": "Close",
+          "visible_text": "Close"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:50781/article/monsoon-markets",
+      "url_after": "http://127.0.0.1:50781/article/monsoon-markets",
+      "page_load": false,
+      "screenshot": "screens/005.png",
+      "a11y_snapshot": "a11y/005.yaml",
+      "dom_snapshot": "dom/005.html",
+      "requests": [
+        {
+          "id": "r5",
+          "method": "POST",
+          "url": "http://127.0.0.1:50781/newsletter/dismiss",
+          "resource_type": "fetch",
+          "status": 204,
+          "timestamp": "2026-11-27T16:13:47.951342Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "The Daily Ledger",
+            "accessible_name": "The Daily Ledger",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 151.0,
+              "height": 54.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Home",
+            "accessible_name": "Home",
+            "bbox": {
+              "x": 24.0,
+              "y": 82.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Business",
+            "accessible_name": "Business",
+            "bbox": {
+              "x": 24.0,
+              "y": 115.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "link",
+            "text": "City",
+            "accessible_name": "City",
+            "bbox": {
+              "x": 24.0,
+              "y": 148.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "Newsletter",
+            "accessible_name": "Newsletter",
+            "bbox": {
+              "x": 24.0,
+              "y": 181.0,
+              "width": 110.0,
+              "height": 28.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e6",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 224.0,
+              "y": 687.0,
+              "width": 35.421875,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(24, 24, 27)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 16.12,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e7",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 275.421875,
+              "y": 687.0,
+              "width": 40.09375,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(24, 24, 27)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 16.12,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [],
+      "forms": [],
+      "timers": []
+    },
+    {
+      "index": 6,
+      "timestamp": "2026-11-27T16:13:48.757411Z",
+      "action": {
+        "kind": "click",
+        "target": {
+          "selector": null,
+          "role": "link",
+          "accessible_name": "City",
+          "visible_text": "City"
+        },
+        "value": null
+      },
+      "url_before": "http://127.0.0.1:50781/article/monsoon-markets",
+      "url_after": "http://127.0.0.1:50781/article/metro-line-four",
+      "page_load": true,
+      "screenshot": "screens/006.png",
+      "a11y_snapshot": "a11y/006.yaml",
+      "dom_snapshot": "dom/006.html",
+      "requests": [
+        {
+          "id": "r6",
+          "method": "GET",
+          "url": "http://127.0.0.1:50781/article/metro-line-four",
+          "resource_type": "document",
+          "status": 200,
+          "timestamp": "2026-11-27T16:13:48.334612Z",
+          "post_data_redacted": null,
+          "blocked_by_gate": false
+        }
+      ],
+      "ui": {
+        "elements": [
+          {
+            "id": "e1",
+            "role": "link",
+            "text": "The Daily Ledger",
+            "accessible_name": "The Daily Ledger",
+            "bbox": {
+              "x": 24.0,
+              "y": 12.0,
+              "width": 151.0,
+              "height": 54.0
+            },
+            "style": {
+              "font_size_px": 20.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "banner"
+          },
+          {
+            "id": "e2",
+            "role": "link",
+            "text": "Home",
+            "accessible_name": "Home",
+            "bbox": {
+              "x": 24.0,
+              "y": 82.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e3",
+            "role": "link",
+            "text": "Business",
+            "accessible_name": "Business",
+            "bbox": {
+              "x": 24.0,
+              "y": 115.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e4",
+            "role": "link",
+            "text": "City",
+            "accessible_name": "City",
+            "bbox": {
+              "x": 24.0,
+              "y": 148.0,
+              "width": 110.0,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 16.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e5",
+            "role": "link",
+            "text": "Newsletter",
+            "accessible_name": "Newsletter",
+            "bbox": {
+              "x": 24.0,
+              "y": 181.0,
+              "width": 110.0,
+              "height": 28.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 13.55,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 2,
+            "landmark": "navigation"
+          },
+          {
+            "id": "e6",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Email",
+            "bbox": {
+              "x": 444.0,
+              "y": 371.90625,
+              "width": 392.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e7",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Password",
+            "bbox": {
+              "x": 444.0,
+              "y": 443.90625,
+              "width": 392.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e8",
+            "role": "button",
+            "text": "Create account",
+            "accessible_name": "Create account",
+            "bbox": {
+              "x": 444.0,
+              "y": 492.90625,
+              "width": 106.40625,
+              "height": 21.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(240, 240, 240)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 18.43,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e9",
+            "role": "textbox",
+            "text": "",
+            "accessible_name": "Email",
+            "bbox": {
+              "x": 444.0,
+              "y": 383.40625,
+              "width": 392.0,
+              "height": 37.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(255, 255, 255)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 21.0,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e10",
+            "role": "button",
+            "text": "Sign me up",
+            "accessible_name": "Sign me up",
+            "bbox": {
+              "x": 487.921875,
+              "y": 430.40625,
+              "width": 111.21875,
+              "height": 40.0
+            },
+            "style": {
+              "font_size_px": 15.0,
+              "color": "rgb(255, 255, 255)",
+              "background_color": "rgb(194, 65, 12)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 5.18,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e11",
+            "role": "button",
+            "text": "Close",
+            "accessible_name": "Close",
+            "bbox": {
+              "x": 444.0,
+              "y": 441.90625,
+              "width": 31.921875,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.3333,
+              "color": "rgb(0, 0, 0)",
+              "background_color": "rgb(39, 39, 42)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 1.41,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 900,
+            "tree_depth": 3,
+            "landmark": "main"
+          },
+          {
+            "id": "e12",
+            "role": "link",
+            "text": "About",
+            "accessible_name": "About",
+            "bbox": {
+              "x": 224.0,
+              "y": 687.0,
+              "width": 35.421875,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(24, 24, 27)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 16.12,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          },
+          {
+            "id": "e13",
+            "role": "link",
+            "text": "Privacy",
+            "accessible_name": "Privacy",
+            "bbox": {
+              "x": 275.421875,
+              "y": 687.0,
+              "width": 40.09375,
+              "height": 17.0
+            },
+            "style": {
+              "font_size_px": 13.0,
+              "color": "rgb(244, 244, 245)",
+              "background_color": "rgb(24, 24, 27)",
+              "opacity": 1.0,
+              "visible": true
+            },
+            "contrast_ratio": 16.12,
+            "checked": null,
+            "selected": null,
+            "disabled": false,
+            "in_viewport": true,
+            "z_order": 0,
+            "tree_depth": 1,
+            "landmark": "contentinfo"
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "o1",
+          "kind": "banner",
+          "purpose": "other",
+          "layer": 1,
+          "bbox": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1280.0,
+            "height": 720.0
+          },
+          "viewport_coverage": 1.0,
+          "blocks_interaction": false,
+          "controls": [
+            {
+              "element_id": "e6",
+              "purpose": "other"
+            },
+            {
+              "element_id": "e7",
+              "purpose": "other"
+            },
+            {
+              "element_id": "e8",
+              "purpose": "other"
+            }
+          ]
+        },
+        {
+          "id": "o2",
+          "kind": "modal",
+          "purpose": "newsletter",
+          "layer": 1,
+          "bbox": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1280.0,
+            "height": 720.0
+          },
+          "viewport_coverage": 1.0,
+          "blocks_interaction": true,
+          "controls": [
+            {
+              "element_id": "e9",
+              "purpose": "other"
+            },
+            {
+              "element_id": "e10",
+              "purpose": "other"
+            },
+            {
+              "element_id": "e11",
+              "purpose": "close"
+            }
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "has_alternative_link": false,
+          "id": "f1",
+          "action_url": "/account/create",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "email",
+              "type": "email",
+              "label": "Email",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e6"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "password",
+              "type": "password",
+              "label": "Password",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e7"
+            }
+          ],
+          "submit_element_id": "e8"
+        },
+        {
+          "has_alternative_link": false,
+          "id": "f2",
+          "action_url": "/newsletter/subscribe",
+          "method": "POST",
+          "fields": [
+            {
+              "hidden_boolean_default": null,
+              "name": "email",
+              "type": "email",
+              "label": "Email",
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": false,
+              "off_screen": false,
+              "required": true,
+              "element_id": "e9"
+            },
+            {
+              "hidden_boolean_default": null,
+              "name": "csrf_token",
+              "type": "hidden",
+              "label": null,
+              "default_value": "[REDACTED]",
+              "prechecked": false,
+              "hidden": true,
+              "off_screen": false,
+              "required": false,
+              "element_id": null
+            }
+          ],
+          "submit_element_id": "e10"
+        }
+      ],
+      "timers": []
+    }
+  ],
+  "paths": [
+    {
+      "name": "accept_consent",
+      "goal": "accept_consent",
+      "clicks": 1,
+      "page_loads": 0,
+      "step_indices": [
+        0
+      ],
+      "executed": false,
+      "completed": true,
+      "exit_channel": "web"
+    },
+    {
+      "name": "reject_consent",
+      "goal": "reject_consent",
+      "clicks": 1,
+      "page_loads": 0,
+      "step_indices": [
+        1
+      ],
+      "executed": true,
+      "completed": true,
+      "exit_channel": "web"
+    }
+  ],
+  "intents": [
+    {
+      "goal": "reject_consent",
+      "success": true,
+      "cheapest_path": "reject_consent"
+    }
+  ],
+  "commerce": null,
+  "notes": [
+    {
+      "kind": "handoff",
+      "step_index": 6,
+      "message": "login: A login is required. Tripwire never types passwords."
+    }
+  ]
+}

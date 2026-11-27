@@ -14,6 +14,7 @@ from evilweb.server import serve
 from tripwire.detectors.base import findings_for, measurements
 from tripwire.eval.scoring import Score, incomplete_reason
 from tripwire.mission import load_mission
+from tripwire.schemas.finding import Family
 from tripwire.schemas.ground_truth import GroundTruth
 from tripwire.walker.scripted_walker import RunRequest, ScriptedWalker
 
@@ -32,6 +33,12 @@ def grid_expectations(truth: GroundTruth):
                 leave_page_loads=metrics["leave_clicks"] - int(acknowledgement),
             )
         yield label.model_copy(update={"metrics": metrics})
+
+
+def _login_wall(trace) -> bool:
+    return trace.status == "handed_off" and any(
+        n.kind == "handoff" and n.message.startswith("login") for n in trace.notes
+    )
 
 
 def walk_case(sc, *, repeat, executable):
@@ -54,7 +61,9 @@ def walk_case(sc, *, repeat, executable):
                             browser=browser,
                         )
                     ).run()
-                if reason := incomplete_reason(trace):
+                reason = incomplete_reason(trace)
+                if reason and not (sc.family == Family.NAGGING and _login_wall(trace)):
+                    # A nagging scenario that stops at its planted account wall did its job.
                     failures.append(f"{sc.id}: {reason}")
                 observations = measurements(trace)
                 findings = findings_for(trace, observations)

@@ -18,7 +18,7 @@ SKIN_NUMBERS = (1, 2, 3, 4)
 # The v1 grid stays at 36 scenarios. Phase 9 modules get their own grid (module_grid), so a
 # new family never changes the v1 numbers, CI's baseline or the Phase 6 targets.
 V1_FAMILIES = (Family.CONSENT_ASYMMETRY, Family.SNEAKING, Family.OBSTRUCTION)
-MODULES = {"urgency": Family.URGENCY, "wire": Family.WIRE}
+MODULES = {"urgency": Family.URGENCY, "wire": Family.WIRE, "nagging": Family.NAGGING}
 
 FAMILY_SITES: dict[Family, tuple[SiteType, SiteType]] = {
     Family.CONSENT_ASYMMETRY: (SiteType.NEWS, SiteType.SAAS),  # banner; saas sign-up page
@@ -26,13 +26,14 @@ FAMILY_SITES: dict[Family, tuple[SiteType, SiteType]] = {
     Family.OBSTRUCTION: (SiteType.SAAS, SiteType.NEWS),  # cancel; newsletter unsubscribe
     Family.URGENCY: (SiteType.SHOP, SiteType.SAAS),  # product page; pricing page
     Family.WIRE: (SiteType.SAAS, SiteType.SHOP),  # sign-up form; address form
+    Family.NAGGING: (SiteType.NEWS, SiteType.NEWS),  # articles: pop-ups and an account wall
 }
 
 
 def mission_for(family: Family, site: SiteType) -> str:
     if site == SiteType.SHOP:
         return "reach_payment"
-    if site == SiteType.NEWS and family == Family.CONSENT_ASYMMETRY:
+    if site == SiteType.NEWS and family in (Family.CONSENT_ASYMMETRY, Family.NAGGING):
         return "first_visit"
     return "sign_up_and_leave"
 

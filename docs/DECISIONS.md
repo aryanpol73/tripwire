@@ -585,3 +585,15 @@ Pagewise, Fresco, Ledgerline) were written after the freeze, checked only over p
 and not walked by the model before the gate; they are the "unseen" group of gate 3.
 **Caveat:** the same author wrote the walker and these layouts; the real-site pilot remains
 the clean test of generalisation.
+
+### D-073 Nagging is measured from closes, returns and hand-offs
+
+`nagging.repeat_popup` counts a pop-up as closed only when the walker clicked a control the
+collector classed as close or decline on that pop-up, and as returned when a later page load
+shows a pop-up of the same purpose. `nagging.forced_registration` reads the walker's own
+hand-off note at a login wall (the walker never types passwords) and the link that led
+there; walls reached through account, sign-in or sign-up words are expected, not forced.
+**v1 change:** the v1 news pop-up was removed by script only, so it came back on every article,
+which this rule would have reported on every v1 news site. Closing it is now remembered
+server-side; the v1 eval was re-run after that change alone and is unchanged. **Eval change:**
+in the nagging module a hand-off at a login wall is a correct end, not a failed run.

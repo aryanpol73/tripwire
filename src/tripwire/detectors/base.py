@@ -33,6 +33,7 @@ class Detector(Protocol):
 
 def measurements(trace: Trace) -> dict[str, Observation]:
     from tripwire.detectors.consent import consent
+    from tripwire.detectors.nagging import nagging
     from tripwire.detectors.obstruction import obstruction
     from tripwire.detectors.sneaking import sneaking
     from tripwire.detectors.urgency import urgency
@@ -43,6 +44,7 @@ def measurements(trace: Trace) -> dict[str, Observation]:
     observations = {}
     families: dict[str, Detector] = {
         "consent": consent,
+        "nagging": nagging,
         "obstruction": obstruction,
         "sneaking": sneaking,
         "urgency": urgency,

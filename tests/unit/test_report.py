@@ -39,6 +39,8 @@ SAMPLE_METRICS = {
     "urgency.stock_flux": dict(stock_before=2, stock_after=4),
     "wire.flipped_choice": dict(flipped_count=1, flipped_fields="partner_deals=1"),
     "wire.injected_optin": dict(injected_fields="partner_data_sharing=1"),
+    "nagging.repeat_popup": dict(reappearances=2, popup_purpose="newsletter"),
+    "nagging.forced_registration": dict(reached_by="City"),
 }
 
 

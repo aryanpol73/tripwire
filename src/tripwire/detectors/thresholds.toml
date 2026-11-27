@@ -26,3 +26,7 @@ reset_tolerance_s = 3.0
 on_values = ["1", "on", "true", "yes", "y"]
 # Fields a page may add at submit for security reasons; never treated as choices.
 security_names = "csrf|xsrf|token|nonce|authenticity|_method|captcha"
+
+[nagging]
+# A login wall reached through one of these is an expected sign-in, not forced registration.
+account_words = "sign\\s*in|log\\s*in|account|register|sign\\s*up|join|subscribe|member"

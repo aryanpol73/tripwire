@@ -939,3 +939,36 @@ loaded), frozen in commit 60db3b0, then three new unseen layouts (Pagewise, Fres
 Ledgerline) written after that commit and not run by the model before the gate. Gate 3 has
 58 runs: 36 sandbox, 6 unseen (new), 6 dev (the old layouts, reported only), 10 red team. The three old layouts have informed fixes (Streamly three times), so
 they are reported as development layouts and no longer count as unseen.
+
+## Phase 9 — module 3: nagging and forced registration
+
+**Built** (branch `phase-9/nagging`; not merged while the Phase 6 gate 3 runs on `main`).
+- Family `nagging`; rules `nagging.repeat_popup` and `nagging.forced_registration` (Tier A),
+  D-073. Report card: "A newsletter pop-up that was closed came back on 2 later pages."; "An
+  ordinary page, reached by "City", asked the visitor to create an account before it could
+  be read."
+- Sandbox, on the news articles (first visit). Clean: the pop-up remembers being closed and a
+  closable "Sign in for a personalised feed" banner (decoys). Subtle: the pop-up comes back
+  site-wide after closing. Blatant: it comes back, and from the second article a "Create a
+  free account to keep reading" wall (email and password, no close) covers the page.
+
+**Results (measured).**
+- Module grid, 12 scenarios: both rules precision 1.00, recall 1.00; decoys silent; 0
+  measurement differences over 192 compared values.
+- v1 grid after making its pop-up remember being closed: 36 scenarios, 1.00 / 1.00, no
+  errors, ground truth unchanged.
+- 637 unit tests pass.
+
+**What broke (and was fixed).**
+- The v1 news pop-up already nagged (it came back on every article): fixed in the v1 sandbox
+  before the rule existed, and the v1 eval re-run on that change alone.
+- The decoy banner's button was first named "Close", like the pop-up's: the walker's
+  role-and-name locator found the banner's button first, under the pop-up, and timed out in
+  all four clean runs. Renamed "Not now".
+- In subtle scenarios the pop-up only came back on articles, and three-page walks often
+  missed it (recall 0.63 on the first try); real nags are site-wide, so it now also shows on
+  the home page.
+
+**Limitations.** Only pop-ups the collector classes as overlays, closed through a control it
+classes as close or decline. Forced registration is judged by the words of the link that led
+to the wall, so an account wall behind a vaguely named link counts as forced.

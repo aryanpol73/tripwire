@@ -19,3 +19,5 @@ detectors:
   - consent.confirmshaming
   - urgency.countdown_reset
   - urgency.stock_flux
+  - nagging.repeat_popup
+  - nagging.forced_registration

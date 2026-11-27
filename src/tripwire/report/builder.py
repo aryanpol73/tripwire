@@ -145,6 +145,13 @@ def _targets(trace: Trace, finding: Finding, step: Step) -> list[tuple[UiElement
             e = by_id.get(addon.element_id or "")
             if addon.preselected and addon.step_index == step.index and e is not None:
                 out.append((e, f"Pre-added: {addon.label[:30]}", "focus"))
+    elif rule.startswith("nagging."):
+        for o in step.overlays:
+            if o.purpose.value != "consent":
+                for c in o.controls:
+                    e = by_id.get(c.element_id)
+                    if e is not None and c.purpose.value in ("close", "reject"):
+                        out.append((e, f"Closed here: {_name(e)[:30]}", "focus"))
     elif rule == "wire.flipped_choice":
         sent = str(finding.evidence.measurements.get("flipped_fields") or "")
         names = {pair.split("=", 1)[0] for pair in sent.split(", ") if pair}

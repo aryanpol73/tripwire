@@ -5,18 +5,6 @@
   <h1>{{ headline }}</h1>
   <p>{{ body }}</p>
 </article>
-{% if show_popup %}
-<div class="{{ c('modal') }}" id="{{ sid('newsletter') }}" role="dialog" aria-modal="true" aria-label="Newsletter">
-  <form class="{{ c('modal-box') }}" method="post" action="/newsletter/subscribe">
-    <h2>Get the morning briefing</h2>
-    <p>One email a day with the stories that matter.</p>
-    <label class="{{ c('field') }}">Email <input name="email" type="email" autocomplete="off" required></label>
-    <input type="hidden" name="csrf_token" value="sandbox-csrf-token">
-    {% call nest() %}<div class="{{ c('row') }}">
-      {{ button(w("subscribe")) }}
-      <button type="button" class="{{ c('linkctl') }}" aria-label="Close" onclick="document.getElementById('{{ sid('newsletter') }}').remove()">Close</button>
-    </div>{% endcall %}
-  </form>
-</div>
-{% endif %}
+{% include "nagging.html" %}
+{% include "newsletter_popup.html" %}
 {% endblock %}
