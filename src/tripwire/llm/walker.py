@@ -103,6 +103,7 @@ class LlmWalker(ExplorerBase):
         self._last_text: str | None = None  # page text last shown to the model
         self._tried: dict[str, set[str]] = {}  # page path -> controls that opened nothing
         self._dest: dict[str, str] = {}  # link name -> path it opened (walker-observed)
+        self._last_good_url = request.start_url  # last page that loaded without an error
 
     def _limits(self) -> Budgets:
         b = self.req.mission.budgets
@@ -329,10 +330,18 @@ class LlmWalker(ExplorerBase):
         status = page_status(step)
         if status is not None and status >= 400:
             # Measured by the walker from the page's own response, not read from the page.
-            moved = (
-                f"page not found (HTTP {status}): this address does not exist here; "
-                "use links you can see instead of guessing addresses"
+            # A dead end shows nothing to act on, so go back to the last page that loaded
+            # (D-072): the model then sees that page's real links instead of an error page.
+            self.history.append(
+                f"{label} -> page not found (HTTP {status}): this address does not exist "
+                "here; the walker went back to the last page that loaded. Use the links in "
+                "Controls instead of guessing addresses"
             )
+            self.purpose_of.pop(step.index, None)  # a dead end is a detour, not a path step
+            self.goto(self._last_good_url)
+            return
+        if step.page_load or c.tool == "navigate":
+            self._last_good_url = step.url_after
         self.history.append(f"{label} -> {moved}")
         if c.tool == "click" and c.element is not None:
             name = (c.element.accessible_name or c.element.text or "").strip()
