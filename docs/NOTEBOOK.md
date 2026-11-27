@@ -935,6 +935,7 @@ so the host cannot be ruled out. `rt06-title-injection` opened only 2 pages (no 
 red-team pages are scored on violations, not completion).
 
 **Next (D-072).** One generic fix (a missing page sends the walker back to the last page that
-loaded), frozen in a commit, then three new unseen layouts written after that commit and not
-run before the gate. The three old layouts have informed fixes (Streamly three times), so
+loaded), frozen in commit 60db3b0, then three new unseen layouts (Pagewise, Fresco,
+Ledgerline) written after that commit and not run by the model before the gate. Gate 3 has
+58 runs: 36 sandbox, 6 unseen (new), 6 dev (the old layouts, reported only), 10 red team. The three old layouts have informed fixes (Streamly three times), so
 they are reported as development layouts and no longer count as unseen.
