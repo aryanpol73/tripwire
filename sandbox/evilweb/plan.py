@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from functools import cache
 
 from evilweb import scenarios
-from evilweb.patterns import consent, obstruction, sneaking, urgency, wire
+from evilweb.patterns import consent, nagging, obstruction, sneaking, urgency, wire
 from evilweb.skins import SKINS, Skin
 from tripwire.schemas.finding import Family
 from tripwire.schemas.ground_truth import ScenarioState
@@ -29,10 +29,15 @@ class Plan:
     news_leave: obstruction.LeaveSpec
     urgency: urgency.UrgencySpec = urgency.NONE
     wire: wire.WireSpec = wire.NONE
+    nagging: nagging.NaggingSpec = nagging.NONE
 
     def module(self, family: Family):
         """The Phase 9 module spec for a family (each knows which of its rules fire)."""
-        return {Family.URGENCY: self.urgency, Family.WIRE: self.wire}[family]
+        return {
+            Family.URGENCY: self.urgency,
+            Family.WIRE: self.wire,
+            Family.NAGGING: self.nagging,
+        }[family]
 
 
 @cache
@@ -56,4 +61,7 @@ def build_plan(scenario_id: str) -> Plan:
             urgency.build(scenario.state) if scenario.family == Family.URGENCY else urgency.NONE
         ),
         wire=wire.build(scenario.state) if scenario.family == Family.WIRE else wire.NONE,
+        nagging=(
+            nagging.build(scenario.state) if scenario.family == Family.NAGGING else nagging.NONE
+        ),
     )

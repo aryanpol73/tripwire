@@ -41,3 +41,6 @@ jobs:
 
       - name: Score the Phase 9 wire-level form module
         run: uv run --locked tripwire eval --module wire
+
+      - name: Score the Phase 9 nagging module
+        run: uv run --locked tripwire eval --module nagging
