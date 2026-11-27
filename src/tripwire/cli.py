@@ -236,7 +236,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     evaluation.add_argument(
         "--set",
-        choices=("all", "sandbox", "unseen", "redteam"),
+        choices=("all", "sandbox", "unseen", "dev", "redteam"),
         default="all",
         help="llm walker: which targets to run",
     )

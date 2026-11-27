@@ -10,7 +10,7 @@ from evilweb.app import create_app
 from evilweb.server import serve_app
 from tests.llm_policy import controls
 from tripwire.llm.client import PolicySource
-from tripwire.llm.walker import LlmWalker
+from tripwire.llm.walker import LlmWalker, page_status
 from tripwire.mission import load_mission
 from tripwire.walker.base import RunRequest
 from unseen.sites import get as get_layout
@@ -77,8 +77,14 @@ def test_a_guessed_address_that_does_not_exist_is_reported_as_not_found(browser,
         return queue.pop(0)
 
     layout = get_layout("streamly-video")
-    _trace, walker = run(browser, tmp_path, layout.create_app(), "streamly", policy, "first_visit")
+    trace, walker = run(browser, tmp_path, layout.create_app(), "streamly", policy, "first_visit")
     assert any("page not found (HTTP 404)" in h for h in walker.history)
+    # D-072: the walker went back to the last page that loaded, so the model sees real links.
+    assert any("went back to the last page that loaded" in h for h in walker.history)
+    last = trace.steps[-1]
+    assert last.url_after.endswith("/") and page_status(last) == 200
+    dead = next(s for s in trace.steps if page_status(s) == 404)
+    assert dead.index not in walker.purpose_of  # the dead end is not part of any path
 
 
 def test_done_is_allowed_once_something_was_joined(browser, tmp_path):

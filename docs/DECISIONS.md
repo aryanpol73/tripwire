@@ -571,3 +571,17 @@ From the first full live gate (2026-11-25/26). Two of three misses were the walk
 order step is the same rule applied before the model wastes the run. **Caveat:** the fixes
 were made after seeing these runs, including one on an unseen layout (Streamly), so the
 whole gate is re-run on the fixed code, and Streamly is now twice-informed (see D-063).
+
+### D-072 Go back after a missing page; freeze; new unseen layouts for gate 3
+
+Both live gates missed the same unseen run: after signing up on Streamly the model guessed
+addresses, was told they did not exist (D-071), and kept scrolling the error page. A missing
+page now sends the walker back to the last page that loaded, so the model sees that page's
+real links; the dead-end step is a detour and counts toward no path.
+That change is the **walker freeze for gate 3 (commit 60db3b0)**. The three original unseen
+layouts have informed walker fixes (Streamly three times), so they now run as **dev
+layouts**: reported, never gated. Three new layouts (`sandbox/unseen/sites_v2.py`:
+Pagewise, Fresco, Ledgerline) were written after the freeze, checked only over plain HTTP,
+and not walked by the model before the gate; they are the "unseen" group of gate 3.
+**Caveat:** the same author wrote the walker and these layouts; the real-site pilot remains
+the clean test of generalisation.

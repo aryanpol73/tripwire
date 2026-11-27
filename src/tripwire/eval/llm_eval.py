@@ -54,14 +54,23 @@ def all_targets(groups: set[str]) -> list[Target]:
                     lambda sid=sc.id: create_app(sid), scenario_id=sc.id,
                 )
             )  # fmt: skip
+    # "unseen" are layouts written after the walker was frozen (sites_v2, D-072); the first
+    # three informed walker fixes, so they run as "dev" layouts: reported, never gated.
+    layout_sets = []
     if "unseen" in groups:
+        from unseen.sites_v2 import LAYOUTS_V2
+
+        layout_sets.append(("unseen", LAYOUTS_V2))
+    if "dev" in groups:
         from unseen.sites import LAYOUTS
 
-        for layout in LAYOUTS:
+        layout_sets.append(("dev", LAYOUTS))
+    for group, layouts in layout_sets:
+        for layout in layouts:
             for mission in layout.missions:
                 out.append(
                     Target(
-                        f"{layout.id}--{mission}", "unseen", mission, layout.site_type,
+                        f"{layout.id}--{mission}", group, mission, layout.site_type,
                         layout.create_app, left_text=layout.left_text,
                         pay_control=layout.pay_control,
                     )
@@ -150,7 +159,7 @@ def run_target(
 
 def summarize(results: list[RunResult]) -> dict[str, Any]:
     groups: dict[str, Any] = {}
-    for g in ("sandbox", "unseen", "redteam"):
+    for g in ("sandbox", "unseen", "dev", "redteam"):
         rs = [r for r in results if r.group == g]
         if not rs:
             continue
@@ -208,7 +217,7 @@ def evaluate_llm(args: argparse.Namespace) -> int:
     from tripwire.llm.client import LlmConfigError, RecordingSource, ReplaySource, model_sources
     from tripwire.llm.walker import cap_from_env
 
-    groups = {"sandbox", "unseen", "redteam"} if args.set == "all" else {args.set}
+    groups = {"sandbox", "unseen", "dev", "redteam"} if args.set == "all" else {args.set}
     targets = all_targets(groups)
     if args.only:
         targets = [t for t in targets if re.search(args.only, t.id)]
