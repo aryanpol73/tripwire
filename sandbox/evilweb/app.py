@@ -37,6 +37,7 @@ class Sim:
     signed_up: bool = False
     cancelled: bool = False
     newsletter: bool = False
+    popup_dismissed: bool = False  # the visitor closed the newsletter pop-up
     unsubscribed: bool = False
 
 
